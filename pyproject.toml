@@ -29,10 +29,6 @@ license = {file = "LICENSE"}
 [project.urls]
 homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
 
-[build-system]
-requires = ["setuptools", "wheel", "typing-extensions"]
-build-backend = "setuptools.build_meta"
-
 [tool.pdm]
 distribution = false
 
@@ -46,7 +42,12 @@ dev = [
     "inflection>=0.5.1",
     "pre-commit>=3.7.1",
     "typing-extensions>=4.12.2",
+    "build>=1.2.1",
 ]
+
+[tool.pdm.scripts]
+test = "pytest ./tests"
+build_sdist = "python -m build . --sdist --no-isolation"
 
 # linters configuration below
 [tool.ruff]

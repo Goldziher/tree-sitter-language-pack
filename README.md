@@ -213,7 +213,7 @@ That is, each object must have a `repo` key, and optionally a `branch`, `directo
 
 2. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
 3. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
-4. If the build is successful, execute the tests with `pdm run pytest ./tests`
+4. If the build is successful, execute the tests with `pdm run test`
 5. If the tests pass, commit your changes and open a pull request.
 
 #### Adding an installed binding
@@ -223,5 +223,5 @@ To add an installed package follow these steps:
 1. Install the bindings with `pdm add <bindings_package_name>`
 2. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
 3. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
-4. If the build is successful, execute the tests with `pdm run pytest ./tests`
+4. If the build is successful, execute the tests with `pdm run test`
 5. If the tests pass, commit your changes and open a pull request.

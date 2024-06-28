@@ -19,10 +19,8 @@ jobs:
           ./pdm.lock
     - name: Install Dependencies
       run: pdm install
-    - name: Build sources
-      run: |-
-        pdm run pip install build wheel
-        python -mbuild -n -s
+    - name: Build source dist
+      run: pdm run build_sdist
     - name: Upload sources
       uses: actions/upload-artifact@v4
       with:
@@ -43,7 +41,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         cache: pip
-        python-version: '3.9'
+        python-version: 3.12
     - name: Set up QEMU
       if: matrix.os == 'Linux'
       uses: docker/setup-qemu-action@v3

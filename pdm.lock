@@ -5,7 +5,25 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:d01b8352e07e1ff158a26f21ea5bb30a8bb354bd34c39a6eaacea79c51cb1eae"
+content_hash = "sha256:628595c54f8726fd2f4022db024431fdf34d22df7fe5a6189875e381279a11fa"
+
+[[package]]
+name = "build"
+version = "1.2.1"
+requires_python = ">=3.8"
+summary = "A simple, correct Python build frontend"
+groups = ["dev"]
+dependencies = [
+    "colorama; os_name == \"nt\"",
+    "importlib-metadata>=4.6; python_full_version < \"3.10.2\"",
+    "packaging>=19.1",
+    "pyproject-hooks",
+    "tomli>=1.1.0; python_version < \"3.11\"",
+]
+files = [
+    {file = "build-1.2.1-py3-none-any.whl", hash = "sha256:75e10f767a433d9a86e50d83f418e83efc18ede923ee5ff7df93b6cb0306c5d4"},
+    {file = "build-1.2.1.tar.gz", hash = "sha256:526263f4870c26f26c433545579475377b2b7588b6f1eac76a001e873ae3e19d"},
+]
 
 [[package]]
 name = "cfgv"
@@ -24,7 +42,7 @@ version = "0.4.6"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 summary = "Cross-platform colored terminal text."
 groups = ["dev"]
-marker = "sys_platform == \"win32\""
+marker = "os_name == \"nt\" or sys_platform == \"win32\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
@@ -72,6 +90,21 @@ groups = ["dev"]
 files = [
     {file = "identify-2.5.36-py2.py3-none-any.whl", hash = "sha256:37d93f380f4de590500d9dba7db359d0d3da95ffe7f9de1753faa159e71e7dfa"},
     {file = "identify-2.5.36.tar.gz", hash = "sha256:e5e00f54165f9047fbebeb4a560f9acfb8af4c88232be60a488e9b68d122745d"},
+]
+
+[[package]]
+name = "importlib-metadata"
+version = "8.0.0"
+requires_python = ">=3.8"
+summary = "Read metadata from Python packages"
+groups = ["dev"]
+marker = "python_full_version < \"3.10.2\""
+dependencies = [
+    "zipp>=0.5",
+]
+files = [
+    {file = "importlib_metadata-8.0.0-py3-none-any.whl", hash = "sha256:15584cf2b1bf449d98ff8a6ff1abef57bf20f3ac6454f431736cd3e660921b2f"},
+    {file = "importlib_metadata-8.0.0.tar.gz", hash = "sha256:188bd24e4c346d3f0a933f275c2fec67050326a856b9a359881d7c2a697e8812"},
 ]
 
 [[package]]
@@ -203,6 +236,17 @@ dependencies = [
 files = [
     {file = "pre_commit-3.7.1-py2.py3-none-any.whl", hash = "sha256:fae36fd1d7ad7d6a5a1c0b0d5adb2ed1a3bda5a21bf6c3e5372073d7a11cd4c5"},
     {file = "pre_commit-3.7.1.tar.gz", hash = "sha256:8ca3ad567bc78a4972a3f1a477e94a79d4597e8140a6e0b651c5e33899c3654a"},
+]
+
+[[package]]
+name = "pyproject-hooks"
+version = "1.1.0"
+requires_python = ">=3.7"
+summary = "Wrappers to call pyproject.toml-based build backend hooks."
+groups = ["dev"]
+files = [
+    {file = "pyproject_hooks-1.1.0-py3-none-any.whl", hash = "sha256:7ceeefe9aec63a1064c18d939bdc3adf2d8aa1988a510afec15151578b232aa2"},
+    {file = "pyproject_hooks-1.1.0.tar.gz", hash = "sha256:4b37730834edbd6bd37f26ece6b44802fb1c1ee2ece0e54ddff8bfc06db86965"},
 ]
 
 [[package]]
@@ -455,4 +499,16 @@ groups = ["dev"]
 files = [
     {file = "wheel-0.43.0-py3-none-any.whl", hash = "sha256:55c570405f142630c6b9f72fe09d9b67cf1477fcf543ae5b8dcb1f5b7377da81"},
     {file = "wheel-0.43.0.tar.gz", hash = "sha256:465ef92c69fa5c5da2d1cf8ac40559a8c940886afcef87dcf14b9470862f1d85"},
+]
+
+[[package]]
+name = "zipp"
+version = "3.19.2"
+requires_python = ">=3.8"
+summary = "Backport of pathlib-compatible object wrapper for zip files"
+groups = ["dev"]
+marker = "python_full_version < \"3.10.2\""
+files = [
+    {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
+    {file = "zipp-3.19.2.tar.gz", hash = "sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"},
 ]
