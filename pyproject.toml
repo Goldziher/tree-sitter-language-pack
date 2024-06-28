@@ -23,7 +23,7 @@ dependencies = [
 ]
 requires-python = ">=3.9.0"
 readme = "README.md"
-license = "MIT"
+license = {file = "LICENSE"}
 
 [project.urls]
 homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
