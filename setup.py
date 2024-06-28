@@ -1,11 +1,12 @@
 from json import loads
-from os import chdir, environ, getcwd
+from os import chdir, getcwd
 from pathlib import Path
 from platform import system
-from typing import Any, NotRequired, TypedDict
+from typing import Any
 
 from setuptools import Extension, find_packages, setup  # type: ignore[import-untyped]
 from setuptools.command.build_ext import build_ext  # type: ignore[import-untyped]
+from typing_extensions import NotRequired, TypedDict
 from wheel.bdist_wheel import bdist_wheel  # type: ignore[import-untyped]
 
 
@@ -32,7 +33,7 @@ language_names = [
     for language_definition in language_definition_list
 ]
 # Create a dictionary of language definitions mapped to the language names
-language_definitions = dict(zip(language_names, language_definition_list, strict=False))
+language_definitions = dict(zip(language_names, language_definition_list))
 # Common C source file for all language extensions
 common_source = (Path(__file__).parent / "./tree_sitter_language_pack/language.c").relative_to(Path(__file__).parent)
 
@@ -119,11 +120,6 @@ class BuildExt(build_ext):  # type: ignore[misc]
         path = directory / language_definition.get("directory", "")
         src = path / "src"
 
-        if "USE_TREE_SITTER_CLI_GENERATE" in environ:
-            chdir(path)
-            self.spawn(["tree-sitter", "generate", "--no-bindings", "src/grammar.json"])
-            chdir(cwd)
-
         ext.sources.extend(list(map(str, src.glob("*.c"))))
         ext.include_dirs = [str(src)]
 
@@ -142,7 +138,7 @@ class BdistWheel(bdist_wheel):  # type: ignore[misc]
 
 
 setup(
-    packages=find_packages(),  # Use find_packages to automatically discover all packages
+    packages=find_packages(),
     package_data={"tree_sitter_language_pack": ["py.typed"]},
     ext_modules=extensions,
     include_package_data=True,

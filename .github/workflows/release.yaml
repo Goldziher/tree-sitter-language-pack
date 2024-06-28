@@ -1,9 +1,8 @@
-name: Build
+name: Release
 
 on:
-  push:
-    branches:
-    - main
+  release:
+    types: [published]
 
 jobs:
   build-sdist:
@@ -11,16 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: actions/checkout@v4
+    - uses: pdm-project/setup-pdm@v4
       with:
-        cache: pip
         python-version: 3.12
+        cache: true
+        cache-dependency-path: |
+          ./pdm.lock
+    - name: Install Dependencies
+      run: pdm install
     - name: Build sources
       run: |-
-        pip install build wheel
+        pdm run pip install build wheel
         python -mbuild -n -s
     - name: Upload sources
       uses: actions/upload-artifact@v4
@@ -34,7 +35,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-13]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -63,3 +64,21 @@ jobs:
         path: dist/*.whl
         name: dist-wheels-${{matrix.os}}
         retention-days: 2
+  publish:
+    name: Publish Python package
+    needs: [build-sdist, build-wheels]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/tree-sitter-language-pack/
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: dist
+        pattern: dist-*
+        merge-multiple: true
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{secrets.PYPI_API_TOKEN}}

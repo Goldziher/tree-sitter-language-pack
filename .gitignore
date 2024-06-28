@@ -3,10 +3,10 @@
 *.pyc
 *.so
 .idea/
+.pdm-python
 .venv/
 .vscode/
 __pycache__
-build/
 build/
 dist/
 env*/

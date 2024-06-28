@@ -13,9 +13,9 @@ repos:
   - id: name-tests-test
     args:
     - --pytest
-    exclude: ^tests/factories|^tests/types|^tests/utils|^tests/data_fixtures.py
   - id: trailing-whitespace
   - id: end-of-file-fixer
+    exclude: ^.pdm-python
   - id: check-yaml
   - id: check-toml
   - id: check-json
