@@ -43,11 +43,13 @@ dev = [
     "pre-commit>=3.7.1",
     "typing-extensions>=4.12.2",
     "build>=1.2.1",
+    "cibuildwheel>=2.19.1",
 ]
 
 [tool.pdm.scripts]
 test = "pytest ./tests"
 build_sdist = "python -m build . --sdist --no-isolation"
+build_wheel = "cibuildwheel --output-dir dist"
 
 # linters configuration below
 [tool.ruff]
