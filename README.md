@@ -140,7 +140,7 @@ See the list of available languages below to get the name of the language you wa
 - [verilog](https://github.com/tree-sitter/tree-sitter-verilog) - MIT License
 - [vim](https://github.com/tree-sitter-grammars/tree-sitter-vim) - MIT License
 - [vue](https://github.com/tree-sitter-grammars/tree-sitter-vue) - MIT License
-- [wgslbevy](https://github.com/tree-sitter-grammars/tree-sitter-wgsl-bevy) - MIT License
+- [wgsl](https://github.com/szebniok/tree-sitter-wgsl) - MIT License
 - [xcompose](https://github.com/tree-sitter-grammars/tree-sitter-xcompose) - MIT License
 - [xml](https://github.com/tree-sitter-grammars/tree-sitter-xml) - MIT License
 - [yaml](https://github.com/ikatyang/tree-sitter-yaml) - MIT License
@@ -165,7 +165,7 @@ This library is open to and welcomes contributions.
 
 #### Adding a Binary Wheel Language
 
-1. Add the language to the [language_definitions.json](./language_definitions.json) file
+1. Add the language to the [language_definitions.json](language_definitions.json) file
    at the repository's root.
 
 This file contains a JSON array of objects that adheres to the following json schema:

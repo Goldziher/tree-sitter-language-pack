@@ -1,5 +1,5 @@
 from json import loads
-from os import chdir, getcwd
+from os import chdir, environ, getcwd
 from pathlib import Path
 from platform import system
 from typing import Any
@@ -19,21 +19,26 @@ class LanguageDict(TypedDict):
     cmd: NotRequired[list[str]]
 
 
-# Load language configurations from a JSON file
-language_definition_list: list[LanguageDict] = loads(Path(__file__).with_name("language_definitions.json").read_text())
-# create PascalCase identifiers from the package names
-language_names = [
-    language_definition.get("directory", language_definition["repo"])
-    .split("/")[-1]
-    .replace("tree-sitter-", "")
-    .replace(
-        "-",
-        "",
-    )
-    for language_definition in language_definition_list
-]
-# Create a dictionary of language definitions mapped to the language names
-language_definitions = dict(zip(language_names, language_definition_list))
+def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
+    """Get the language definitions."""
+    project_root = Path(environ.get("PROJECT_ROOT", getcwd()))
+
+    # Load language configurations from a JSON file
+    language_definition_list: list[LanguageDict] = loads((project_root / "language_definitions.json").read_text())
+    # create PascalCase identifiers from the package names
+    language_names = [
+        language_definition.get("directory", language_definition["repo"])
+        .split("/")[-1]
+        .replace("tree-sitter-", "")
+        .replace(
+            "-",
+            "",
+        )
+        for language_definition in language_definition_list
+    ]
+    # Create a dictionary of language definitions mapped to the language names
+    language_definitions = dict(zip(language_names, language_definition_list))
+    return language_definitions, language_names
 
 
 def create_extension(*, language_name: str) -> Extension:
@@ -47,7 +52,7 @@ def create_extension(*, language_name: str) -> Extension:
     """
     return Extension(
         name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=["./language_module.c"],
+        sources=["language_extension.c"],
         include_dirs=[language_name],
         define_macros=[
             ("PY_SSIZE_T_CLEAN", None),
@@ -71,6 +76,8 @@ def create_extension(*, language_name: str) -> Extension:
     )
 
 
+# Get the language definitions and names from the JSON file
+language_definitions, language_names = get_language_definitions()
 # Create extensions for all languages defined in the JSON file
 extensions = [create_extension(language_name=language_name) for language_name in language_names]
 
@@ -83,9 +90,9 @@ class BuildExt(build_ext):  # type: ignore[misc]
         extension_dir_name = ext.include_dirs.pop()
         language_name = ext.name.split(".")[-1]
         language_definition = language_definitions[language_name]
+        cwd = Path(getcwd())
 
-        cwd = getcwd()
-        directory = Path(cwd) / "vendor" / extension_dir_name
+        directory = cwd / "vendor" / extension_dir_name
         relative_path = directory.relative_to(cwd)
 
         # Clone or pull the language repository

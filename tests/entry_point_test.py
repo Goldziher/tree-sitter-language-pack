@@ -20,7 +20,7 @@ language_names = [
         "",
     )
     for language_definition in language_definition_list
-] + ["csharp", "embeddedtemplate", "wgslbevy", "yaml"]
+] + ["csharp", "embeddedtemplate", "yaml"]
 
 
 def test_language_names() -> None:

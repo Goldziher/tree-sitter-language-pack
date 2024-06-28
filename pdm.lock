@@ -5,58 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:8ab0cfda77c498f84b6eb9ee9d05892e71e2332c049f72ed21f941cec4d44ede"
-
-[[package]]
-name = "bashlex"
-version = "0.18"
-requires_python = ">=2.7, !=3.0, !=3.1, !=3.2, !=3.3, !=3.4"
-summary = "Python parser for bash"
-groups = ["dev"]
-files = [
-    {file = "bashlex-0.18-py2.py3-none-any.whl", hash = "sha256:91d73a23a3e51711919c1c899083890cdecffc91d8c088942725ac13e9dcfffa"},
-    {file = "bashlex-0.18.tar.gz", hash = "sha256:5bb03a01c6d5676338c36fd1028009c8ad07e7d61d8a1ce3f513b7fff52796ee"},
-]
-
-[[package]]
-name = "bracex"
-version = "2.4"
-requires_python = ">=3.8"
-summary = "Bash style brace expander."
-groups = ["dev"]
-files = [
-    {file = "bracex-2.4-py3-none-any.whl", hash = "sha256:efdc71eff95eaff5e0f8cfebe7d01adf2c8637c8c92edaf63ef348c241a82418"},
-    {file = "bracex-2.4.tar.gz", hash = "sha256:a27eaf1df42cf561fed58b7a8f3fdf129d1ea16a81e1fadd1d17989bc6384beb"},
-]
-
-[[package]]
-name = "build"
-version = "1.2.1"
-requires_python = ">=3.8"
-summary = "A simple, correct Python build frontend"
-groups = ["dev"]
-dependencies = [
-    "colorama; os_name == \"nt\"",
-    "importlib-metadata>=4.6; python_full_version < \"3.10.2\"",
-    "packaging>=19.1",
-    "pyproject-hooks",
-    "tomli>=1.1.0; python_version < \"3.11\"",
-]
-files = [
-    {file = "build-1.2.1-py3-none-any.whl", hash = "sha256:75e10f767a433d9a86e50d83f418e83efc18ede923ee5ff7df93b6cb0306c5d4"},
-    {file = "build-1.2.1.tar.gz", hash = "sha256:526263f4870c26f26c433545579475377b2b7588b6f1eac76a001e873ae3e19d"},
-]
-
-[[package]]
-name = "certifi"
-version = "2024.6.2"
-requires_python = ">=3.6"
-summary = "Python package for providing Mozilla's CA Bundle."
-groups = ["dev"]
-files = [
-    {file = "certifi-2024.6.2-py3-none-any.whl", hash = "sha256:ddc6c8ce995e6987e7faf5e3f1b02b302836a0e5d98ece18392cb1a36c72ad56"},
-    {file = "certifi-2024.6.2.tar.gz", hash = "sha256:3cd43f1c6fa7dedc5899d69d3ad0398fd018ad1a17fba83ddaf78aa46c747516"},
-]
+content_hash = "sha256:59bdd0b0c124fa20fc1203e4f6ce16eb6bfc04ab9259994c29e97cd45daaabfb"
 
 [[package]]
 name = "cfgv"
@@ -70,33 +19,12 @@ files = [
 ]
 
 [[package]]
-name = "cibuildwheel"
-version = "2.19.1"
-requires_python = ">=3.8"
-summary = "Build Python wheels on CI with minimal configuration."
-groups = ["dev"]
-dependencies = [
-    "bashlex!=0.13",
-    "bracex",
-    "certifi",
-    "filelock",
-    "packaging>=20.9",
-    "platformdirs",
-    "tomli; python_version < \"3.11\"",
-    "typing-extensions>=4.1.0; python_version < \"3.11\"",
-]
-files = [
-    {file = "cibuildwheel-2.19.1-py3-none-any.whl", hash = "sha256:c60a8e9aa0322b13f5965a8396fcabb64ce0f45b2f7130273b2589f6066034be"},
-    {file = "cibuildwheel-2.19.1.tar.gz", hash = "sha256:b6cd9c09ddda4b8a77e93550e8c7cd423e3850ec7ba008ee1dbcb4848e9ee6c1"},
-]
-
-[[package]]
 name = "colorama"
 version = "0.4.6"
 requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 summary = "Cross-platform colored terminal text."
 groups = ["dev"]
-marker = "os_name == \"nt\" or sys_platform == \"win32\""
+marker = "sys_platform == \"win32\""
 files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
@@ -144,32 +72,6 @@ groups = ["dev"]
 files = [
     {file = "identify-2.5.36-py2.py3-none-any.whl", hash = "sha256:37d93f380f4de590500d9dba7db359d0d3da95ffe7f9de1753faa159e71e7dfa"},
     {file = "identify-2.5.36.tar.gz", hash = "sha256:e5e00f54165f9047fbebeb4a560f9acfb8af4c88232be60a488e9b68d122745d"},
-]
-
-[[package]]
-name = "importlib-metadata"
-version = "8.0.0"
-requires_python = ">=3.8"
-summary = "Read metadata from Python packages"
-groups = ["dev"]
-marker = "python_full_version < \"3.10.2\""
-dependencies = [
-    "zipp>=0.5",
-]
-files = [
-    {file = "importlib_metadata-8.0.0-py3-none-any.whl", hash = "sha256:15584cf2b1bf449d98ff8a6ff1abef57bf20f3ac6454f431736cd3e660921b2f"},
-    {file = "importlib_metadata-8.0.0.tar.gz", hash = "sha256:188bd24e4c346d3f0a933f275c2fec67050326a856b9a359881d7c2a697e8812"},
-]
-
-[[package]]
-name = "inflection"
-version = "0.5.1"
-requires_python = ">=3.5"
-summary = "A port of Ruby on Rails inflector to Python"
-groups = ["dev"]
-files = [
-    {file = "inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2"},
-    {file = "inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417"},
 ]
 
 [[package]]
@@ -290,17 +192,6 @@ dependencies = [
 files = [
     {file = "pre_commit-3.7.1-py2.py3-none-any.whl", hash = "sha256:fae36fd1d7ad7d6a5a1c0b0d5adb2ed1a3bda5a21bf6c3e5372073d7a11cd4c5"},
     {file = "pre_commit-3.7.1.tar.gz", hash = "sha256:8ca3ad567bc78a4972a3f1a477e94a79d4597e8140a6e0b651c5e33899c3654a"},
-]
-
-[[package]]
-name = "pyproject-hooks"
-version = "1.1.0"
-requires_python = ">=3.7"
-summary = "Wrappers to call pyproject.toml-based build backend hooks."
-groups = ["dev"]
-files = [
-    {file = "pyproject_hooks-1.1.0-py3-none-any.whl", hash = "sha256:7ceeefe9aec63a1064c18d939bdc3adf2d8aa1988a510afec15151578b232aa2"},
-    {file = "pyproject_hooks-1.1.0.tar.gz", hash = "sha256:4b37730834edbd6bd37f26ece6b44802fb1c1ee2ece0e54ddff8bfc06db86965"},
 ]
 
 [[package]]
@@ -486,22 +377,6 @@ files = [
 ]
 
 [[package]]
-name = "tree-sitter-wgsl-bevy"
-version = "0.1.3"
-requires_python = ">=3.8"
-summary = "WgslBevy grammar for tree-sitter"
-groups = ["default"]
-files = [
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-macosx_10_9_x86_64.whl", hash = "sha256:d6d9a22ffa18f5f9ff41e3a69ee3ff00192b7f65e6e2b964542a68d9f518050b"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:e7fd11de3080ffd0e295618045318eca731d90f0f666f15887ea04446abc2a8b"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:be13aaf41577eb79f965bde1e5fcc2afe8ee170ef9ef3eb7e31b5df8361a180a"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:645bfbce34110f166360cf14e51f5121ee119512511fc8c3e4c5ed38b8601a3a"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:1fdd00d9bc9eff181b29ec3e190163ac214178addefbf6851fd45b6c3da79040"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:692aab423c341efb5410acc9436d6f9f8a4de46a1a58bfe20ddf4ad9063a174e"},
-    {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-win_amd64.whl", hash = "sha256:cccbdf8ee09e21d8b1bb130880b8c129d7ad224f078e7c6c8f5b3659974154ed"},
-]
-
-[[package]]
 name = "tree-sitter-yaml"
 version = "0.6.0"
 requires_python = ">=3.8"
@@ -553,16 +428,4 @@ groups = ["dev"]
 files = [
     {file = "wheel-0.43.0-py3-none-any.whl", hash = "sha256:55c570405f142630c6b9f72fe09d9b67cf1477fcf543ae5b8dcb1f5b7377da81"},
     {file = "wheel-0.43.0.tar.gz", hash = "sha256:465ef92c69fa5c5da2d1cf8ac40559a8c940886afcef87dcf14b9470862f1d85"},
-]
-
-[[package]]
-name = "zipp"
-version = "3.19.2"
-requires_python = ">=3.8"
-summary = "Backport of pathlib-compatible object wrapper for zip files"
-groups = ["dev"]
-marker = "python_full_version < \"3.10.2\""
-files = [
-    {file = "zipp-3.19.2-py3-none-any.whl", hash = "sha256:f091755f667055f2d02b32c53771a7a6c8b47e1fdbc4b72a8b9072b3eef8015c"},
-    {file = "zipp-3.19.2.tar.gz", hash = "sha256:bf1dcf6450f873a13e952a29504887c89e6de7506209e5b1bcc3460135d4de19"},
 ]

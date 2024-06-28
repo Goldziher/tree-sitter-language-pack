@@ -4,10 +4,9 @@ from typing import Callable, Literal, Union, cast
 from tree_sitter import Language, Parser
 from tree_sitter_c_sharp import language as c_sharp_language
 from tree_sitter_embedded_template import language as embedded_template_language
-from tree_sitter_wgsl_bevy import language as wgsl_bevy_language
 from tree_sitter_yaml import language as yaml_language
 
-InstalledBindings = Literal["csharp", "embeddedtemplate", "wgslbevy", "yaml"]
+InstalledBindings = Literal["csharp", "embeddedtemplate", "yaml"]
 SupportedLanguage = Union[
     Literal[
         "agda",
@@ -107,7 +106,7 @@ SupportedLanguage = Union[
         "verilog",
         "vim",
         "vue",
-        "xcompose",
+        "wgsl" "xcompose",
         "xml",
         "yuck",
     ],
@@ -117,7 +116,6 @@ SupportedLanguage = Union[
 installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
     "csharp": c_sharp_language,
     "embeddedtemplate": embedded_template_language,
-    "wgslbevy": wgsl_bevy_language,
     "yaml": yaml_language,
 }
 
