@@ -23,24 +23,16 @@ dependencies = [
 ]
 requires-python = ">=3.9.0"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
 
 [project.urls]
 homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
-
-[build-system]
-requires = ["setuptools", "wheel", "cython"]
-build-backend = "setuptools.build_meta"
-
-[tool.pdm]
-distribution = false
 
 [tool.pdm.dev-dependencies]
 dev = [
     "mypy>=1.10.1",
     "ruff>=0.4.10",
     "pytest>=8.2.2",
-    "cython>=3.0.10",
     "setuptools>=70.1.1",
     "wheel>=0.43.0",
     "inflection>=0.5.1",

@@ -138,7 +138,8 @@ class BdistWheel(bdist_wheel):  # type: ignore[misc]
 
 
 setup(
-    packages=find_packages(),  # Use find_packages to automatically discover all packages
+    name="tree-sitter-language-pack",
+    packages=find_packages(),
     package_data={"tree_sitter_language_pack": ["py.typed"]},
     ext_modules=extensions,
     include_package_data=True,
@@ -146,4 +147,6 @@ setup(
         "build_ext": BuildExt,
         "bdist_wheel": BdistWheel,
     },
+    long_description=(Path(__file__).parent / "README.md").read_text(),
+    long_description_content_type="text/markdown",
 )

@@ -44,4 +44,4 @@ jobs:
     - name: Build Bindings
       run: pdm run setup.py build_ext --inplace
     - name: Run Tests
-      run: pdm run test
+      run: pdm run pytest ./tests
