@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:680298557a68b96c4a3d1f28e06b8a8c415addc68229ffbbf700f39c64d13122"
+content_hash = "sha256:d01b8352e07e1ff158a26f21ea5bb30a8bb354bd34c39a6eaacea79c51cb1eae"
 
 [[package]]
 name = "cfgv"
@@ -401,6 +401,22 @@ files = [
     {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:1fdd00d9bc9eff181b29ec3e190163ac214178addefbf6851fd45b6c3da79040"},
     {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:692aab423c341efb5410acc9436d6f9f8a4de46a1a58bfe20ddf4ad9063a174e"},
     {file = "tree_sitter_wgsl_bevy-0.1.3-cp38-abi3-win_amd64.whl", hash = "sha256:cccbdf8ee09e21d8b1bb130880b8c129d7ad224f078e7c6c8f5b3659974154ed"},
+]
+
+[[package]]
+name = "tree-sitter-yaml"
+version = "0.6.0"
+requires_python = ">=3.8"
+summary = "YAML grammar for tree-sitter"
+groups = ["default"]
+files = [
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-macosx_10_9_x86_64.whl", hash = "sha256:62d53ef380d6f0ae731818be4e236d3006abede6331d1b727fe6a5476601cff9"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:7e7ccc5666336dabf3bfbffd6333c3df7ab8c8b6564fd550fe443d4a09609f57"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b0b5c0a4db1834e8066fe011f6a9e9a7dbd03eb70321a59c74b079dd6ca8389e"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:41ea2cc2857982c4e2102032fadf186d9c8d5b53706f5963c5470234eac39fc4"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-musllinux_1_1_aarch64.whl", hash = "sha256:c07c297e515af4c11912d32ad8115261c1999570f6cee0af96850ed9daacda6d"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:f20b99ee3b11c7307d80698ac71a3c9b1284760cd205d6575e796e0285a172a7"},
+    {file = "tree_sitter_yaml-0.6.0-cp38-abi3-win_amd64.whl", hash = "sha256:5cd6a603303c3c3a8f1e79245d202fb1156baff48000c7a01de085767eba9253"},
 ]
 
 [[package]]

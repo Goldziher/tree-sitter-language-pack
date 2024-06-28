@@ -312,9 +312,6 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-xcompose"
   },
   {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-yaml"
-  },
-  {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-yuck"
   }
 ]
