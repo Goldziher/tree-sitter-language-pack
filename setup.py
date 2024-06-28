@@ -34,8 +34,6 @@ language_names = [
 ]
 # Create a dictionary of language definitions mapped to the language names
 language_definitions = dict(zip(language_names, language_definition_list))
-# Common C source file for all language extensions
-common_source = (Path(__file__).parent / "./tree_sitter_language_pack/language.c").relative_to(Path(__file__).parent)
 
 
 def create_extension(*, language_name: str) -> Extension:
@@ -49,7 +47,7 @@ def create_extension(*, language_name: str) -> Extension:
     """
     return Extension(
         name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=[str(common_source)],
+        sources=["./language_module.c"],
         include_dirs=[language_name],
         define_macros=[
             ("PY_SSIZE_T_CLEAN", None),

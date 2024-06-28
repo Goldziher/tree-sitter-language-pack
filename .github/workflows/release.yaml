@@ -45,15 +45,17 @@ jobs:
         cache: true
         cache-dependency-path: |
           ./pdm.lock
-    - name: Install Dependencies
-      run: pdm install
+    - name: Export requirements
+      run: pdm export --no-hashes > requirements.txt
+    - name: Install cibuildwheel
+      run: python -m pip install cibuildwheel==2.19.1
     - name: Set up QEMU
       if: matrix.os == 'Linux'
       uses: docker/setup-qemu-action@v3
       with:
         platforms: arm64
     - name: Build wheels
-      run: pdm run build_wheel
+      run: python -m cibuildwheel --output-dir dist
       env:
         CIBW_ARCHS_WINDOWS: AMD64
         CIBW_ARCHS_LINUX: x86_64 aarch64

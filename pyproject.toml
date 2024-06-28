@@ -29,6 +29,9 @@ license = {file = "LICENSE"}
 [project.urls]
 homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
 
+[build-system]
+requires = ["setuptools>=70.1.1", "wheel>=0.43.0", "typing-extensions>=4.12.2"]
+
 [tool.pdm]
 distribution = false
 
