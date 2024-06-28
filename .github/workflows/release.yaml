@@ -3,6 +3,9 @@ name: Release
 on:
   release:
     types: [published]
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build-sdist:
@@ -62,21 +65,21 @@ jobs:
         path: dist/*.whl
         name: dist-wheels-${{matrix.os}}
         retention-days: 2
-  publish:
-    name: Publish Python package
-    needs: [build-sdist, build-wheels]
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/tree-sitter-language-pack/
-    steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: dist
-        pattern: dist-*
-        merge-multiple: true
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{secrets.PYPI_API_TOKEN}}
+#  publish:
+#    name: Publish Python package
+#    needs: [build-sdist, build-wheels]
+#    runs-on: ubuntu-latest
+#    environment:
+#      name: pypi
+#      url: https://pypi.org/project/tree-sitter-language-pack/
+#    steps:
+#    - name: Download build artifacts
+#      uses: actions/download-artifact@v4
+#      with:
+#        path: dist
+#        pattern: dist-*
+#        merge-multiple: true
+#    - name: Publish to PyPI
+#      uses: pypa/gh-action-pypi-publish@release/v1
+#      with:
+#        password: ${{secrets.PYPI_API_TOKEN}}
