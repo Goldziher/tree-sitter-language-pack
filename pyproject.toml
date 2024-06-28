@@ -28,6 +28,13 @@ license = "MIT"
 [project.urls]
 homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
 
+[build-system]
+requires = ["setuptools", "wheel", "typing-extensions"]
+build-backend = "setuptools.build_meta"
+
+[tool.pdm]
+distribution = false
+
 [tool.pdm.dev-dependencies]
 dev = [
     "mypy>=1.10.1",
@@ -37,6 +44,7 @@ dev = [
     "wheel>=0.43.0",
     "inflection>=0.5.1",
     "pre-commit>=3.7.1",
+    "typing-extensions>=4.12.2",
 ]
 
 # linters configuration below
