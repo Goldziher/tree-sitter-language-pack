@@ -256,7 +256,9 @@
     "repo": "https://github.com/alex-pinkus/tree-sitter-swift",
     "cmd": [
       "npm",
-      "install"
+      "install",
+      "--prefix",
+      "vendor/swift"
     ]
   },
   {

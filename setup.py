@@ -1,5 +1,5 @@
 from json import loads
-from os import chdir, environ, getcwd
+from os import environ, getcwd
 from pathlib import Path
 from platform import system
 from typing import Any, Optional
@@ -113,9 +113,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
             )
         # Run the command to build the language if provided
         if cmd := language_definition.get("cmd"):
-            chdir(vendor_directory)
             self.spawn(cmd)
-            chdir(cwd)
 
         # Set up vendor sources for building the extension
         vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"
