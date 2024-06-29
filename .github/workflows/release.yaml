@@ -62,7 +62,7 @@ jobs:
         CIBW_ARCHS_WINDOWS: AMD64
         CIBW_ARCHS_LINUX: x86_64 aarch64
         CIBW_ARCHS_MACOS: x86_64 arm64
-        CIBW_TEST_SKIP: '*arm64 *aarch64'
+        CIBW_BEFORE_ALL_LINUX: (curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | sh -s -- -y) && yum install -y nodejs
     - uses: actions/upload-artifact@v4
       with:
         name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
