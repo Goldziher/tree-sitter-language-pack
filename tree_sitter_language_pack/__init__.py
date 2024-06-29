@@ -127,21 +127,21 @@ installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
 }
 
 
-def get_language(name: SupportedLanguage) -> Language:
+def get_language(language_name: SupportedLanguage) -> Language:
     """Get the language with the given name."""
-    if name in installed_bindings_map:
-        return Language(installed_bindings_map[cast(InstalledBindings, name)]())
+    if language_name in installed_bindings_map:
+        return Language(installed_bindings_map[cast(InstalledBindings, language_name)]())
 
     try:
-        module = import_module(name=f".languages.{name}", package=__package__)
+        module = import_module(name=f".bindings.{language_name}", package=__package__)
         return Language(module.language())
     except ModuleNotFoundError as e:
-        raise LookupError(f"Language not found: {name}") from e
+        raise LookupError(f"Language not found: {language_name}") from e
 
 
-def get_parser(name: SupportedLanguage) -> Parser:
+def get_parser(language_name: SupportedLanguage) -> Parser:
     """Get a parser for the given language name."""
-    return Parser(get_language(name))
+    return Parser(get_language(language_name=language_name))
 
 
 __all__ = ["get_language", "get_parser", "SupportedLanguage"]

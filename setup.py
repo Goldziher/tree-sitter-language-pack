@@ -23,7 +23,7 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     """Get the language definitions."""
     # Load language configurations from a JSON file
     language_definition_list: list[LanguageDict] = loads(
-        (Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "src" / "language_definitions.json").read_text()
+        (Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "sources" / "language_definitions.json").read_text()
     )
     # create PascalCase identifiers from the package names
     language_names = [
@@ -50,18 +50,8 @@ def create_extension(*, language_name: str) -> Extension:
     Returns:
         Extension: The extension for the language.
     """
-    # Get the C source file for the language
-    # This path must be a relative path, otherwise distutils will through an error
-    return Extension(
-        name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=[],
-        include_dirs=[language_name],
-        define_macros=[
-            ("PY_SSIZE_T_CLEAN", None),
-            ("TREE_SITTER_HIDE_SYMBOLS", None),
-            ("TS_LANGUAGE_NAME", language_name),
-        ],
-        extra_compile_args=[
+    compile_args = (
+        [
             "-std=c11",
             "-fvisibility=hidden",
             "-Wno-cast-function-type",
@@ -72,9 +62,19 @@ def create_extension(*, language_name: str) -> Extension:
         else [
             "/std:c11",
             "/wd4244",
-        ],
+        ]
+    )
+
+    return Extension(
+        name=f"tree_sitter_language_pack.bindings.{language_name}",
         py_limited_api=True,
-        optional=True,
+        define_macros=[
+            ("PY_SSIZE_T_CLEAN", None),
+            ("TREE_SITTER_HIDE_SYMBOLS", None),
+            ("TS_LANGUAGE_NAME", language_name),
+        ],
+        extra_compile_args=compile_args,
+        sources=[],
     )
 
 
@@ -89,18 +89,17 @@ class BuildExt(build_ext):  # type: ignore[misc]
 
     def build_extension(self, ext: Extension) -> None:
         """Build the extension."""
-        extension_dir_name = ext.include_dirs.pop()
-        language_name = ext.name.split(".")[-1]
-        language_definition = language_definitions[language_name]
+        extension_name = ext.name.split(".")[-1]
+        language_definition = language_definitions[extension_name]
         cwd = Path(getcwd())
 
         # Add the language extension source file
-        language_extension = (cwd / "src" / "language_extension.c").resolve()
+        language_extension = (cwd / "sources" / "language_extension.c").resolve()
         if not language_extension.is_file():
             raise FileNotFoundError(f"Language extension file not found: {language_extension}")
-        ext.sources = [str(language_extension)]
+        ext.sources = [str(language_extension.relative_to(cwd))]
 
-        vendor_directory = cwd / "vendor" / extension_dir_name
+        vendor_directory = cwd / "vendor" / extension_name
 
         # Clone the or pull the repository
         if vendor_directory.is_dir():
@@ -118,7 +117,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
         # Set up vendor sources for building the extension
         vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"
         ext.include_dirs = [str(vendor_src_dir)]
-        ext.sources.extend(list(map(str, vendor_src_dir.glob("*.c"))))
+        ext.sources.extend([str(src_file_path.relative_to(cwd)) for src_file_path in vendor_src_dir.glob("*.c")])
 
         super().build_extension(ext)
 
@@ -174,12 +173,13 @@ class BdistWheel(bdist_wheel):  # type: ignore[misc]
 
 
 setup(
-    packages=find_packages(),
-    package_data={"tree_sitter_language_pack": ["py.typed"]},
+    packages=find_packages(include=["tree_sitter_language_pack", "tree_sitter_language_pack.bindings"]),
+    package_data={"tree_sitter_language_pack": ["py.typed"], "tree_sitter_language_pack.bindings": ["*.so"]},
     ext_modules=extensions,
     include_package_data=True,
     cmdclass={
         "build_ext": BuildExt,
         "bdist_wheel": BdistWheel,
     },
+    options={"build_ext": {"inplace": True}},
 )

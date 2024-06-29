@@ -10,7 +10,7 @@ from tree_sitter_language_pack import SupportedLanguage, get_language, get_parse
 
 language_definition_list = cast(
     list[dict[str, str]],
-    loads((Path(__file__).parent.parent.resolve() / "src" / "language_definitions.json").read_text()),
+    loads((Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json").read_text()),
 )
 language_names = [
     language_definition.get("directory", language_definition["repo"])

@@ -173,7 +173,7 @@ This library is open to and welcomes contributions.
 
 #### Adding a Binary Wheel Language
 
-1. Add the language to the [src/language_definitions.json](src/language_definitions.json) file
+1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
    at the repository's root.
 
 This file contains a JSON array of objects that adheres to the following json schema:
