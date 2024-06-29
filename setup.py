@@ -19,12 +19,15 @@ class LanguageDict(TypedDict):
     cmd: NotRequired[list[str]]
 
 
+def get_project_root() -> Path:
+    """Get the project root directory."""
+    return Path(environ.get("PROJECT_ROOT", getcwd()))
+
+
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     """Get the language definitions."""
-    project_root = Path(environ.get("PROJECT_ROOT", getcwd()))
-
     # Load language configurations from a JSON file
-    language_definition_list: list[LanguageDict] = loads((project_root / "language_definitions.json").read_text())
+    language_definition_list: list[LanguageDict] = loads((get_project_root() / "language_definitions.json").read_text())
     # create PascalCase identifiers from the package names
     language_names = [
         language_definition.get("directory", language_definition["repo"])
@@ -50,9 +53,16 @@ def create_extension(*, language_name: str) -> Extension:
     Returns:
         Extension: The extension for the language.
     """
+    # Get the C source file for the language
+    # This path must be a relative path, otherwise distutils will through an error
+    if system() == "Windows":
+        c_source = str(get_project_root() / "language_extension.c")
+    else:
+        c_source = str(get_project_root().relative_to(getcwd()) / "language_extension.c")
+
     return Extension(
         name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=["language_extension.c"],
+        sources=[c_source],
         include_dirs=[language_name],
         define_macros=[
             ("PY_SSIZE_T_CLEAN", None),
