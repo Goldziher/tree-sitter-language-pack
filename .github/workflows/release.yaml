@@ -31,34 +31,42 @@ jobs:
       with:
         name: dist-sources
         path: dist/*.tar.gz
-        retention-days: 2
   build-wheels:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-13, macos-14, windows-latest]
-        python_version: ['3.12']
     name: Build wheel on ${{matrix.os}}
     runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
     - uses: pdm-project/setup-pdm@v4
       with:
-        python-version: ${{matrix.python_version}}
+        python-version: '3.9'
         cache: true
         cache-dependency-path: |
           ./pdm.lock
+    - name: Generate requirements.txt
+      run: pdm export --no-hashes > requirements.txt
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
-    - name: Build wheels
-      run: pdm build --no-sdist -v
-      env:
-        PROJECT_ROOT: ${{env.PROJECT_ROOT}}
-    - name: Upload wheel artifacts
-      uses: actions/upload-artifact@v4
+    - name: Set up QEMU
+      if: runner.os == 'Linux'
+      uses: docker/setup-qemu-action@v3
       with:
-        path: dist/*.whl
-        name: dist-wheels-${{matrix.python_version}}-${{matrix.os}}
-        retention-days: 2
+        platforms: all
+    - name: Build wheels
+      uses: pypa/cibuildwheel@v2.19.1
+      with:
+        output-dir: dist
+      env:
+        CIBW_ARCHS_WINDOWS: AMD64
+        CIBW_ARCHS_LINUX: x86_64 aarch64
+        CIBW_ARCHS_MACOS: x86_64 arm64
+        CIBW_TEST_SKIP: '*arm64 *aarch64'
+    - uses: actions/upload-artifact@v4
+      with:
+        name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+        path: ./dist/*.whl
 #  build-wheels:
 #    strategy:
 #      matrix:
