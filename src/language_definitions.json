@@ -337,5 +337,11 @@
   },
   {
     "repo": "https://github.com/acristoffers/tree-sitter-matlab"
+  },
+  {
+    "repo": "https://github.com/airbus-cert/tree-sitter-powershell"
+  },
+  {
+    "repo": "https://github.com/r-lib/tree-sitter-r"
   }
 ]

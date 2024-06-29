@@ -12,7 +12,8 @@ Notes:
   this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
 - This package is MIT licensed and the original package of which this is a fork has an Apache 2.0 License. Both licenses
   are available in the LICENSE file.
-- All languages bundled by this package are licensed under permissive open-source licenses (MIT or Apache 2.0)
+- All languages bundled by this package are licensed under permissive open-source licenses (MIT or Apache 2.0) - no GPL
+  licensed languages are included.
 
 ## Installation
 
@@ -96,8 +97,8 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [luau](https://github.com/tree-sitter-grammars/tree-sitter-luau) - MIT License
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
-- [meson](https://github.com/tree-sitter-grammars/tree-sitter-meson) - MIT License
 - [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License
+- [meson](https://github.com/tree-sitter-grammars/tree-sitter-meson) - MIT License
 - [nix](https://github.com/nix-community/tree-sitter-nix) - MIT License
 - [nqc](https://github.com/tree-sitter-grammars/tree-sitter-nqc) - MIT License
 - [objc](https://github.com/tree-sitter-grammars/tree-sitter-objc) - MIT License
@@ -107,6 +108,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [php](https://github.com/tree-sitter/tree-sitter-php) - MIT License
 - [po](https://github.com/tree-sitter-grammars/tree-sitter-po) - MIT License
 - [pony](https://github.com/tree-sitter-grammars/tree-sitter-pony) - MIT License
+- [powershell](https://github.com/airbus-cert/tree-sitter-powershell) - MIT License
 - [printf](https://github.com/tree-sitter-grammars/tree-sitter-printf) - ISC License
 - [properties](https://github.com/tree-sitter-grammars/tree-sitter-properties) - MIT License
 - [puppet](https://github.com/tree-sitter-grammars/tree-sitter-puppet) - MIT License
@@ -116,6 +118,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [ql](https://github.com/tree-sitter/tree-sitter-ql) - MIT License
 - [qmldir](https://github.com/tree-sitter-grammars/tree-sitter-qmldir) - MIT License
 - [query](https://github.com/tree-sitter-grammars/tree-sitter-query) - Apache License 2.0
+- [r](https://github.com/r-lib/tree-sitter-r) - MIT License
 - [rbs](https://github.com/joker1007/tree-sitter-rbs) - MIT License
 - [re2c](https://github.com/tree-sitter-grammars/tree-sitter-re2c) - MIT License
 - [readline](https://github.com/tree-sitter-grammars/tree-sitter-readline) - MIT License
@@ -143,6 +146,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [udev](https://github.com/tree-sitter-grammars/tree-sitter-udev) - MIT License
 - [ungrammar](https://github.com/tree-sitter-grammars/tree-sitter-ungrammar) - MIT License
 - [uxntal](https://github.com/tree-sitter-grammars/tree-sitter-uxntal) - MIT License
+- [v](https://github.com/nedpals/tree-sitter-v) - MIT License
 - [verilog](https://github.com/tree-sitter/tree-sitter-verilog) - MIT License
 - [vim](https://github.com/tree-sitter-grammars/tree-sitter-vim) - MIT License
 - [vue](https://github.com/tree-sitter-grammars/tree-sitter-vue) - MIT License
@@ -151,7 +155,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [xml](https://github.com/tree-sitter-grammars/tree-sitter-xml) - MIT License
 - [yaml](https://github.com/tree-sitter-grammars/tree-sitter-yaml) - MIT License
 - [yuck](https://github.com/tree-sitter-grammars/tree-sitter-yuck) - MIT License
-- [v](https://github.com/nedpals/tree-sitter-v) - MIT License
 
 ## Contributing
 
