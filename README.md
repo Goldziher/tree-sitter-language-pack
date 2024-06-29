@@ -105,6 +105,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [ocaml](https://github.com/tree-sitter/tree-sitter-ocaml) - MIT License
 - [odin](https://github.com/tree-sitter-grammars/tree-sitter-odin) - MIT License
 - [pem](https://github.com/tree-sitter-grammars/tree-sitter-pem) - MIT License
+- [perl](https://github.com/tree-sitter-perl/tree-sitter-perl) - Artistic License 2.0
 - [php](https://github.com/tree-sitter/tree-sitter-php) - MIT License
 - [po](https://github.com/tree-sitter-grammars/tree-sitter-po) - MIT License
 - [pony](https://github.com/tree-sitter-grammars/tree-sitter-pony) - MIT License
@@ -219,10 +220,10 @@ That is, each object must have a `repo` key, and optionally a `branch`, `directo
   concatenated, e.g. `["npm", "install"]`. This should be specified only if the binding needs to be build in the
   repository.
 
-2. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
-3. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
-4. If the build is successful, execute the tests with `pdm run test`
-5. If the tests pass, commit your changes and open a pull request.
+1. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
+2. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
+3. If the build is successful, execute the tests with `pdm run test`
+4. If the tests pass, commit your changes and open a pull request.
 
 #### Adding an installed binding
 Some bindings are not build from source but are rather installed via PDM and are added to the package dependencies in the [pyproject.toml](./pyproject.toml) file.

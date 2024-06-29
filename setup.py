@@ -1,5 +1,5 @@
 from json import loads
-from os import environ, getcwd
+from os import chdir, environ, getcwd
 from pathlib import Path
 from platform import system
 from typing import Any, Optional
@@ -16,7 +16,7 @@ class LanguageDict(TypedDict):
     repo: str
     branch: NotRequired[str]
     directory: NotRequired[str]
-    cmd: NotRequired[list[str]]
+    npm_install: NotRequired[bool]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -111,8 +111,15 @@ class BuildExt(build_ext):  # type: ignore[misc]
                 directory=str(vendor_directory.relative_to(cwd)),
             )
         # Run the command to build the language if provided
-        if cmd := language_definition.get("cmd"):
-            self.spawn(cmd)
+        if language_definition.get("npm_install"):
+            chdir(vendor_directory)
+            self.spawn(
+                [
+                    "npm",
+                    "install",
+                ]
+            )
+            chdir(cwd)
 
         # Set up vendor sources for building the extension
         vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"
@@ -130,7 +137,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
         Returns:
             None
         """
-        self.spawn(["git", "-C", directory, "pull", "-q", "--depth=1"])
+        self.spawn(["git", "-C", directory, "pull", "--depth=1"])
 
     def clone_repo(self, repo: str, branch: Optional[str], directory: str) -> None:
         """Clone a repository.
@@ -146,7 +153,6 @@ class BuildExt(build_ext):  # type: ignore[misc]
         clone_cmd = [
             "git",
             "clone",
-            "-q",
             "--depth=1",
         ]
         if branch:

@@ -134,8 +134,3 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
-
-[tool.cibuildwheel]
-test-requires = "pytest"
-test-command = "pytest {project}/tests"
-archs = ["auto"]

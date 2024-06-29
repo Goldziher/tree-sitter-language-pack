@@ -20,8 +20,8 @@ jobs:
         cache: true
         cache-dependency-path: |
           ./pdm.lock
-    - name: Install Dependencies
-      run: pdm install --no-default -q
+    - name: Install and build extensions
+      run: pdm install
     - name: Build source dist
       run: pdm build --no-wheel -v
       env:
@@ -39,34 +39,23 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
         cache: true
         cache-dependency-path: |
           ./pdm.lock
-    - name: Generate requirements.txt
-      run: pdm export --no-hashes > requirements.txt
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
-    - name: Set up QEMU
-      if: runner.os == 'Linux'
-      uses: docker/setup-qemu-action@v3
-      with:
-        platforms: all
+    - name: Install and build extensions
+      run: pdm install -v
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.19.1
-      with:
-        output-dir: dist
-      env:
-        CIBW_ARCHS_WINDOWS: AMD64
-        CIBW_ARCHS_LINUX: x86_64 aarch64
-        CIBW_ARCHS_MACOS: x86_64 arm64
-        CIBW_BEFORE_ALL_LINUX: (curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh | sh -s -- -y) && yum install -y nodejs
+      run: pdm build --no-sdist -v
     - uses: actions/upload-artifact@v4
       with:
-        name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
-        path: ./dist/*.whl
+        name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
+        path: dist/*.whl
 #  build-wheels:
 #    strategy:
 #      matrix:

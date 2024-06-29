@@ -254,12 +254,7 @@
   },
   {
     "repo": "https://github.com/alex-pinkus/tree-sitter-swift",
-    "cmd": [
-      "npm",
-      "install",
-      "--prefix",
-      "vendor/swift"
-    ]
+    "npm_install": true
   },
   {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
@@ -343,5 +338,10 @@
   },
   {
     "repo": "https://github.com/r-lib/tree-sitter-r"
+  },
+  {
+    "repo": "https://github.com/tree-sitter-perl/tree-sitter-perl",
+    "branch": "master",
+    "npm_install": true
   }
 ]
