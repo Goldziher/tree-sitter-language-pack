@@ -2,7 +2,7 @@ from json import loads
 from os import chdir, environ, getcwd
 from pathlib import Path
 from platform import system
-from typing import Any
+from typing import Any, Optional
 
 from setuptools import Extension, find_packages, setup  # type: ignore[import-untyped]
 from setuptools.command.build_ext import build_ext  # type: ignore[import-untyped]
@@ -97,38 +97,63 @@ class BuildExt(build_ext):  # type: ignore[misc]
 
         # Clone or pull the language repository
         if directory.is_dir():
-            self.spawn(["git", "-C", str(relative_path), "pull", "-q", "--depth=1"])
+            self.update_repo(directory=str(relative_path))
         else:
-            clone_cmd = [
-                "git",
-                "clone",
-                "-q",
-                "--depth=1",
-            ]
-            if branch := language_definition.get("branch"):
-                clone_cmd.append(f"--branch={branch}")
-
-            self.spawn(
-                [
-                    *clone_cmd,
-                    language_definition["repo"],
-                    str(relative_path),
-                ]
+            self.clone_repo(
+                repo=language_definition["repo"], branch=language_definition.get("branch"), directory=str(relative_path)
             )
 
+        # Run the command to build the language if provided
         if cmd := language_definition.get("cmd"):
             chdir(directory)
             self.spawn(cmd)
             chdir(cwd)
 
         # Set up paths for building the extension
-        path = directory / language_definition.get("directory", "")
-        src = path / "src"
-
-        ext.sources.extend(list(map(str, src.glob("*.c"))))
-        ext.include_dirs = [str(src)]
+        source_dir = directory / language_definition.get("directory", "") / "src"
+        ext.sources.extend([str(src_file) for src_file in source_dir.glob("*.c")])
+        ext.include_dirs = [str(source_dir)]
 
         super().build_extension(ext)
+
+    def update_repo(self, directory: str) -> None:
+        """Update a repository.
+
+        Args:
+            directory (str): The directory of the repository to update.
+
+        Returns:
+            None
+        """
+        self.spawn(["git", "-C", directory, "pull", "-q", "--depth=1"])
+
+    def clone_repo(self, repo: str, branch: Optional[str], directory: str) -> None:
+        """Clone a repository.
+
+        Args:
+            repo (str): The repository URL.
+            branch (Optional[str]): The branch to clone.
+            directory (str): The directory to clone the repository to.
+
+        Returns:
+            None
+        """
+        clone_cmd = [
+            "git",
+            "clone",
+            "-q",
+            "--depth=1",
+        ]
+        if branch:
+            clone_cmd.append(f"--branch={branch}")
+
+        self.spawn(
+            [
+                *clone_cmd,
+                repo,
+                directory,
+            ]
+        )
 
 
 class BdistWheel(bdist_wheel):  # type: ignore[misc]

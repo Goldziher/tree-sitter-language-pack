@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: pdm-project/setup-pdm@v4
       with:
-        python-version: 3.12
+        python-version: '3.9'
         cache: true
         cache-dependency-path: |
           ./pdm.lock
@@ -32,36 +32,58 @@ jobs:
         name: dist-sources
         path: dist/*.tar.gz
         retention-days: 2
-
   build-wheels:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+        python_version: ['3.9', '3.10', '3.11', '3.12']
     name: Build wheel on ${{matrix.os}}
     runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
     - uses: pdm-project/setup-pdm@v4
       with:
-        python-version: 3.12
+        python-version: ${{matrix.python_version}}
         cache: true
         cache-dependency-path: |
           ./pdm.lock
-    - name: Export requirements
-      run: pdm export --no-hashes > requirements.txt
-    - name: Set up QEMU
-      if: matrix.os == 'Linux'
-      uses: docker/setup-qemu-action@v3
-      with:
-        platforms: all
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.19.1
+      run: pdm build --no-sdist
     - name: Upload wheel artifacts
       uses: actions/upload-artifact@v4
       with:
         path: dist/*.whl
-        name: dist-wheels-${{matrix.os}}
+        name: dist-wheels-${{matrix.python_version}}-${{matrix.os}}
         retention-days: 2
+#  build-wheels:
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
+#    name: Build wheel on ${{matrix.os}}
+#    runs-on: ${{matrix.os}}
+#    steps:
+#    - uses: actions/checkout@v4
+#    - uses: pdm-project/setup-pdm@v4
+#      with:
+#        python-version: 3.12
+#        cache: true
+#        cache-dependency-path: |
+#          ./pdm.lock
+#    - name: Export requirements
+#      run: pdm export --no-hashes > requirements.txt
+#    - name: Set up QEMU
+#      if: matrix.os == 'Linux'
+#      uses: docker/setup-qemu-action@v3
+#      with:
+#        platforms: all
+#    - name: Build wheels
+#      uses: pypa/cibuildwheel@v2.19.1
+#    - name: Upload wheel artifacts
+#      uses: actions/upload-artifact@v4
+#      with:
+#        path: dist/*.whl
+#        name: dist-wheels-${{matrix.os}}
+#        retention-days: 2
 #  publish:
 #    name: Publish Python package
 #    needs: [build-sdist, build-wheels]
