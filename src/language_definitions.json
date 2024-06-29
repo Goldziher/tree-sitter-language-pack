@@ -254,7 +254,10 @@
   },
   {
     "repo": "https://github.com/alex-pinkus/tree-sitter-swift",
-    "cmd": ["npm", "install"]
+    "cmd": [
+      "npm",
+      "install"
+    ]
   },
   {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-svelte"
@@ -317,5 +320,20 @@
   {
     "repo": "https://github.com/szebniok/tree-sitter-wgsl",
     "branch": "master"
+  },
+  {
+    "repo": "https://github.com/tree-sitter/tree-sitter-python",
+    "branch": "master"
+  },
+  {
+    "repo": "https://github.com/UserNobody14/tree-sitter-dart",
+    "branch": "master"
+  },
+  {
+    "repo": "https://github.com/nedpals/tree-sitter-v",
+    "branch": "master"
+  },
+  {
+    "repo": "https://github.com/acristoffers/tree-sitter-matlab"
   }
 ]

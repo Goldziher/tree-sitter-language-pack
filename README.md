@@ -35,6 +35,8 @@ See the list of available languages below to get the name of the language you wa
 
 ## Available Languages:
 
+Each language below is identified by the key used to retrieve it from the `get_language` and `get_parser` functions.
+
 - [agda](https://github.com/tree-sitter/tree-sitter-agda) - MIT License
 - [arduino](https://github.com/tree-sitter-grammars/tree-sitter-arduino) - MIT License
 - [bash](https://github.com/tree-sitter/tree-sitter-bash) - MIT License
@@ -52,6 +54,7 @@ See the list of available languages below to get the name of the language you wa
 - [css](https://github.com/tree-sitter/tree-sitter-css) - MIT License
 - [csv](https://github.com/tree-sitter-grammars/tree-sitter-csv) - MIT License
 - [cuda](https://github.com/tree-sitter-grammars/tree-sitter-cuda) - MIT License
+- [dart](https://github.com/UserNobody14/tree-sitter-dart) - MIT License
 - [dot](https://github.com/rydesun/tree-sitter-dot) - MIT License
 - [doxygen](https://github.com/tree-sitter-grammars/tree-sitter-doxygen) - MIT License
 - [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
@@ -76,6 +79,7 @@ See the list of available languages below to get the name of the language you wa
 - [hlsl](https://github.com/tree-sitter-grammars/tree-sitter-hlsl) - MIT License
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
 - [hyperlang](https://github.com/tree-sitter-grammars/tree-sitter-hyperlang) - MIT License
+- [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
 - [java](https://github.com/tree-sitter/tree-sitter-java) - MIT License
 - [javascript](https://github.com/tree-sitter/tree-sitter-javascript) - MIT License
@@ -93,6 +97,7 @@ See the list of available languages below to get the name of the language you wa
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
 - [meson](https://github.com/tree-sitter-grammars/tree-sitter-meson) - MIT License
+- [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License
 - [nix](https://github.com/nix-community/tree-sitter-nix) - MIT License
 - [nqc](https://github.com/tree-sitter-grammars/tree-sitter-nqc) - MIT License
 - [objc](https://github.com/tree-sitter-grammars/tree-sitter-objc) - MIT License
@@ -106,6 +111,7 @@ See the list of available languages below to get the name of the language you wa
 - [properties](https://github.com/tree-sitter-grammars/tree-sitter-properties) - MIT License
 - [puppet](https://github.com/tree-sitter-grammars/tree-sitter-puppet) - MIT License
 - [pymanifest](https://github.com/tree-sitter-grammars/tree-sitter-pymanifest) - MIT License
+- [python](https://github.com/tree-sitter/tree-sitter-python) - MIT License
 - [python](https://github.com/tree-sitter/tree-sitter-python) - MIT License
 - [ql](https://github.com/tree-sitter/tree-sitter-ql) - MIT License
 - [qmldir](https://github.com/tree-sitter-grammars/tree-sitter-qmldir) - MIT License
@@ -143,10 +149,9 @@ See the list of available languages below to get the name of the language you wa
 - [wgsl](https://github.com/szebniok/tree-sitter-wgsl) - MIT License
 - [xcompose](https://github.com/tree-sitter-grammars/tree-sitter-xcompose) - MIT License
 - [xml](https://github.com/tree-sitter-grammars/tree-sitter-xml) - MIT License
-- [yaml](https://github.com/ikatyang/tree-sitter-yaml) - MIT License
 - [yaml](https://github.com/tree-sitter-grammars/tree-sitter-yaml) - MIT License
 - [yuck](https://github.com/tree-sitter-grammars/tree-sitter-yuck) - MIT License
-- [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
+- [v](https://github.com/nedpals/tree-sitter-v) - MIT License
 
 ## Contributing
 
@@ -165,7 +170,7 @@ This library is open to and welcomes contributions.
 
 #### Adding a Binary Wheel Language
 
-1. Add the language to the [language_definitions.json](language_definitions.json) file
+1. Add the language to the [src/language_definitions.json](src/language_definitions.json) file
    at the repository's root.
 
 This file contains a JSON array of objects that adheres to the following json schema:

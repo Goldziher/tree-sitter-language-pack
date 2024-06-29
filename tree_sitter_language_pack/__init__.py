@@ -75,6 +75,7 @@ SupportedLanguage = Union[
         "properties",
         "puppet",
         "pymanifest",
+        "python",
         "qmldir",
         "qmljs",
         "query",

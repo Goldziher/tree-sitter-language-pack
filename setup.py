@@ -19,15 +19,12 @@ class LanguageDict(TypedDict):
     cmd: NotRequired[list[str]]
 
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    return Path(environ.get("PROJECT_ROOT", getcwd()))
-
-
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     """Get the language definitions."""
     # Load language configurations from a JSON file
-    language_definition_list: list[LanguageDict] = loads((get_project_root() / "language_definitions.json").read_text())
+    language_definition_list: list[LanguageDict] = loads(
+        (Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "src" / "language_definitions.json").read_text()
+    )
     # create PascalCase identifiers from the package names
     language_names = [
         language_definition.get("directory", language_definition["repo"])
@@ -55,14 +52,9 @@ def create_extension(*, language_name: str) -> Extension:
     """
     # Get the C source file for the language
     # This path must be a relative path, otherwise distutils will through an error
-    if system() == "Windows":
-        c_source = str(get_project_root() / "language_extension.c")
-    else:
-        c_source = str(get_project_root().relative_to(getcwd()) / "language_extension.c")
-
     return Extension(
         name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=[c_source],
+        sources=[],
         include_dirs=[language_name],
         define_macros=[
             ("PY_SSIZE_T_CLEAN", None),
@@ -102,27 +94,33 @@ class BuildExt(build_ext):  # type: ignore[misc]
         language_definition = language_definitions[language_name]
         cwd = Path(getcwd())
 
-        directory = cwd / "vendor" / extension_dir_name
-        relative_path = directory.relative_to(cwd)
+        # Add the language extension source file
+        language_extension = (cwd / "src" / "language_extension.c").resolve()
+        if not language_extension.is_file():
+            raise FileNotFoundError(f"Language extension file not found: {language_extension}")
+        ext.sources = [str(language_extension)]
 
-        # Clone or pull the language repository
-        if directory.is_dir():
-            self.update_repo(directory=str(relative_path))
+        vendor_directory = cwd / "vendor" / extension_dir_name
+
+        # Clone the or pull the repository
+        if vendor_directory.is_dir():
+            self.update_repo(directory=str(vendor_directory.relative_to(cwd)))
         else:
             self.clone_repo(
-                repo=language_definition["repo"], branch=language_definition.get("branch"), directory=str(relative_path)
+                repo=language_definition["repo"],
+                branch=language_definition.get("branch"),
+                directory=str(vendor_directory.relative_to(cwd)),
             )
-
         # Run the command to build the language if provided
         if cmd := language_definition.get("cmd"):
-            chdir(directory)
+            chdir(vendor_directory)
             self.spawn(cmd)
             chdir(cwd)
 
-        # Set up paths for building the extension
-        source_dir = directory / language_definition.get("directory", "") / "src"
-        ext.sources.extend([str(src_file) for src_file in source_dir.glob("*.c")])
-        ext.include_dirs = [str(source_dir)]
+        # Set up vendor sources for building the extension
+        vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"
+        ext.include_dirs = [str(vendor_src_dir)]
+        ext.sources.extend(list(map(str, vendor_src_dir.glob("*.c"))))
 
         super().build_extension(ext)
 
