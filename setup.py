@@ -16,28 +16,17 @@ class LanguageDict(TypedDict):
     repo: str
     branch: NotRequired[str]
     directory: NotRequired[str]
-    npm_install: NotRequired[bool]
+    generate: NotRequired[bool]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     """Get the language definitions."""
     # Load language configurations from a JSON file
-    language_definition_list: list[LanguageDict] = loads(
+    language_definitions: dict[str, LanguageDict] = loads(
         (Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "sources" / "language_definitions.json").read_text()
     )
-    # create PascalCase identifiers from the package names
-    language_names = [
-        language_definition.get("directory", language_definition["repo"])
-        .split("/")[-1]
-        .replace("tree-sitter-", "")
-        .replace(
-            "-",
-            "",
-        )
-        for language_definition in language_definition_list
-    ]
-    # Create a dictionary of language definitions mapped to the language names
-    language_definitions = dict(zip(language_names, language_definition_list))
+    # return a list of language names
+    language_names = list(language_definitions.keys())
     return language_definitions, language_names
 
 
@@ -111,15 +100,15 @@ class BuildExt(build_ext):  # type: ignore[misc]
                 directory=str(vendor_directory.relative_to(cwd)),
             )
         # Run the command to build the language if provided
-        if language_definition.get("npm_install"):
-            chdir(vendor_directory)
+        if language_definition.get("generate"):
+            chdir(str(vendor_directory.resolve()))
             self.spawn(
                 [
-                    "npm",
-                    "install",
+                    "tree-sitter",
+                    "generate",
                 ]
             )
-            chdir(cwd)
+            chdir(str(cwd.resolve()))
 
         # Set up vendor sources for building the extension
         vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"

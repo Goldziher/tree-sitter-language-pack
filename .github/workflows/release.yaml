@@ -14,14 +14,21 @@ jobs:
     continue-on-error: true
     steps:
     - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+    - name: Install tree-sitter cli
+      run: npm install -g tree-sitter-cli
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
         cache: true
         cache-dependency-path: |
           ./pdm.lock
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
     - name: Install and build extensions
-      run: pdm install
+      run: pdm install -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
     - name: Build source dist
       run: pdm build --no-wheel -v
       env:
@@ -40,6 +47,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
+    - name: Install tree-sitter cli
+      run: npm install -g tree-sitter-cli
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
@@ -50,8 +59,12 @@ jobs:
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
     - name: Install and build extensions
       run: pdm install -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
     - name: Build wheels
       run: pdm build --no-sdist -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
     - uses: actions/upload-artifact@v4
       with:
         name: wheels-${{ matrix.os }}-${{ strategy.job-index }}

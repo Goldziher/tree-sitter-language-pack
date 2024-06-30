@@ -51,6 +51,10 @@ dev = [
 ]
 
 [tool.pdm.scripts]
+pre_setup_pre_commit = "pre-commit install --hook-type commit-msg"
+setup_pre_commit = "pre-commit install"
+post_setup_pre_commit = "pre-commit install --install-hooks"
+post_install = "pdm run setup_pre_commit"
 test = "pytest ./tests"
 
 # linters configuration below
