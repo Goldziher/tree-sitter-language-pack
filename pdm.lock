@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:59bdd0b0c124fa20fc1203e4f6ce16eb6bfc04ab9259994c29e97cd45daaabfb"
+content_hash = "sha256:fa3a8c8078b444ea324e77ac657ffd73a1fb2ca493be7c778b94fcbea8a914ed"
 
 [[package]]
 name = "cfgv"
@@ -61,6 +61,34 @@ groups = ["dev"]
 files = [
     {file = "filelock-3.15.4-py3-none-any.whl", hash = "sha256:6ca1fffae96225dab4c6eaf1c4f4f28cd2568d3ec2a44e15a08520504de468e7"},
     {file = "filelock-3.15.4.tar.gz", hash = "sha256:2207938cbc1844345cb01a5a95524dae30f0ce089eba5b00378295a17e3e90cb"},
+]
+
+[[package]]
+name = "gitdb"
+version = "4.0.11"
+requires_python = ">=3.7"
+summary = "Git Object Database"
+groups = ["default"]
+dependencies = [
+    "smmap<6,>=3.0.1",
+]
+files = [
+    {file = "gitdb-4.0.11-py3-none-any.whl", hash = "sha256:81a3407ddd2ee8df444cbacea00e2d038e40150acfa3001696fe0dcf1d3adfa4"},
+    {file = "gitdb-4.0.11.tar.gz", hash = "sha256:bf5421126136d6d0af55bc1e7c1af1c397a34f5b7bd79e776cd3e89785c2b04b"},
+]
+
+[[package]]
+name = "gitpython"
+version = "3.1.43"
+requires_python = ">=3.7"
+summary = "GitPython is a Python library used to interact with Git repositories"
+groups = ["default"]
+dependencies = [
+    "gitdb<5,>=4.0.1",
+]
+files = [
+    {file = "GitPython-3.1.43-py3-none-any.whl", hash = "sha256:eec7ec56b92aad751f9912a73404bc02ba212a23adb2c7098ee668417051a1ff"},
+    {file = "GitPython-3.1.43.tar.gz", hash = "sha256:35f314a9f878467f5453cc1fee295c3e18e52f1b99f10f6cf5b1682e968a9e7c"},
 ]
 
 [[package]]
@@ -293,6 +321,17 @@ files = [
 ]
 
 [[package]]
+name = "smmap"
+version = "5.0.1"
+requires_python = ">=3.7"
+summary = "A pure Python implementation of a sliding window memory map manager"
+groups = ["default"]
+files = [
+    {file = "smmap-5.0.1-py3-none-any.whl", hash = "sha256:e6d8668fa5f93e706934a62d7b4db19c8d9eb8cf2adbb75ef1b675aa332b69da"},
+    {file = "smmap-5.0.1.tar.gz", hash = "sha256:dceeb6c0028fdb6734471eb07c0cd2aae706ccaecab45965ee83f11c8d3b1f62"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 requires_python = ">=3.7"
@@ -375,6 +414,16 @@ files = [
     {file = "tree_sitter_embedded_template-0.21.0-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:91cd9b3d6b96f58aea30526af0abd17f6b814ac8a167b1a126898fbd4adcea8a"},
     {file = "tree_sitter_embedded_template-0.21.0-cp38-abi3-win_amd64.whl", hash = "sha256:13ce8750b7a66050c0436ec0a0f574a59e191f67521f10cb983dd488b31f54fc"},
 ]
+
+[[package]]
+name = "tree-sitter-perl"
+version = "0.0.1"
+requires_python = ">=3.8"
+git = "https://github.com/tree-sitter-perl/tree-sitter-perl.git"
+ref = "master"
+revision = "022c1c87e0010676849d7f52991f74fd4fb755bd"
+summary = "Perl grammar for tree-sitter"
+groups = ["default"]
 
 [[package]]
 name = "tree-sitter-yaml"

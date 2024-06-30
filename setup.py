@@ -1,8 +1,7 @@
-from json import loads
-from os import chdir, environ, getcwd
+from os import environ, getcwd, listdir
 from pathlib import Path
 from platform import system
-from typing import Any, Optional
+from typing import Any
 
 from setuptools import Extension, find_packages, setup  # type: ignore[import-untyped]
 from setuptools.command.build_ext import build_ext  # type: ignore[import-untyped]
@@ -19,15 +18,10 @@ class LanguageDict(TypedDict):
     generate: NotRequired[bool]
 
 
-def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
+def get_mapped_parsers() -> dict[str, Path]:
     """Get the language definitions."""
-    # Load language configurations from a JSON file
-    language_definitions: dict[str, LanguageDict] = loads(
-        (Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "sources" / "language_definitions.json").read_text()
-    )
-    # return a list of language names
-    language_names = list(language_definitions.keys())
-    return language_definitions, language_names
+    parsers_dir = Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "parsers"
+    return {dir_name: (parsers_dir / dir_name) for dir_name in listdir(parsers_dir)}
 
 
 def create_extension(*, language_name: str) -> Extension:
@@ -67,10 +61,9 @@ def create_extension(*, language_name: str) -> Extension:
     )
 
 
-# Get the language definitions and names from the JSON file
-language_definitions, language_names = get_language_definitions()
+mapped_parsers = get_mapped_parsers()
 # Create extensions for all languages defined in the JSON file
-extensions = [create_extension(language_name=language_name) for language_name in language_names]
+extensions = [create_extension(language_name=language_name) for language_name in mapped_parsers]
 
 
 class BuildExt(build_ext):  # type: ignore[misc]
@@ -78,8 +71,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
 
     def build_extension(self, ext: Extension) -> None:
         """Build the extension."""
-        extension_name = ext.name.split(".")[-1]
-        language_definition = language_definitions[extension_name]
+        language_name = ext.name.split(".")[-1]
         cwd = Path(getcwd())
 
         # Add the language extension source file
@@ -88,72 +80,14 @@ class BuildExt(build_ext):  # type: ignore[misc]
             raise FileNotFoundError(f"Language extension file not found: {language_extension}")
         ext.sources = [str(language_extension.relative_to(cwd))]
 
-        vendor_directory = cwd / "vendor" / extension_name
-
-        # Clone the or pull the repository
-        if vendor_directory.is_dir():
-            self.update_repo(directory=str(vendor_directory.relative_to(cwd)))
-        else:
-            self.clone_repo(
-                repo=language_definition["repo"],
-                branch=language_definition.get("branch"),
-                directory=str(vendor_directory.relative_to(cwd)),
-            )
-        # Run the command to build the language if provided
-        if language_definition.get("generate"):
-            chdir(str(vendor_directory.resolve()))
-            self.spawn(
-                [
-                    "tree-sitter",
-                    "generate",
-                ]
-            )
-            chdir(str(cwd.resolve()))
+        parser_dir = mapped_parsers[language_name]
 
         # Set up vendor sources for building the extension
-        vendor_src_dir = vendor_directory / language_definition.get("directory", "") / "src"
-        ext.include_dirs = [str(vendor_src_dir)]
-        ext.sources.extend([str(src_file_path.relative_to(cwd)) for src_file_path in vendor_src_dir.glob("*.c")])
+        parser_src_dir = parser_dir / "src"
+        ext.include_dirs = [str(parser_src_dir)]
+        ext.sources.extend([str(src_file_path.relative_to(cwd)) for src_file_path in parser_src_dir.glob("*.c")])
 
         super().build_extension(ext)
-
-    def update_repo(self, directory: str) -> None:
-        """Update a repository.
-
-        Args:
-            directory (str): The directory of the repository to update.
-
-        Returns:
-            None
-        """
-        self.spawn(["git", "-C", directory, "pull", "--depth=1"])
-
-    def clone_repo(self, repo: str, branch: Optional[str], directory: str) -> None:
-        """Clone a repository.
-
-        Args:
-            repo (str): The repository URL.
-            branch (Optional[str]): The branch to clone.
-            directory (str): The directory to clone the repository to.
-
-        Returns:
-            None
-        """
-        clone_cmd = [
-            "git",
-            "clone",
-            "--depth=1",
-        ]
-        if branch:
-            clone_cmd.append(f"--branch={branch}")
-
-        self.spawn(
-            [
-                *clone_cmd,
-                repo,
-                directory,
-            ]
-        )
 
 
 class BdistWheel(bdist_wheel):  # type: ignore[misc]

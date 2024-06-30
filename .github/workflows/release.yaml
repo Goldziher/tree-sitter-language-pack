@@ -8,10 +8,9 @@ on:
     - main
 
 jobs:
-  build-sdist:
-    name: Build source dist
+  clone_vendors:
+    name: Clone vendors
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -19,6 +18,31 @@ jobs:
         node-version: '22'
     - name: Install tree-sitter cli
       run: npm install -g tree-sitter-cli
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+        cache-dependency-path: |
+          ./pdm.lock
+    - name: Install Dependencies
+      run: pdm install -v --no-self
+    - name: Clone vendors
+      run: pdm run scripts/clone_vendors.py
+    - uses: actions/upload-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers/**/*.*
+  build-sdist:
+    needs: clone_vendors
+    name: Build source dist
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
+      with:
+        name: language-parsers
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
@@ -41,6 +65,7 @@ jobs:
         name: dist-sources
         path: dist/*.tar.gz
   build-wheels:
+    needs: clone_vendors
     strategy:
       matrix:
         os: [ubuntu-latest, macos-13, macos-14, windows-latest]

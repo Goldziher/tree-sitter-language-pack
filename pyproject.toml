@@ -47,14 +47,11 @@ dev = [
     "setuptools>=70.1.1",
     "wheel>=0.43.0",
     "pre-commit>=3.7.1",
-    "typing-extensions>=4.12.2"
+    "typing-extensions>=4.12.2",
+    "gitpython>=3.1.43",
 ]
 
 [tool.pdm.scripts]
-pre_setup_pre_commit = "pre-commit install --hook-type commit-msg"
-setup_pre_commit = "pre-commit install"
-post_setup_pre_commit = "pre-commit install --install-hooks"
-post_install = "pdm run setup_pre_commit"
 test = "pytest ./tests"
 
 # linters configuration below
@@ -113,7 +110,7 @@ src = ["tree_sitter_language_pack", "tests"]
 "tests/**/*.*" = [
     "D", "S"
 ]
-"e2e/**/*.*" = ["S101"]
+"scripts/**/*.*" = ["T201", "S"]
 
 [tool.ruff.format]
 docstring-code-format = true
