@@ -3,65 +3,98 @@ name: Release
 on:
   release:
     types: [published]
-
 jobs:
+  clone_vendors:
+    name: Clone vendors
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Install tree-sitter cli
+      run: npm install -g tree-sitter-cli
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+        cache-dependency-path: |
+          ./pdm.lock
+    - name: Install Dependencies
+      run: pdm install -v --no-self
+    - name: Clone vendors
+      run: pdm run scripts/clone_vendors.py
+    - uses: actions/upload-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
   build-sdist:
+    needs: clone_vendors
     name: Build source dist
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
     - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
     - uses: pdm-project/setup-pdm@v4
       with:
-        python-version: 3.12
+        python-version: '3.9'
         cache: true
         cache-dependency-path: |
           ./pdm.lock
-    - name: Install Dependencies
-      run: pdm install
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+    - name: Install and build extensions
+      run: pdm install -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
     - name: Build source dist
-      run: pdm run build_sdist
+      run: pdm build --no-wheel -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
     - name: Upload sources
       uses: actions/upload-artifact@v4
       with:
         name: dist-sources
         path: dist/*.tar.gz
-        retention-days: 2
-
   build-wheels:
+    needs: clone_vendors
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-13, macos-14, windows-latest]
     name: Build wheel on ${{matrix.os}}
     runs-on: ${{matrix.os}}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
       with:
-        cache: pip
-        python-version: 3.12
-    - name: Set up QEMU
-      if: matrix.os == 'Linux'
-      uses: docker/setup-qemu-action@v3
+        name: language-parsers
+        path: parsers
+    - uses: pdm-project/setup-pdm@v4
       with:
-        platforms: arm64
-    - name: Build wheels
-      uses: pypa/cibuildwheel@v2.16
-      with:
-        output-dir: dist
+        python-version: '3.9'
+        cache: true
+        cache-dependency-path: |
+          ./pdm.lock
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+    - name: Install and build extensions
+      run: pdm install -v
       env:
-        CIBW_ARCHS_WINDOWS: AMD64
-        CIBW_ARCHS_LINUX: x86_64 aarch64
-        CIBW_ARCHS_MACOS: x86_64 arm64
-        CIBW_TEST_SKIP: '*arm64 *aarch64'
-    - name: Upload wheel artifacts
-      uses: actions/upload-artifact@v4
+        PROJECT_ROOT: ${{github.workspace}}
+    - name: Build wheels
+      run: pdm build --no-sdist -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
+    - uses: actions/upload-artifact@v4
       with:
+        name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
         path: dist/*.whl
-        name: dist-wheels-${{matrix.os}}
-        retention-days: 2
   publish:
     name: Publish Python package
     needs: [build-sdist, build-wheels]

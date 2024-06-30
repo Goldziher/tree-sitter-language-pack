@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.12
+  python: python3.9
 repos:
 - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
   rev: v9.16.0

@@ -4,15 +4,33 @@ from typing import Callable, Literal, Union, cast
 from tree_sitter import Language, Parser
 from tree_sitter_c_sharp import language as c_sharp_language
 from tree_sitter_embedded_template import language as embedded_template_language
-from tree_sitter_wgsl_bevy import language as wgsl_bevy_language
+from tree_sitter_php import language_php as php_language
+from tree_sitter_typescript import language_tsx, language_typescript
+from tree_sitter_xml import language_dtd as dtd_language
+from tree_sitter_xml import language_xml as xml_language
 from tree_sitter_yaml import language as yaml_language
 
-InstalledBindings = Literal["csharp", "embeddedtemplate", "wgslbevy", "yaml"]
+InstalledBindings = Literal[
+    "csharp",
+    "dtd",
+    "embeddedtemplate",
+    "php",
+    "tsx",
+    "typescript",
+    "xml",
+    "yaml",
+]
 SupportedLanguage = Union[
     Literal[
+        "actionscript",
+        "ada",
         "agda",
         "arduino",
+        "asm",
+        "astro",
         "bash",
+        "beancount",
+        "bibtex",
         "bicep",
         "bitbake",
         "c",
@@ -20,75 +38,113 @@ SupportedLanguage = Union[
         "capnp",
         "chatito",
         "clarity",
+        "clojure",
+        "cmake",
+        "comment",
         "commonlisp",
         "cpon",
         "cpp",
         "css",
         "csv",
         "cuda",
+        "d",
+        "dart",
+        "dockerfile",
         "doxygen",
-        "dtd",
+        "elisp",
         "elixir",
         "elm",
+        "erlang",
+        "fennel",
         "firrtl",
+        "fish",
         "fortran",
         "func",
+        "gdscript",
         "gitattributes",
+        "gitcommit",
+        "gitignore",
+        "gleam",
         "glsl",
         "gn",
         "go",
         "gomod",
         "gosum",
+        "groovy",
         "gstlaunch",
         "hack",
         "hare",
         "haskell",
+        "haxe",
         "hcl",
         "heex",
         "hlsl",
         "html",
         "hyprlang",
         "ispc",
+        "janet",
         "java",
         "javascript",
         "jsdoc",
         "json",
+        "jsonnet",
         "julia",
         "kconfig",
         "kdl",
+        "kotlin",
+        "latex",
         "linkerscript",
+        "llvm",
         "lua",
         "luadoc",
         "luap",
         "luau",
+        "magik",
         "make",
         "markdown",
+        "matlab",
+        "mermaid",
         "meson",
+        "ninja",
+        "nix",
         "nqc",
         "objc",
-        "ocaml",
         "odin",
+        "org",
+        "pascal",
         "pem",
-        "php",
+        "perl",
+        "pgn",
         "po",
         "pony",
+        "powershell",
         "printf",
+        "prisma",
         "properties",
+        "psv",
         "puppet",
+        "purescript",
         "pymanifest",
+        "python",
         "qmldir",
         "qmljs",
         "query",
+        "r",
+        "racket",
         "re2c",
         "readline",
         "requirements",
         "ron",
+        "rst",
         "ruby",
         "rust",
         "scala",
+        "scheme",
         "scss",
         "smali",
+        "smithy",
         "solidity",
+        "sql",
         "squirrel",
         "starlark",
         "svelte",
@@ -99,44 +155,52 @@ SupportedLanguage = Union[
         "test",
         "thrift",
         "toml",
-        "tsx",
-        "typescript",
+        "tsv",
+        "twig",
+        "typst",
         "udev",
         "ungrammar",
         "uxntal",
+        "v",
         "verilog",
+        "vhdl",
         "vim",
         "vue",
+        "wgsl",
         "xcompose",
-        "xml",
         "yuck",
+        "zig",
     ],
     InstalledBindings,
 ]
 
 installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
     "csharp": c_sharp_language,
+    "dtd": dtd_language,
     "embeddedtemplate": embedded_template_language,
-    "wgslbevy": wgsl_bevy_language,
+    "php": php_language,
+    "tsx": language_tsx,
+    "typescript": language_typescript,
+    "xml": xml_language,
     "yaml": yaml_language,
 }
 
 
-def get_language(name: SupportedLanguage) -> Language:
+def get_language(language_name: SupportedLanguage) -> Language:
     """Get the language with the given name."""
-    if name in installed_bindings_map:
-        return Language(installed_bindings_map[cast(InstalledBindings, name)]())
+    if language_name in installed_bindings_map:
+        return Language(installed_bindings_map[cast(InstalledBindings, language_name)]())
 
     try:
-        module = import_module(name=f".languages.{name}", package=__package__)
+        module = import_module(name=f".bindings.{language_name}", package=__package__)
         return Language(module.language())
     except ModuleNotFoundError as e:
-        raise LookupError(f"Language not found: {name}") from e
+        raise LookupError(f"Language not found: {language_name}") from e
 
 
-def get_parser(name: SupportedLanguage) -> Parser:
+def get_parser(language_name: SupportedLanguage) -> Parser:
     """Get a parser for the given language name."""
-    return Parser(get_language(name))
+    return Parser(get_language(language_name=language_name))
 
 
 __all__ = ["get_language", "get_parser", "SupportedLanguage"]

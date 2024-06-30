@@ -1,6 +1,4 @@
-*.dll
 *.egg-info/
-*.pyc
 *.so
 .idea/
 .pdm-python
@@ -9,5 +7,6 @@
 __pycache__
 build/
 dist/
-env*/
 vendor/
+wheelhouse/
+parsers/

@@ -1,5 +1,4 @@
-from json import loads
-from os import chdir, getcwd
+from os import environ, getcwd, listdir
 from pathlib import Path
 from platform import system
 from typing import Any
@@ -16,26 +15,13 @@ class LanguageDict(TypedDict):
     repo: str
     branch: NotRequired[str]
     directory: NotRequired[str]
-    cmd: NotRequired[list[str]]
+    generate: NotRequired[bool]
 
 
-# Load language configurations from a JSON file
-language_definition_list: list[LanguageDict] = loads(Path(__file__).with_name("language_definitions.json").read_text())
-# create PascalCase identifiers from the package names
-language_names = [
-    language_definition.get("directory", language_definition["repo"])
-    .split("/")[-1]
-    .replace("tree-sitter-", "")
-    .replace(
-        "-",
-        "",
-    )
-    for language_definition in language_definition_list
-]
-# Create a dictionary of language definitions mapped to the language names
-language_definitions = dict(zip(language_names, language_definition_list))
-# Common C source file for all language extensions
-common_source = (Path(__file__).parent / "./tree_sitter_language_pack/language.c").relative_to(Path(__file__).parent)
+def get_mapped_parsers() -> dict[str, Path]:
+    """Get the language definitions."""
+    parsers_dir = Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "parsers"
+    return {dir_name: (parsers_dir / dir_name) for dir_name in listdir(parsers_dir)}
 
 
 def create_extension(*, language_name: str) -> Extension:
@@ -47,34 +33,37 @@ def create_extension(*, language_name: str) -> Extension:
     Returns:
         Extension: The extension for the language.
     """
-    return Extension(
-        name=f"tree_sitter_language_pack.languages.{language_name}",
-        sources=[str(common_source)],
-        include_dirs=[language_name],
-        define_macros=[
-            ("PY_SSIZE_T_CLEAN", None),
-            ("TREE_SITTER_HIDE_SYMBOLS", None),
-            ("TS_LANGUAGE_NAME", language_name),
-        ],
-        extra_compile_args=[
-            "-std=c11",
-            "-fvisibility=hidden",
+    compile_args = (
+        [
+            "-Werror=implicit-function-declaration",
             "-Wno-cast-function-type",
             "-Wno-unused-but-set-variable",
-            "-Werror=implicit-function-declaration",
+            "-fvisibility=hidden",
+            "-std=c11",
         ]
         if system() != "Windows"
         else [
             "/std:c11",
             "/wd4244",
-        ],
+        ]
+    )
+
+    return Extension(
+        name=f"tree_sitter_language_pack.bindings.{language_name}",
         py_limited_api=True,
-        optional=True,
+        define_macros=[
+            ("PY_SSIZE_T_CLEAN", None),
+            ("TREE_SITTER_HIDE_SYMBOLS", None),
+            ("TS_LANGUAGE_NAME", language_name),
+        ],
+        extra_compile_args=compile_args,
+        sources=[],
     )
 
 
+mapped_parsers = get_mapped_parsers()
 # Create extensions for all languages defined in the JSON file
-extensions = [create_extension(language_name=language_name) for language_name in language_names]
+extensions = [create_extension(language_name=language_name) for language_name in mapped_parsers]
 
 
 class BuildExt(build_ext):  # type: ignore[misc]
@@ -82,46 +71,21 @@ class BuildExt(build_ext):  # type: ignore[misc]
 
     def build_extension(self, ext: Extension) -> None:
         """Build the extension."""
-        extension_dir_name = ext.include_dirs.pop()
         language_name = ext.name.split(".")[-1]
-        language_definition = language_definitions[language_name]
+        cwd = Path(getcwd())
 
-        cwd = getcwd()
-        directory = Path(cwd) / "vendor" / extension_dir_name
-        relative_path = directory.relative_to(cwd)
+        # Add the language extension source file
+        language_extension = (cwd / "sources" / "language_extension.c").resolve()
+        if not language_extension.is_file():
+            raise FileNotFoundError(f"Language extension file not found: {language_extension}")
+        ext.sources = [str(language_extension.relative_to(cwd))]
 
-        # Clone or pull the language repository
-        if directory.is_dir():
-            self.spawn(["git", "-C", str(relative_path), "pull", "-q", "--depth=1"])
-        else:
-            clone_cmd = [
-                "git",
-                "clone",
-                "-q",
-                "--depth=1",
-            ]
-            if branch := language_definition.get("branch"):
-                clone_cmd.append(f"--branch={branch}")
+        parser_dir = mapped_parsers[language_name]
 
-            self.spawn(
-                [
-                    *clone_cmd,
-                    language_definition["repo"],
-                    str(relative_path),
-                ]
-            )
-
-        if cmd := language_definition.get("cmd"):
-            chdir(directory)
-            self.spawn(cmd)
-            chdir(cwd)
-
-        # Set up paths for building the extension
-        path = directory / language_definition.get("directory", "")
-        src = path / "src"
-
-        ext.sources.extend(list(map(str, src.glob("*.c"))))
-        ext.include_dirs = [str(src)]
+        # Set up vendor sources for building the extension
+        parser_src_dir = parser_dir / "src"
+        ext.include_dirs = [str(parser_src_dir)]
+        ext.sources.extend([str(src_file_path.relative_to(cwd)) for src_file_path in parser_src_dir.glob("*.c")])
 
         super().build_extension(ext)
 
@@ -138,12 +102,13 @@ class BdistWheel(bdist_wheel):  # type: ignore[misc]
 
 
 setup(
-    packages=find_packages(),
-    package_data={"tree_sitter_language_pack": ["py.typed"]},
+    packages=find_packages(include=["tree_sitter_language_pack", "tree_sitter_language_pack.bindings"]),
+    package_data={"tree_sitter_language_pack": ["py.typed"], "tree_sitter_language_pack.bindings": ["*.so"]},
     ext_modules=extensions,
     include_package_data=True,
     cmdclass={
         "build_ext": BuildExt,
         "bdist_wheel": BdistWheel,
     },
+    options={"build_ext": {"inplace": True}},
 )

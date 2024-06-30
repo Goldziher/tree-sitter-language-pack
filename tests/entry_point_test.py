@@ -8,25 +8,26 @@ from tree_sitter import Language, Parser
 
 from tree_sitter_language_pack import SupportedLanguage, get_language, get_parser
 
-language_definition_list = cast(
-    list[dict[str, str]], loads((Path(__file__).parent.parent.resolve() / "language_definitions.json").read_text())
+language_definitions = cast(
+    dict[str, dict[str, str]],
+    loads((Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json").read_text()),
 )
 language_names = [
-    language_definition.get("directory", language_definition["repo"])
-    .split("/")[-1]
-    .replace("tree-sitter-", "")
-    .replace(
-        "-",
-        "",
-    )
-    for language_definition in language_definition_list
-] + ["csharp", "embeddedtemplate", "wgslbevy", "yaml"]
+    *list(language_definitions.keys()),
+    "csharp",
+    "embeddedtemplate",
+    "yaml",
+    "typescript",
+    "tsx",
+    "xml",
+    "php",
+    "dtd",
+]
 
 
 def test_language_names() -> None:
-    assert sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__]) == sorted(  # type: ignore[attr-defined]
-        language_names
-    )
+    supported_langauges = sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__])  # type: ignore[attr-defined]
+    assert supported_langauges == sorted(language_names)
 
 
 @pytest.mark.parametrize("language", language_names)
