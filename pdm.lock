@@ -5,7 +5,77 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:fa3a8c8078b444ea324e77ac657ffd73a1fb2ca493be7c778b94fcbea8a914ed"
+content_hash = "sha256:182414282b263b537e339ed1efbb2672694ea317d7a4185d1d783c8096f1422f"
+
+[[package]]
+name = "aiofile"
+version = "3.5.0"
+requires_python = ">3.4.*, <4"
+summary = "Asynchronous file operations."
+groups = ["dev"]
+dependencies = [
+    "caio~=0.8.0",
+]
+files = [
+    {file = "aiofile-3.5.0-py3-none-any.whl", hash = "sha256:5e7287a33b498bfa418aac1caa0be7b2ad32ec49680ec22f537335d95002de0a"},
+    {file = "aiofile-3.5.0.tar.gz", hash = "sha256:cc9fb394e8c0ad1d2b9014a9b4bdaa3535f098c5881bd3ba220350b198c12727"},
+]
+
+[[package]]
+name = "aiofiles"
+version = "0.6.0"
+summary = "File support for asyncio."
+groups = ["dev"]
+files = [
+    {file = "aiofiles-0.6.0-py3-none-any.whl", hash = "sha256:bd3019af67f83b739f8e4053c6c0512a7f545b9a8d91aaeab55e6e0f9d123c27"},
+    {file = "aiofiles-0.6.0.tar.gz", hash = "sha256:e0281b157d3d5d59d803e3f4557dcc9a3dff28a4dd4829a9ff478adae50ca092"},
+]
+
+[[package]]
+name = "aiopath"
+version = "0.5.6"
+requires_python = ">=3.7"
+summary = "📁 Async pathlib for Python"
+groups = ["dev"]
+dependencies = [
+    "aiofile==3.5.0",
+    "aiofiles==0.6.0",
+    "typing-extensions>=3.10.0.0; python_version < \"3.10\"",
+]
+files = [
+    {file = "aiopath-0.5.6-py2.py3-none-any.whl", hash = "sha256:759430e63b180e684a529ae23d804a1003e14e41f64f46196ffe2da444be455b"},
+    {file = "aiopath-0.5.6.tar.gz", hash = "sha256:daa794df01ca9b62b0df021ebff603059e7f7589d045a24cf6a29f2abff4e08b"},
+]
+
+[[package]]
+name = "anyio"
+version = "4.4.0"
+requires_python = ">=3.8"
+summary = "High level compatibility layer for multiple asynchronous event loop implementations"
+groups = ["dev"]
+dependencies = [
+    "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+    "idna>=2.8",
+    "sniffio>=1.1",
+    "typing-extensions>=4.1; python_version < \"3.11\"",
+]
+files = [
+    {file = "anyio-4.4.0-py3-none-any.whl", hash = "sha256:c1b2d8f46a8a812513012e1107cb0e68c17159a7a594208005a57dc776e1bdc7"},
+    {file = "anyio-4.4.0.tar.gz", hash = "sha256:5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"},
+]
+
+[[package]]
+name = "caio"
+version = "0.8.4"
+requires_python = ">=3.5.*, <4"
+summary = "Asynchronous file IO for Linux Posix and Windows."
+groups = ["dev"]
+files = [
+    {file = "caio-0.8.4-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:67d0b376676c0959b09d00d8e7715c0dd2127b1503b5727a0a232c6561668d96"},
+    {file = "caio-0.8.4-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:7a422a877c2d9f2c2cdce0219306bb063a4106765f9cad19d2917c70de415a63"},
+    {file = "caio-0.8.4-py3-none-any.whl", hash = "sha256:f7ee73b182d732bbca937df3ce13767641328f8fc69f92605aaab06feba5a125"},
+    {file = "caio-0.8.4.tar.gz", hash = "sha256:c49fef200796ac876a3507d2b07478c3920c48968dcef26ff928d191cd89d041"},
+]
 
 [[package]]
 name = "cfgv"
@@ -68,7 +138,7 @@ name = "gitdb"
 version = "4.0.11"
 requires_python = ">=3.7"
 summary = "Git Object Database"
-groups = ["default"]
+groups = ["dev"]
 dependencies = [
     "smmap<6,>=3.0.1",
 ]
@@ -82,7 +152,7 @@ name = "gitpython"
 version = "3.1.43"
 requires_python = ">=3.7"
 summary = "GitPython is a Python library used to interact with Git repositories"
-groups = ["default"]
+groups = ["dev"]
 dependencies = [
     "gitdb<5,>=4.0.1",
 ]
@@ -100,6 +170,17 @@ groups = ["dev"]
 files = [
     {file = "identify-2.5.36-py2.py3-none-any.whl", hash = "sha256:37d93f380f4de590500d9dba7db359d0d3da95ffe7f9de1753faa159e71e7dfa"},
     {file = "identify-2.5.36.tar.gz", hash = "sha256:e5e00f54165f9047fbebeb4a560f9acfb8af4c88232be60a488e9b68d122745d"},
+]
+
+[[package]]
+name = "idna"
+version = "3.7"
+requires_python = ">=3.5"
+summary = "Internationalized Domain Names in Applications (IDNA)"
+groups = ["dev"]
+files = [
+    {file = "idna-3.7-py3-none-any.whl", hash = "sha256:82fee1fc78add43492d3a1898bfa6d8a904cc97d8427f683ed8e798d07761aa0"},
+    {file = "idna-3.7.tar.gz", hash = "sha256:028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"},
 ]
 
 [[package]]
@@ -325,10 +406,21 @@ name = "smmap"
 version = "5.0.1"
 requires_python = ">=3.7"
 summary = "A pure Python implementation of a sliding window memory map manager"
-groups = ["default"]
+groups = ["dev"]
 files = [
     {file = "smmap-5.0.1-py3-none-any.whl", hash = "sha256:e6d8668fa5f93e706934a62d7b4db19c8d9eb8cf2adbb75ef1b675aa332b69da"},
     {file = "smmap-5.0.1.tar.gz", hash = "sha256:dceeb6c0028fdb6734471eb07c0cd2aae706ccaecab45965ee83f11c8d3b1f62"},
+]
+
+[[package]]
+name = "sniffio"
+version = "1.3.1"
+requires_python = ">=3.7"
+summary = "Sniff out which async library your code is running under"
+groups = ["dev"]
+files = [
+    {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
+    {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
 ]
 
 [[package]]
@@ -414,16 +506,6 @@ files = [
     {file = "tree_sitter_embedded_template-0.21.0-cp38-abi3-musllinux_1_1_x86_64.whl", hash = "sha256:91cd9b3d6b96f58aea30526af0abd17f6b814ac8a167b1a126898fbd4adcea8a"},
     {file = "tree_sitter_embedded_template-0.21.0-cp38-abi3-win_amd64.whl", hash = "sha256:13ce8750b7a66050c0436ec0a0f574a59e191f67521f10cb983dd488b31f54fc"},
 ]
-
-[[package]]
-name = "tree-sitter-perl"
-version = "0.0.1"
-requires_python = ">=3.8"
-git = "https://github.com/tree-sitter-perl/tree-sitter-perl.git"
-ref = "master"
-revision = "022c1c87e0010676849d7f52991f74fd4fb755bd"
-summary = "Perl grammar for tree-sitter"
-groups = ["default"]
 
 [[package]]
 name = "tree-sitter-yaml"

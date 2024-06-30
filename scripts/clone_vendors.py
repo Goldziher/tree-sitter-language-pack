@@ -1,9 +1,12 @@
+import asyncio
 import subprocess
+from functools import partial
 from json import loads
 from pathlib import Path
 from shutil import move
 from typing import Optional
 
+from anyio.to_thread import run_sync
 from git import Repo
 from typing_extensions import NotRequired, TypedDict
 
@@ -31,7 +34,7 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     return language_definitions, language_names
 
 
-def clone_repository(repo_url: str, branch: Optional[str], language_name: str) -> None:
+async def clone_repository(repo_url: str, branch: Optional[str], language_name: str) -> None:
     """Clone a repository.
 
     Args:
@@ -43,14 +46,16 @@ def clone_repository(repo_url: str, branch: Optional[str], language_name: str) -
         Repo: The cloned repository.
     """
     print(f"Cloning {repo_url}")
-    repo = Repo.clone_from(url=repo_url, to_path=vendor_directory / language_name)
-    if branch and branch != repo.active_branch:
-        print(f"Checking out branch {branch}")
-        repo.git.checkout(branch)
+    kwargs = {"url": repo_url, "to_path": vendor_directory / language_name, "depth": 1}
+    if branch:
+        kwargs["branch"] = branch
+    handler = partial(Repo.clone_from, **kwargs)
+
+    await run_sync(handler)
     print(f"Cloned {repo_url} successfully")
 
 
-def handle_generate(language_name: str, directory: Optional[str]) -> None:
+async def handle_generate(language_name: str, directory: Optional[str]) -> None:
     """Handle the generation of a language.
 
     Args:
@@ -66,11 +71,11 @@ def handle_generate(language_name: str, directory: Optional[str]) -> None:
         if directory
         else (vendor_directory / language_name).resolve()
     )
-    subprocess.run(["tree-sitter", "generate"], cwd=str(target_dir), check=False)
+    await run_sync(partial(subprocess.run, ["tree-sitter", "generate"], cwd=str(target_dir), check=False))
     print(f"Generated {language_name} parser successfully")
 
 
-def move_src_folder(language_name: str, directory: Optional[str]) -> None:
+async def move_src_folder(language_name: str, directory: Optional[str]) -> None:
     """Move the src folder to the parsers directory.
 
     Args:
@@ -87,17 +92,39 @@ def move_src_folder(language_name: str, directory: Optional[str]) -> None:
         else (vendor_directory / language_name / "src").resolve()
     )
     target_dir = (parsers_directory / language_name).resolve()
-    target_dir.mkdir(parents=True, exist_ok=True)
-    move(source_dir, target_dir)
+    await run_sync(partial(target_dir.mkdir, parents=True, exist_ok=True))
+    await run_sync(move, source_dir, target_dir)
     print(f"Moved {language_name} parser files successfully")
 
 
-if __name__ == "__main__":
+async def process_repo(language_name: str, language_definition: LanguageDict) -> None:
+    """Process a repository.
+
+    Args:
+        language_name (str): The name of the language.
+        language_definition (LanguageDict): The language definition.
+
+    Returns:
+        None
+    """
+    await clone_repository(
+        repo_url=language_definition["repo"], branch=language_definition.get("branch"), language_name=language_name
+    )
+    if language_definition.get("generate", False):
+        await handle_generate(language_name=language_name, directory=language_definition.get("directory"))
+    await move_src_folder(language_name=language_name, directory=language_definition.get("directory"))
+
+
+async def main() -> None:
+    """Main function."""
     language_definitions, language_names = get_language_definitions()
-    for language_name, language_definition in language_definitions.items():
-        clone_repository(
-            repo_url=language_definition["repo"], branch=language_definition.get("branch"), language_name=language_name
-        )
-        if language_definition.get("generate", False):
-            handle_generate(language_name=language_name, directory=language_definition.get("directory"))
-        move_src_folder(language_name=language_name, directory=language_definition.get("directory"))
+    await asyncio.gather(
+        *[
+            process_repo(language_name=language_name, language_definition=language_definitions[language_name])
+            for language_name in language_names
+        ]
+    )
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

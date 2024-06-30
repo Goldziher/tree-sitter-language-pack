@@ -49,6 +49,8 @@ dev = [
     "pre-commit>=3.7.1",
     "typing-extensions>=4.12.2",
     "gitpython>=3.1.43",
+    "anyio>=4.4.0",
+    "aiopath>=0.5.6",
 ]
 
 [tool.pdm.scripts]
