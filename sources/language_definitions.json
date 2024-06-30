@@ -259,10 +259,6 @@
     "llvm": {
         "repo": "https://github.com/benwilliamgraham/tree-sitter-llvm"
     },
-    "llvmmir": {
-        "repo": "https://github.com/Flakebi/tree-sitter-llvm-mir",
-        "branch": "master"
-    },
     "lua": {
         "repo": "https://github.com/MunifTanjim/tree-sitter-lua"
     },

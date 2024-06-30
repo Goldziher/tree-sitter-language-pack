@@ -116,7 +116,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [kotlin](https://github.com/fwcd/tree-sitter-kotlin) - MIT License
 - [linkerscript](https://github.com/tree-sitter-grammars/tree-sitter-linkerscript) - MIT License
 - [llvm](https://github.com/benwilliamgraham/tree-sitter-llvm) - MIT License
-- [llvmmir](https://github.com/Flakebi/tree-sitter-llvm-mir) - MIT License
 - [lua](https://github.com/tree-sitter-grammars/tree-sitter-lua) - MIT License
 - [luadoc](https://github.com/tree-sitter-grammars/tree-sitter-luadoc) - MIT License
 - [luap](https://github.com/tree-sitter-grammars/tree-sitter-luap) - MIT License
