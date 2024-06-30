@@ -156,9 +156,6 @@
     "gitignore": {
         "repo": "https://github.com/shunsambongi/tree-sitter-gitignore"
     },
-    "gitrebase": {
-        "repo": "https://github.com/the-mikedavis/tree-sitter-git-rebase"
-    },
     "gleam": {
         "repo": "https://github.com/gleam-lang/tree-sitter-gleam"
     },

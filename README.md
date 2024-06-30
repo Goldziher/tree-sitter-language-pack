@@ -85,7 +85,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [gitattributes](https://github.com/tree-sitter-grammars/tree-sitter-gitattributes) - MIT License
 - [gitcommit](https://github.com/gbprod/tree-sitter-gitcommit) - WTFPL License
 - [gitignore](https://github.com/shunsambongi/tree-sitter-gitignore) - MIT License
-- [gitrebase](https://github.com/the-mikedavis/tree-sitter-git-rebase) - MIT License
 - [gleam](https://github.com/gleam-lang/tree-sitter-gleam) - Apache-2.0 license
 - [glsl](https://github.com/tree-sitter-grammars/tree-sitter-glsl) - MIT License
 - [gn](https://github.com/tree-sitter-grammars/tree-sitter-gn) - MIT License
