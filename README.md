@@ -1,8 +1,8 @@
 # Tree Sitter Language Pack
 
-This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages.
-
-It is compatible with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above.
+This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages
+as both source distribution and pre-built wheels. It is compatible
+with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above. It is strongly typed.
 
 Notes:
 
@@ -12,7 +12,8 @@ Notes:
   this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
 - This package is MIT licensed and the original package of which this is a fork has an Apache 2.0 License. Both licenses
   are available in the LICENSE file.
-- All languages bundled by this package are licensed under permissive open-source licenses (MIT or Apache 2.0) - no GPL
+- All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
+  no GPL
   licensed languages are included.
 
 ## Installation
@@ -69,7 +70,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [dockerfile](https://github.com/camdencheek/tree-sitter-dockerfile) - MIT License
 - [dot](https://github.com/rydesun/tree-sitter-dot) - MIT License
 - [doxygen](https://github.com/tree-sitter-grammars/tree-sitter-doxygen) - MIT License
-- [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
 - [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
 - [elixir](https://github.com/elixir-lang/tree-sitter-elixir) - MIT License
 - [elm](https://github.com/elm-tooling/tree-sitter-elm) - MIT License
@@ -211,8 +211,7 @@ This library is open to and welcomes contributions.
 2. Make sure to have [PDM](https://pdm-project.org/en/latest/) installed on your machine.
 3. You will also need the clang toolchain installed on your machine and available in path. Consult the pertinent
    documentation for your operating system.
-4. Install the dependencies by running `pdm install`.
-5. Install the git hooks with `pdm run pre-commit install && pdm run pre-commit install --hook-type commit-msg`
+4. Install and build locally by running `pdm install -v`.
 
 ### Adding a new language
 
@@ -221,60 +220,42 @@ This library is open to and welcomes contributions.
 1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
    at the repository's root.
 
-This file contains a JSON array of objects that adheres to the following json schema:
+This file contains a mapping of language names to their respective repositories.
 
-```json
+```jsonc
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "LanguageDict",
-  "description": "Language configuration for tree-sitter repositories.",
-  "type": "object",
-  "properties": {
-    "repo": {
-      "type": "string"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "directory": {
-      "type": "string"
-    },
-    "cmd": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  },
-  "required": [
-    "repo"
-  ],
-  "additionalProperties": false
+  "name": {
+    "repo": "https://github.com/...",
+    "branch": "master",  // not mandatory
+    "directory": "sub-dir/something",  // not mandatory
+    "generate": true  // not mandatory
+  }
 }
 ```
 
-That is, each object must have a `repo` key, and optionally a `branch`, `directory`, and `cmd` keys.
+That is, each object must have a `repo` key, and optionally a `branch`, `directory`, and `generate` keys.
 
 - `repo` is the URL of the tree-sitter repository. This value is mandatory
 - `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
   i.e. for `master` or other names, specify this).
 - `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
   the `src` folder is not immediately under the root folder.
-- `cmd` is a command to execute in a sub-process after cloning the repository. Its an array of commands strings that are
-  concatenated, e.g. `["npm", "install"]`. This should be specified only if the binding needs to be build in the
-  repository.
+- `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
+  repository / directory combo. This should be specified only if the binding needs to be build in the repository.
 
 1. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
-2. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
-3. If the build is successful, execute the tests with `pdm run test`
+2. Build the bindings by executing: `pdm install -v`.
+3. Execute the tests with `pdm run test`.
 4. If the tests pass, commit your changes and open a pull request.
 
 #### Adding an installed binding
-Some bindings are not build from source but are rather installed via PDM and are added to the package dependencies in the [pyproject.toml](./pyproject.toml) file.
-To add an installed package follow these steps:
 
-1. Install the bindings with `pdm add <bindings_package_name>`
-2. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
-3. Build the bindings by executing: `pdm run setup.py build_ext --inplace`
-4. If the build is successful, execute the tests with `pdm run test`
+Some bindings are not build from source but are rather installed via PDM and are added to the package dependencies in
+the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
+
+1. Install the bindings with `pdm add <bindings_package_name>`.
+2. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
+   [__init .py _](./tree_sitter_language_pack/__init__.py) file.
+3. Build the bindings by executing: `pdm install -v`.
+4. Execute the tests with `pdm run test`.
 5. If the tests pass, commit your changes and open a pull request.
