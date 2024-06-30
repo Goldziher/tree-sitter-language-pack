@@ -78,7 +78,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [fennel](https://github.com/TravonteD/tree-sitter-fennel) - MIT License
 - [firrtl](https://github.com/tree-sitter-grammars/tree-sitter-firrtl) - Apache License 2.0
 - [fish](https://github.com/ram02z/tree-sitter-fish) - Unlicense license
-- [fluent](https://github.com/tree-sitter/tree-sitter-fluent) - MIT License
 - [fortran](https://github.com/stadelmanma/tree-sitter-fortran) - MIT License
 - [func](https://github.com/tree-sitter-grammars/tree-sitter-func) - MIT License
 - [gdscript](https://github.com/PrestonKnopp/tree-sitter-gdscript) - MIT License
@@ -130,7 +129,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [nix](https://github.com/nix-community/tree-sitter-nix) - MIT License
 - [nqc](https://github.com/tree-sitter-grammars/tree-sitter-nqc) - MIT License
 - [objc](https://github.com/tree-sitter-grammars/tree-sitter-objc) - MIT License
-- [ocaml](https://github.com/tree-sitter/tree-sitter-ocaml) - MIT License
 - [odin](https://github.com/tree-sitter-grammars/tree-sitter-odin) - MIT License
 - [org](https://github.com/milisims/tree-sitter-org) - MIT License
 - [pascal](https://github.com/Isopod/tree-sitter-pascal) - MIT License

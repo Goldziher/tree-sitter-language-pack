@@ -12,7 +12,17 @@ language_definitions = cast(
     dict[str, dict[str, str]],
     loads((Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json").read_text()),
 )
-language_names = [*list(language_definitions.keys()), "csharp", "embeddedtemplate", "yaml"]
+language_names = [
+    *list(language_definitions.keys()),
+    "csharp",
+    "embeddedtemplate",
+    "yaml",
+    "typescript",
+    "tsx",
+    "xml",
+    "php",
+    "dtd",
+]
 
 
 def test_language_names() -> None:

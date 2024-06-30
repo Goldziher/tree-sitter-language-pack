@@ -4,9 +4,22 @@ from typing import Callable, Literal, Union, cast
 from tree_sitter import Language, Parser
 from tree_sitter_c_sharp import language as c_sharp_language
 from tree_sitter_embedded_template import language as embedded_template_language
+from tree_sitter_php import language_php as php_language
+from tree_sitter_typescript import language_tsx, language_typescript
+from tree_sitter_xml import language_dtd as dtd_language
+from tree_sitter_xml import language_xml as xml_language
 from tree_sitter_yaml import language as yaml_language
 
-InstalledBindings = Literal["csharp", "embeddedtemplate", "yaml"]
+InstalledBindings = Literal[
+    "csharp",
+    "dtd",
+    "embeddedtemplate",
+    "php",
+    "tsx",
+    "typescript",
+    "xml",
+    "yaml",
+]
 SupportedLanguage = Union[
     Literal[
         "actionscript",
@@ -38,7 +51,6 @@ SupportedLanguage = Union[
         "dart",
         "dockerfile",
         "doxygen",
-        "dtd",
         "elisp",
         "elixir",
         "elm",
@@ -46,14 +58,12 @@ SupportedLanguage = Union[
         "fennel",
         "firrtl",
         "fish",
-        "fluent",
         "fortran",
         "func",
         "gdscript",
         "gitattributes",
         "gitcommit",
         "gitignore",
-        "gitrebase",
         "gleam",
         "glsl",
         "gn",
@@ -72,8 +82,7 @@ SupportedLanguage = Union[
         "html",
         "hyprlang",
         "ispc",
-        "jai",
-        "janetsimple",
+        "janet",
         "java",
         "javascript",
         "jsdoc",
@@ -86,7 +95,6 @@ SupportedLanguage = Union[
         "latex",
         "linkerscript",
         "llvm",
-        "llvmmir",
         "lua",
         "luadoc",
         "luap",
@@ -99,17 +107,14 @@ SupportedLanguage = Union[
         "meson",
         "ninja",
         "nix",
-        "noir",
         "nqc",
         "objc",
-        "ocaml",
         "odin",
         "org",
         "pascal",
         "pem",
         "perl",
         "pgn",
-        "php",
         "po",
         "pony",
         "powershell",
@@ -151,9 +156,7 @@ SupportedLanguage = Union[
         "thrift",
         "toml",
         "tsv",
-        "tsx",
         "twig",
-        "typescript",
         "typst",
         "udev",
         "ungrammar",
@@ -165,7 +168,6 @@ SupportedLanguage = Union[
         "vue",
         "wgsl",
         "xcompose",
-        "xml",
         "yuck",
         "zig",
     ],
@@ -174,7 +176,12 @@ SupportedLanguage = Union[
 
 installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
     "csharp": c_sharp_language,
+    "dtd": dtd_language,
     "embeddedtemplate": embedded_template_language,
+    "php": php_language,
+    "tsx": language_tsx,
+    "typescript": language_typescript,
+    "xml": xml_language,
     "yaml": yaml_language,
 }
 

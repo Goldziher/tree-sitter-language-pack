@@ -35,11 +35,11 @@ def create_extension(*, language_name: str) -> Extension:
     """
     compile_args = (
         [
-            "-std=c11",
-            "-fvisibility=hidden",
+            "-Werror=implicit-function-declaration",
             "-Wno-cast-function-type",
             "-Wno-unused-but-set-variable",
-            "-Werror=implicit-function-declaration",
+            "-fvisibility=hidden",
+            "-std=c11",
         ]
         if system() != "Windows"
         else [

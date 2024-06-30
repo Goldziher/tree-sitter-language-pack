@@ -20,6 +20,9 @@ dependencies = [
     "tree-sitter-c-sharp>=0.21.2",
     "tree-sitter-embedded-template>=0.21.0",
     "tree-sitter-yaml>=0.6.0",
+    "tree-sitter-typescript>=0.21.1",
+    "tree-sitter-php>=0.22.5",
+    "tree-sitter-xml>=0.6.4",
 ]
 requires-python = ">=3.9.0"
 readme = "README.md"
@@ -33,6 +36,7 @@ requires = ["setuptools>=70.1.1", "wheel>=0.43.0", "typing-extensions>=4.12.2", 
 build-backend = "setuptools.build_meta"
 
 [tool.pdm]
+parallel_install = true
 distribution = true
 
 [tool.pdm.build]
