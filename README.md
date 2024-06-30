@@ -114,7 +114,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [kconfig](https://github.com/tree-sitter-grammars/tree-sitter-kconfig) - MIT License
 - [kdl](https://github.com/tree-sitter-grammars/tree-sitter-kdl) - MIT License
 - [kotlin](https://github.com/fwcd/tree-sitter-kotlin) - MIT License
-- [latex](https://github.com/latex-lsp/tree-sitter-latex) - MIT License
 - [linkerscript](https://github.com/tree-sitter-grammars/tree-sitter-linkerscript) - MIT License
 - [llvm](https://github.com/benwilliamgraham/tree-sitter-llvm) - MIT License
 - [llvmmir](https://github.com/Flakebi/tree-sitter-llvm-mir) - MIT License

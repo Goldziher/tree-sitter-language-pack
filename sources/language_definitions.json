@@ -253,11 +253,6 @@
     "kotlin": {
         "repo": "https://github.com/fwcd/tree-sitter-kotlin"
     },
-    "latex": {
-        "repo": "https://github.com/latex-lsp/tree-sitter-latex",
-        "branch": "master",
-        "generate": true
-    },
     "linkerscript": {
         "repo": "https://github.com/tree-sitter-grammars/tree-sitter-linkerscript"
     },
