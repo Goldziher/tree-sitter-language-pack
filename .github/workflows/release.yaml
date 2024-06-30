@@ -3,10 +3,6 @@ name: Release
 on:
   release:
     types: [published]
-  pull_request:
-    branches:
-    - main
-
 jobs:
   clone_vendors:
     name: Clone vendors
@@ -99,50 +95,21 @@ jobs:
       with:
         name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
         path: dist/*.whl
-#  build-wheels:
-#    strategy:
-#      matrix:
-#        os: [ubuntu-latest, windows-latest, macos-13, macos-14]
-#    name: Build wheel on ${{matrix.os}}
-#    runs-on: ${{matrix.os}}
-#    steps:
-#    - uses: actions/checkout@v4
-#    - uses: pdm-project/setup-pdm@v4
-#      with:
-#        python-version: 3.12
-#        cache: true
-#        cache-dependency-path: |
-#          ./pdm.lock
-#    - name: Export requirements
-#      run: pdm export --no-hashes > requirements.txt
-#    - name: Set up QEMU
-#      if: matrix.os == 'Linux'
-#      uses: docker/setup-qemu-action@v3
-#      with:
-#        platforms: all
-#    - name: Build wheels
-#      uses: pypa/cibuildwheel@v2.19.1
-#    - name: Upload wheel artifacts
-#      uses: actions/upload-artifact@v4
-#      with:
-#        path: dist/*.whl
-#        name: dist-wheels-${{matrix.os}}
-#        retention-days: 2
-#  publish:
-#    name: Publish Python package
-#    needs: [build-sdist, build-wheels]
-#    runs-on: ubuntu-latest
-#    environment:
-#      name: pypi
-#      url: https://pypi.org/project/tree-sitter-language-pack/
-#    steps:
-#    - name: Download build artifacts
-#      uses: actions/download-artifact@v4
-#      with:
-#        path: dist
-#        pattern: dist-*
-#        merge-multiple: true
-#    - name: Publish to PyPI
-#      uses: pypa/gh-action-pypi-publish@release/v1
-#      with:
-#        password: ${{secrets.PYPI_API_TOKEN}}
+  publish:
+    name: Publish Python package
+    needs: [build-sdist, build-wheels]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/tree-sitter-language-pack/
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: dist
+        pattern: dist-*
+        merge-multiple: true
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{secrets.PYPI_API_TOKEN}}
