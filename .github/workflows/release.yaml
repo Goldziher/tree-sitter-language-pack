@@ -31,7 +31,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: language-parsers
-        path: parsers/**/*.*
+        path: parsers
   build-sdist:
     needs: clone_vendors
     name: Build source dist
@@ -43,6 +43,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: language-parsers
+        path: parsers
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
@@ -73,11 +74,11 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
       with:
-        node-version: '22'
-    - name: Install tree-sitter cli
-      run: npm install -g tree-sitter-cli
+        name: language-parsers
+        path: parsers
     - uses: pdm-project/setup-pdm@v4
       with:
         python-version: '3.9'
