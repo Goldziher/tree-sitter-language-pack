@@ -1,3 +1,4 @@
+from itertools import chain
 from os import environ, getcwd, listdir
 from pathlib import Path
 from platform import system
@@ -61,9 +62,16 @@ def create_extension(*, language_name: str) -> Extension:
     )
 
 
+# Get the mapped parsers
 mapped_parsers = get_mapped_parsers()
 # Create extensions for all languages defined in the JSON file
 extensions = [create_extension(language_name=language_name) for language_name in mapped_parsers]
+# Add the data files for the parsers
+data_files = [
+    str(value)
+    for value in chain.from_iterable(list(parser_dir.iterdir()) for parser_dir in mapped_parsers.values())
+    if value.is_file()
+]
 
 
 class BuildExt(build_ext):  # type: ignore[misc]
@@ -103,7 +111,8 @@ class BdistWheel(bdist_wheel):  # type: ignore[misc]
 
 setup(
     packages=find_packages(include=["tree_sitter_language_pack", "tree_sitter_language_pack.bindings"]),
-    package_data={"tree_sitter_language_pack": ["py.typed"], "tree_sitter_language_pack.bindings": ["*.so"]},
+    package_data={"tree_sitter_language_pack": ["py.typed"]},
+    data_files=[("parsers", data_files)],
     ext_modules=extensions,
     include_package_data=True,
     cmdclass={
