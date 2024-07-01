@@ -210,6 +210,21 @@ This library is open to and welcomes contributions.
 
 ### Adding a new language
 
+#### Install via PDM
+
+Some bindings are installed via PDM and are added to the package dependencies in
+the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
+
+1. Install the bindings with `pdm add <bindings_package_name> --no-sync`.
+2. Install the dev dependencies with `pdm install -v --no-self`
+3. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
+4. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
+   [__init .py _](./tree_sitter_language_pack/__init__.py) file.
+5. Build the bindings by executing: `pdm install -v`.
+6. Execute the tests with `pdm run test`.
+7. If the tests pass, commit your changes and open a pull request.
+
+
 #### Adding a Binary Wheel Language
 
 1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
@@ -238,19 +253,9 @@ That is, each object must have a `repo` key, and optionally a `branch`, `directo
 - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
   repository / directory combo. This should be specified only if the binding needs to be build in the repository.
 
-1. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
-2. Build the bindings by executing: `pdm install -v`.
-3. Execute the tests with `pdm run test`.
-4. If the tests pass, commit your changes and open a pull request.
-
-#### Adding an installed binding
-
-Some bindings are not build from source but are rather installed via PDM and are added to the package dependencies in
-the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
-
-1. Install the bindings with `pdm add <bindings_package_name>`.
-2. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
-   [__init .py _](./tree_sitter_language_pack/__init__.py) file.
-3. Build the bindings by executing: `pdm install -v`.
-4. Execute the tests with `pdm run test`.
-5. If the tests pass, commit your changes and open a pull request.
+2. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
+3. Install the dev dependencies with `pdm install -v --no-self`
+4. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
+5. Build the bindings by executing: `pdm install -v`.
+6. Execute the tests with `pdm run test`.
+7. If the tests pass, commit your changes and open a pull request.
