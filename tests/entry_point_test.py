@@ -6,7 +6,7 @@ from typing import Any, cast
 import pytest
 from tree_sitter import Language, Parser
 
-from tree_sitter_language_pack import SupportedLanguage, get_language, get_parser
+from tree_sitter_language_pack import SupportedLanguage, get_binding, get_language, get_parser
 
 language_definitions = cast(
     dict[str, dict[str, str]],
@@ -28,6 +28,11 @@ language_names = [
 def test_language_names() -> None:
     supported_langauges = sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__])  # type: ignore[attr-defined]
     assert supported_langauges == sorted(language_names)
+
+
+@pytest.mark.parametrize("language", language_names)
+def test_get_binding(language: SupportedLanguage) -> None:
+    assert isinstance(get_binding(language), int)
 
 
 @pytest.mark.parametrize("language", language_names)

@@ -186,20 +186,56 @@ installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
 }
 
 
-def get_language(language_name: SupportedLanguage) -> Language:
-    """Get the language with the given name."""
+def get_binding(language_name: SupportedLanguage) -> int:
+    """Get the binding for the given language name.
+
+    Args:
+        language_name (SupportedLanguage): The name of the language.
+
+    Raises:
+        LookupError: If the language is not found.
+
+    Returns:
+        int: The binding for the language.
+    """
     if language_name in installed_bindings_map:
-        return Language(installed_bindings_map[cast(InstalledBindings, language_name)]())
+        return installed_bindings_map[cast(InstalledBindings, language_name)]()
 
     try:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
-        return Language(module.language())
+        return cast(int, module.language())
     except ModuleNotFoundError as e:
         raise LookupError(f"Language not found: {language_name}") from e
 
 
+def get_language(language_name: SupportedLanguage) -> Language:
+    """Get the language with the given name.
+
+    Args:
+        language_name (SupportedLanguage): The name of the language.
+
+    Raises:
+        LookupError: If the language is not found.
+
+    Returns:
+        Language: The language as a tree-sitter Language instance.
+    """
+    binding = get_binding(language_name)
+    return Language(binding)
+
+
 def get_parser(language_name: SupportedLanguage) -> Parser:
-    """Get a parser for the given language name."""
+    """Get a parser for the given language name.
+
+    Args:
+        language_name (SupportedLanguage): The name of the language.
+
+    Raises:
+        LookupError: If the language is not found.
+
+    Returns:
+        Parser: The parser for the language as a tree-sitter Parser instance.
+    """
     return Parser(get_language(language_name=language_name))
 
 

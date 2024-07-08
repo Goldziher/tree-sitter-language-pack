@@ -1,6 +1,6 @@
 [project]
 name = "tree-sitter-language-pack"
-version = "0.1.2"
+version = "0.2.0"
 description = "Extensive Language Pack for Tree-Sitter"
 authors = [{ name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" }]
 
