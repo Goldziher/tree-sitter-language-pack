@@ -3,48 +3,22 @@
 
 [metadata]
 groups = ["default", "dev"]
-strategy = ["cross_platform", "inherit_metadata"]
-lock_version = "4.4.2"
+strategy = ["inherit_metadata"]
+lock_version = "4.5.0"
 content_hash = "sha256:41aa61cb047d8a8c7c259c08cb4171d088d4f540df3c1e21386fd0a9a553044f"
 
-[[package]]
-name = "aiofile"
-version = "3.5.0"
-requires_python = ">3.4.*, <4"
-summary = "Asynchronous file operations."
-groups = ["dev"]
-dependencies = [
-    "caio~=0.8.0",
-]
-files = [
-    {file = "aiofile-3.5.0-py3-none-any.whl", hash = "sha256:5e7287a33b498bfa418aac1caa0be7b2ad32ec49680ec22f537335d95002de0a"},
-    {file = "aiofile-3.5.0.tar.gz", hash = "sha256:cc9fb394e8c0ad1d2b9014a9b4bdaa3535f098c5881bd3ba220350b198c12727"},
-]
-
-[[package]]
-name = "aiofiles"
-version = "0.6.0"
-summary = "File support for asyncio."
-groups = ["dev"]
-files = [
-    {file = "aiofiles-0.6.0-py3-none-any.whl", hash = "sha256:bd3019af67f83b739f8e4053c6c0512a7f545b9a8d91aaeab55e6e0f9d123c27"},
-    {file = "aiofiles-0.6.0.tar.gz", hash = "sha256:e0281b157d3d5d59d803e3f4557dcc9a3dff28a4dd4829a9ff478adae50ca092"},
-]
+[[metadata.targets]]
+requires_python = ">=3.9.0"
 
 [[package]]
 name = "aiopath"
-version = "0.5.6"
+version = "0.5.12"
 requires_python = ">=3.7"
 summary = "📁 Async pathlib for Python"
 groups = ["dev"]
-dependencies = [
-    "aiofile==3.5.0",
-    "aiofiles==0.6.0",
-    "typing-extensions>=3.10.0.0; python_version < \"3.10\"",
-]
 files = [
-    {file = "aiopath-0.5.6-py2.py3-none-any.whl", hash = "sha256:759430e63b180e684a529ae23d804a1003e14e41f64f46196ffe2da444be455b"},
-    {file = "aiopath-0.5.6.tar.gz", hash = "sha256:daa794df01ca9b62b0df021ebff603059e7f7589d045a24cf6a29f2abff4e08b"},
+    {file = "aiopath-0.5.12-py2.py3-none-any.whl", hash = "sha256:9d85fd17ef1cbc75c0e81619acb3a1632cf5e15ead459e57fef5ec85e0b7a1da"},
+    {file = "aiopath-0.5.12.tar.gz", hash = "sha256:de2f9401dd098b9a279afb265df5a6eb5b78f39c2c4f3871f671fc1dd4b21d64"},
 ]
 
 [[package]]
@@ -62,19 +36,6 @@ dependencies = [
 files = [
     {file = "anyio-4.4.0-py3-none-any.whl", hash = "sha256:c1b2d8f46a8a812513012e1107cb0e68c17159a7a594208005a57dc776e1bdc7"},
     {file = "anyio-4.4.0.tar.gz", hash = "sha256:5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"},
-]
-
-[[package]]
-name = "caio"
-version = "0.8.4"
-requires_python = ">=3.5.*, <4"
-summary = "Asynchronous file IO for Linux Posix and Windows."
-groups = ["dev"]
-files = [
-    {file = "caio-0.8.4-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:67d0b376676c0959b09d00d8e7715c0dd2127b1503b5727a0a232c6561668d96"},
-    {file = "caio-0.8.4-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:7a422a877c2d9f2c2cdce0219306bb063a4106765f9cad19d2917c70de415a63"},
-    {file = "caio-0.8.4-py3-none-any.whl", hash = "sha256:f7ee73b182d732bbca937df3ce13767641328f8fc69f92605aaab06feba5a125"},
-    {file = "caio-0.8.4.tar.gz", hash = "sha256:c49fef200796ac876a3507d2b07478c3920c48968dcef26ff928d191cd89d041"},
 ]
 
 [[package]]
@@ -155,6 +116,7 @@ summary = "GitPython is a Python library used to interact with Git repositories"
 groups = ["dev"]
 dependencies = [
     "gitdb<5,>=4.0.1",
+    "typing-extensions>=3.7.4.3; python_version < \"3.8\"",
 ]
 files = [
     {file = "GitPython-3.1.43-py3-none-any.whl", hash = "sha256:eec7ec56b92aad751f9912a73404bc02ba212a23adb2c7098ee668417051a1ff"},
@@ -594,6 +556,7 @@ groups = ["dev"]
 dependencies = [
     "distlib<1,>=0.3.7",
     "filelock<4,>=3.12.2",
+    "importlib-metadata>=6.6; python_version < \"3.8\"",
     "platformdirs<5,>=3.9.1",
 ]
 files = [
