@@ -49,7 +49,7 @@ async def clone_repository(repo_url: str, branch: Optional[str], language_name: 
     kwargs = {"url": repo_url, "to_path": vendor_directory / language_name, "depth": 1}
     if branch:
         kwargs["branch"] = branch
-    handler = partial(Repo.clone_from, **kwargs)
+    handler = partial(Repo.clone_from, **kwargs)  # type: ignore[arg-type]
 
     await run_sync(handler)
     print(f"Cloned {repo_url} successfully")

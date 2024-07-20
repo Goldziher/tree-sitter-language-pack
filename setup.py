@@ -4,8 +4,8 @@ from pathlib import Path
 from platform import system
 from typing import Any
 
-from setuptools import Extension, find_packages, setup  # type: ignore[import-untyped]
-from setuptools.command.build_ext import build_ext  # type: ignore[import-untyped]
+from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext
 from typing_extensions import NotRequired, TypedDict
 from wheel.bdist_wheel import bdist_wheel  # type: ignore[import-untyped]
 
@@ -74,7 +74,7 @@ data_files = [
 ]
 
 
-class BuildExt(build_ext):  # type: ignore[misc]
+class BuildExt(build_ext):
     """Custom build extension to handle tree-sitter language repositories."""
 
     def build_extension(self, ext: Extension) -> None:

@@ -1,10 +1,46 @@
-name: Release
+name: CI
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+    - name: Install Dependencies
+      run: pdm install -v
+    - name: Load Cached Pre-Commit Dependencies
+      id: cached-pre-commit-dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pre-commit/
+        key: pre-commit-4|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+    - name: Lint
+      run: pdm run pre-commit run --show-diff-on-failure --color=always --all-files
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+    - name: Install
+      run: pdm install
+    - name: Test
+      run: pdm run test
   clone_vendors:
+    needs: [validate, test]
     name: Clone vendors
     runs-on: ubuntu-latest
     steps:
@@ -18,8 +54,6 @@ jobs:
       with:
         python-version: '3.9'
         cache: true
-        cache-dependency-path: |
-          ./pdm.lock
     - name: Install Dependencies
       run: pdm install -v --no-self
     - name: Clone vendors
@@ -44,8 +78,6 @@ jobs:
       with:
         python-version: '3.9'
         cache: true
-        cache-dependency-path: |
-          ./pdm.lock
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
     - name: Install and build extensions
@@ -56,11 +88,6 @@ jobs:
       run: pdm build --no-wheel -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
-    - name: Upload sources
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist-sources
-        path: dist/*.tar.gz
   build-wheels:
     needs: clone_vendors
     strategy:
@@ -79,8 +106,6 @@ jobs:
       with:
         python-version: '3.9'
         cache: true
-        cache-dependency-path: |
-          ./pdm.lock
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
     - name: Install and build extensions
@@ -91,25 +116,3 @@ jobs:
       run: pdm build --no-sdist -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
-    - uses: actions/upload-artifact@v4
-      with:
-        name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
-        path: dist/*.whl
-  publish:
-    name: Publish Python package
-    needs: [build-sdist, build-wheels]
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/tree-sitter-language-pack/
-    steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: dist
-        pattern: dist-*
-        merge-multiple: true
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{secrets.PYPI_API_TOKEN}}

@@ -1,0 +1,109 @@
+name: Build and Publish
+
+on:
+  release:
+    types: [published]
+jobs:
+  clone_vendors:
+    name: Clone vendors
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Install tree-sitter cli
+      run: npm install -g tree-sitter-cli
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+    - name: Install Dependencies
+      run: pdm install -v --no-self
+    - name: Clone vendors
+      run: pdm run scripts/clone_vendors.py
+    - uses: actions/upload-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
+  build-sdist:
+    needs: clone_vendors
+    name: Build source dist
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+    - name: Install and build extensions
+      run: pdm install -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
+    - name: Build source dist
+      run: pdm build --no-wheel -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
+    - name: Upload sources
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist-sources
+        path: dist/*.tar.gz
+  build-wheels:
+    needs: clone_vendors
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-13, macos-14, windows-latest]
+    name: Build wheel on ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download parsers
+      uses: actions/download-artifact@v4
+      with:
+        name: language-parsers
+        path: parsers
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: '3.9'
+        cache: true
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+    - name: Install and build extensions
+      run: pdm install -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
+    - name: Build wheels
+      run: pdm build --no-sdist -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
+    - uses: actions/upload-artifact@v4
+      with:
+        name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
+        path: dist/*.whl
+  publish:
+    name: Publish Python package
+    needs: [build-sdist, build-wheels]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/tree-sitter-language-pack/
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: dist
+        pattern: dist-*
+        merge-multiple: true
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        password: ${{secrets.PYPI_API_TOKEN}}
