@@ -190,7 +190,7 @@ def get_binding(language_name: SupportedLanguage) -> int:
     """Get the binding for the given language name.
 
     Args:
-        language_name (SupportedLanguage): The name of the language.
+        language_name: The name of the language.
 
     Raises:
         LookupError: If the language is not found.
@@ -212,10 +212,7 @@ def get_language(language_name: SupportedLanguage) -> Language:
     """Get the language with the given name.
 
     Args:
-        language_name (SupportedLanguage): The name of the language.
-
-    Raises:
-        LookupError: If the language is not found.
+        language_name: The name of the language.
 
     Returns:
         Language: The language as a tree-sitter Language instance.
@@ -228,10 +225,7 @@ def get_parser(language_name: SupportedLanguage) -> Parser:
     """Get a parser for the given language name.
 
     Args:
-        language_name (SupportedLanguage): The name of the language.
-
-    Raises:
-        LookupError: If the language is not found.
+        language_name: The name of the language.
 
     Returns:
         Parser: The parser for the language as a tree-sitter Parser instance.

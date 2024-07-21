@@ -45,7 +45,7 @@ def test_get_parser(language: SupportedLanguage) -> None:
     assert isinstance(get_parser(language), Parser)
 
 
-@pytest.mark.parametrize("handler", (get_language, get_parser))
+@pytest.mark.parametrize("handler", [get_language, get_parser])
 def test_raises_exception_for_invalid_name(handler: Callable[[str], Any]) -> None:
     with pytest.raises(LookupError):
         handler("invalid")

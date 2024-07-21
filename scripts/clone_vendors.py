@@ -1,10 +1,11 @@
+from __future__ import annotations
+
 import asyncio
 import subprocess
 from functools import partial
 from json import loads
 from pathlib import Path
 from shutil import move
-from typing import Optional
 
 from anyio.to_thread import run_sync
 from git import Repo
@@ -34,13 +35,13 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     return language_definitions, language_names
 
 
-async def clone_repository(repo_url: str, branch: Optional[str], language_name: str) -> None:
+async def clone_repository(repo_url: str, branch: str | None, language_name: str) -> None:
     """Clone a repository.
 
     Args:
-        repo_url (str): The repository URL.
-        branch (str | None): The branch to clone.
-        language_name (str): The name of the repository.
+        repo_url: The repository URL.
+        branch: The branch to clone.
+        language_name: The name of the repository.
 
     Returns:
         Repo: The cloned repository.
@@ -55,12 +56,12 @@ async def clone_repository(repo_url: str, branch: Optional[str], language_name: 
     print(f"Cloned {repo_url} successfully")
 
 
-async def handle_generate(language_name: str, directory: Optional[str]) -> None:
+async def handle_generate(language_name: str, directory: str | None) -> None:
     """Handle the generation of a language.
 
     Args:
-        language_name (str): The name of the language.
-        directory (str | None): The directory to generate the language in.
+        language_name: The name of the language.
+        directory: The directory to generate the language in.
 
     Returns:
         None
@@ -75,12 +76,12 @@ async def handle_generate(language_name: str, directory: Optional[str]) -> None:
     print(f"Generated {language_name} parser successfully")
 
 
-async def move_src_folder(language_name: str, directory: Optional[str]) -> None:
+async def move_src_folder(language_name: str, directory: str | None) -> None:
     """Move the src folder to the parsers directory.
 
     Args:
-        language_name (str): The name of the language.
-        directory (str | None): The directory to move the src folder from.
+        language_name: The name of the language.
+        directory: The directory to move the src folder from.
 
     Returns:
         None
@@ -101,8 +102,8 @@ async def process_repo(language_name: str, language_definition: LanguageDict) ->
     """Process a repository.
 
     Args:
-        language_name (str): The name of the language.
-        language_definition (LanguageDict): The language definition.
+        language_name: The name of the language.
+        language_definition: The language definition.
 
     Returns:
         None

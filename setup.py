@@ -21,7 +21,7 @@ class LanguageDict(TypedDict):
 
 def get_mapped_parsers() -> dict[str, Path]:
     """Get the language definitions."""
-    parsers_dir = Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "parsers"
+    parsers_dir = Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "parsers"  # noqa: PTH109
     return {dir_name: (parsers_dir / dir_name) for dir_name in listdir(parsers_dir)}
 
 
@@ -29,7 +29,7 @@ def create_extension(*, language_name: str) -> Extension:
     """Create an extension for the given language.
 
     Args:
-        language_name (str): The name of the language.
+        language_name: The name of the language.
 
     Returns:
         Extension: The extension for the language.
@@ -74,13 +74,13 @@ data_files = [
 ]
 
 
-class BuildExt(build_ext):
+class BuildExt(build_ext):  # type: ignore[misc]
     """Custom build extension to handle tree-sitter language repositories."""
 
     def build_extension(self, ext: Extension) -> None:
         """Build the extension."""
         language_name = ext.name.split(".")[-1]
-        cwd = Path(getcwd())
+        cwd = Path(getcwd())  # noqa: PTH109
 
         # Add the language extension source file
         language_extension = (cwd / "sources" / "language_extension.c").resolve()

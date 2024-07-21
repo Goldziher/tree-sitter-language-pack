@@ -66,51 +66,23 @@ test = "pytest ./tests"
 [tool.ruff]
 line-length = 120
 target-version = "py39"
-
 lint.select = [
-    "A",   # flake8-builtins
-    "B",   # flake8-bugbear
-    "BLE", # flake8-blind-except
-    "C4",  # flake8-comprehensions
-    "C90", # mccabe
-    "D",   # pydocstyle
-    "DJ",  # flake8-django
-    "DTZ", # flake8-datetimez
-    "E",   # pycodestyle errors
-    "ERA", # eradicate
-    "EXE", # flake8-executable
-    "F",   # pyflakes
-    "G",   # flake8-logging-format
-    "I",   # isort
-    "ICN", # flake8-import-conventions
-    "ISC", # flake8-implicit-str-concat
-    "N",   # pep8-naming
-    "PIE", # flake8-pie
-    "PLC", # pylint - convention
-    "PLE", # pylint - error
-    "PLW", # pylint - warning
-    "Q",   # flake8-quotes
-    "RET", # flake8-return
-    "RUF", # Ruff-specific rules
-    "S",   # flake8-bandit
-    "SIM", # flake8-simplify
-    "T10", # flake8-debugger
-    "T20", # flake8-print
-    "TCH", # flake8-type-checking
-    "TID", # flake8-tidy-imports
-    "UP",  # pyupgrade
-    "W",   # pycodestyle - warning
-    "YTT", # flake8-2020
+    "ALL",
 ]
 lint.ignore = [
-    "ISC001", # isort - conflict with other rules
-    "A003", # flake8-builtins - class attribute {name} is shadowing a python builtin
-    "B008", # bugbear - function call parameters init
-    "D100", # pydocstyle - missing docstring in public module
+    "ANN401", # dynamically typed ANY
+    "COM812", # Conflicts with formatter
+    "D100", # # pydocstyle - missing docstring in public module
     "D104", # pydocstyle - missing docstring in public package
     "D107", # pydocstyle - missing docstring in __init__
-    "E203", # whitespace before ':', handled by ruff format
+    "D205", # pydocstyle - 1 blank line required between summary line and description
     "E501", # pycodestyle line too long, handled by ruff format
+    "EM", # Exception messages,
+    "FBT", # Boolean values
+    "FIX", # we allow todo and fixme comments
+    "ISC001", # Conflicts with formatter
+    "TD", # we allow todo and fixme comments
+    "TRY", # Try except block, rules are too strict
 ]
 src = ["tree_sitter_language_pack", "tests"]
 
@@ -133,13 +105,8 @@ known-first-party = ["tree_sitter_language_pack", "tests"]
 [tool.mypy]
 packages = ["tree_sitter_language_pack", "tests"]
 python_version = "3.9"
-disallow_any_generics = false
-disallow_untyped_decorators = false
-implicit_reexport = false
+disallow_untyped_decorators = true
+disallow_any_unimported = true
 show_error_codes = true
 strict = true
-warn_redundant_casts = true
-warn_return_any = true
 warn_unreachable = true
-warn_unused_configs = true
-warn_unused_ignores = true
