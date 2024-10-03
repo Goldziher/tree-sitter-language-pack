@@ -146,6 +146,7 @@ SupportedLanguage = Union[
         "solidity",
         "sql",
         "squirrel",
+        "sparql",
         "starlark",
         "svelte",
         "swift",

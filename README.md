@@ -170,6 +170,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [solidity](https://github.com/JoranHonig/tree-sitter-solidity) - MIT License
 - [sql](https://github.com/derekstride/tree-sitter-sql) - MIT License
 - [squirrel](https://github.com/tree-sitter-grammars/tree-sitter-squirrel) - MIT License
+- [sparql](https://github.com/GordianDziwis/tree-sitter-sparql) - MIT License
 - [starlark](https://github.com/tree-sitter-grammars/tree-sitter-starlark) - MIT License
 - [svelte](https://github.com/tree-sitter-grammars/tree-sitter-svelte) - MIT License
 - [swift](https://github.com/alex-pinkus/tree-sitter-swift) - MIT License
