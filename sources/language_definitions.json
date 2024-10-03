@@ -429,6 +429,9 @@
     "squirrel": {
         "repo": "https://github.com/tree-sitter-grammars/tree-sitter-squirrel"
     },
+    "sparql": {
+        "repo": "https://github.com/GordianDziwis/tree-sitter-sparql"
+    },
     "starlark": {
         "repo": "https://github.com/tree-sitter-grammars/tree-sitter-starlark"
     },
