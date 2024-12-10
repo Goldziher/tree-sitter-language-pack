@@ -121,6 +121,7 @@ SupportedLanguage = Union[
         "printf",
         "prisma",
         "properties",
+        "proto",
         "psv",
         "puppet",
         "purescript",

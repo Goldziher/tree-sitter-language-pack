@@ -344,6 +344,9 @@
     "properties": {
         "repo": "https://github.com/tree-sitter-grammars/tree-sitter-properties"
     },
+    "proto": {
+        "repo": "https://github.com/coder3101/tree-sitter-proto"
+    },
     "psv": {
         "repo": "https://github.com/amaanq/tree-sitter-csv",
         "branch": "master",
