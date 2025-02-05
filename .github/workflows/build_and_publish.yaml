@@ -8,35 +8,38 @@ jobs:
     name: Clone vendors
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
 
-    - name: Install tree-sitter cli
-      run: npm install -g tree-sitter-cli
+      - name: Install tree-sitter cli
+        run: npm install -g tree-sitter-cli
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-    - name: Install Dependencies
-      run: uv sync --all-extras --dev --no-install-project
+      - name: Install Dependencies
+        run: uv sync --no-install-project
 
-    - name: Clone vendors
-      run: uv run scripts/clone_vendors.py
+      - name: Clone vendors
+        run: |
+          mkdir parsers
+          uv run --no-sync scripts/clone_vendors.py
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
+      - name: Upload Parsers
+        uses: actions/upload-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
   build-sdist:
     needs: clone_vendors
     name: Build SDist
@@ -62,10 +65,23 @@ jobs:
           python-version-file: "pyproject.toml"
 
       - name: Install Dependencies
-        run: uv sync --all-extras --dev --no-install-project
+        run: uv sync --no-install-project
 
       - name: Set path in environment
         run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+
+      - name: Cache Bindings
+        id: cache-bindings
+        uses: actions/cache@v4
+        with:
+          path: tree_sitter_language_pack/bindings
+          key: ${{ hashFiles('sources/*') }}-language-definitions
+
+      - name: Build Extensions
+        if: steps.cache-bindings.outputs.cache-hit != 'true'
+        run: uv run setup.py build_ext --inplace
+        env:
+          PROJECT_ROOT: ${{github.workspace}}
 
       - name: Build sdist
         run: uv build --sdist
@@ -105,10 +121,23 @@ jobs:
         python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
-      run: uv sync --all-extras --dev --no-install-project
+      run: uv sync --no-install-project
 
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+
+    - name: Cache Bindings
+      id: cache-bindings
+      uses: actions/cache@v4
+      with:
+        path: tree_sitter_language_pack/bindings
+        key: ${{ hashFiles('sources/*') }}-language-definitions
+
+    - name: Build Extensions
+      if: steps.cache-bindings.outputs.cache-hit != 'true'
+      run: uv run setup.py build_ext --inplace
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
 
     - name: Build wheel
       run: uv build --wheel

@@ -1,18 +1,22 @@
 from __future__ import annotations
 
 import asyncio
+import re
 import subprocess
 from functools import partial
 from json import loads
 from pathlib import Path
 from shutil import move
 
+from anyio import Path as AsyncPath
 from anyio.to_thread import run_sync
 from git import Repo
 from typing_extensions import NotRequired, TypedDict
 
 vendor_directory = Path(__file__).parent.parent / "vendor"
 parsers_directory = Path(__file__).parent.parent / "parsers"
+
+COMMON_RE_PATTERN = re.compile(r"\.{2}/(?:\.{2}/)*common/")
 
 
 class LanguageDict(TypedDict):
@@ -22,6 +26,7 @@ class LanguageDict(TypedDict):
     branch: NotRequired[str]
     directory: NotRequired[str]
     generate: NotRequired[bool]
+    rewrite_targets: NotRequired[bool]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -92,10 +97,28 @@ async def move_src_folder(language_name: str, directory: str | None) -> None:
         if directory
         else (vendor_directory / language_name / "src").resolve()
     )
-    target_dir = (parsers_directory / language_name).resolve()
-    await run_sync(partial(target_dir.mkdir, parents=True, exist_ok=True))
-    await run_sync(move, source_dir, target_dir)
+    target_source_dir = (parsers_directory / language_name).resolve()
+    await AsyncPath(target_source_dir).mkdir(parents=True, exist_ok=True)
+    await run_sync(move, source_dir, target_source_dir)
     print(f"Moved {language_name} parser files successfully")
+
+    common_source_dir = vendor_directory / language_name / "common"
+
+    if await AsyncPath(common_source_dir).exists():
+        print(f"Moving {language_name} common files")
+        await run_sync(move, common_source_dir, target_source_dir)
+        print(f"Moved {language_name} common files successfully")
+
+        for file in target_source_dir.glob("**/*.c"):
+            # replace any include statement that points at common with an updated path:
+            # e.g. '#include "../../common/scanner.h"' should point at (target_common_dir / 'scanner.h').relative_path()
+            file_contents = await AsyncPath(file).read_text()
+            file_contents = COMMON_RE_PATTERN.sub(
+                str((target_source_dir / "common").relative_to(file.parent, walk_up=True)) + "/",  # type: ignore[call-arg]
+                file_contents,
+            )
+
+            await AsyncPath(file).write_text(file_contents)
 
 
 async def process_repo(language_name: str, language_definition: LanguageDict) -> None:
@@ -118,6 +141,8 @@ async def process_repo(language_name: str, language_definition: LanguageDict) ->
 
 async def main() -> None:
     """Main function."""
+    parsers_directory.mkdir(exist_ok=True, parents=True)
+
     language_definitions, language_names = get_language_definitions()
     await asyncio.gather(
         *[

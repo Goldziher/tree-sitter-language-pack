@@ -16,27 +16,17 @@ language_definitions = cast(
     dict[str, dict[str, str]],
     loads((Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json").read_text()),
 )
-language_names = [
-    *list(language_definitions.keys()),
-    "csharp",
-    "embeddedtemplate",
-    "yaml",
-    "typescript",
-    "tsx",
-    "xml",
-    "php",
-    "dtd",
-]
+language_names = sorted([*list(language_definitions.keys()), "yaml", "csharp", "embeddedtemplate"])
 
 
 def test_language_names() -> None:
-    supported_languages = sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__])  # type: ignore[attr-defined]
-    assert supported_languages == sorted(language_names)
+    supported_languages = sorted(SupportedLanguage.__args__)  # type: ignore[attr-defined]
+    assert supported_languages == language_names
 
 
 @pytest.mark.parametrize("language", language_names)
 def test_get_binding(language: SupportedLanguage) -> None:
-    assert isinstance(get_binding(language), int)
+    assert isinstance(get_binding(language), int) or type(get_binding(language)).__name__ == "PyCapsule"
 
 
 @pytest.mark.parametrize("language", language_names)

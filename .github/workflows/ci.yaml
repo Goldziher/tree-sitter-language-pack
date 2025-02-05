@@ -33,10 +33,12 @@ jobs:
         python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
-      run: uv sync --all-extras --dev --no-install-project
+      run: uv sync --no-install-project
 
     - name: Clone vendors
-      run: uv run scripts/clone_vendors.py
+      run: |
+        mkdir parsers
+        uv run --no-sync scripts/clone_vendors.py
 
     - name: Upload Parsers
       uses: actions/upload-artifact@v4
@@ -68,7 +70,7 @@ jobs:
         python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
-      run: uv sync --all-extras --dev  --no-install-project
+      run: uv sync --no-install-project
 
     - name: Load Cached Pre-Commit Dependencies
       id: cached-pre-commit-dependencies
@@ -78,7 +80,7 @@ jobs:
         key: pre-commit-4|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
     - name: Run Linters
-      run: uv run pre-commit run --show-diff-on-failure --color=always --all-files
+      run: uv run --no-sync pre-commit run --show-diff-on-failure --color=always --all-files
   test:
     needs: clone_vendors
     runs-on: ubuntu-latest
@@ -103,10 +105,23 @@ jobs:
         python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
-      run: uv sync --all-extras --dev  --no-install-project
+      run: uv sync --no-install-project
+
+    - name: Cache Bindings
+      id: cache-bindings
+      uses: actions/cache@v4
+      with:
+        path: tree_sitter_language_pack/bindings
+        key: ${{ hashFiles('sources/*') }}-language-definitions
+
+    - name: Build Extensions
+      if: steps.cache-bindings.outputs.cache-hit != 'true'
+      run: uv run --no-sync setup.py build_ext --inplace
 
     - name: Test
-      run: uv run test
+      run: uv run --no-sync pytest tests -v
+      env:
+        PROJECT_ROOT: ${{github.workspace}}
   build:
     needs: [validate, test]
     name: Build source dist
@@ -134,9 +149,6 @@ jobs:
 
     - name: Install Dependencies
       run: uv sync --all-extras --dev --no-install-project
-
-    - name: Set path in environment
-      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
 
     - name: Build
       run: uv build -v

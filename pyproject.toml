@@ -1,11 +1,11 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 
-requires = [ "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
+requires = [ "cython", "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.2.1"
+version = "0.3.0"
 description = "Extensive Language Pack for Tree-Sitter"
 readme = "README.md"
 keywords = [ "code", "text-processing", "tree-sitter" ]
@@ -32,9 +32,6 @@ dependencies = [
   "tree-sitter>=0.23.2",
   "tree-sitter-c-sharp>=0.23.1",
   "tree-sitter-embedded-template>=0.23.2",
-  "tree-sitter-php>=0.23.11",
-  "tree-sitter-typescript>=0.23.2",
-  "tree-sitter-xml>=0.7.0",
   "tree-sitter-yaml>=0.7.0",
 ]
 
