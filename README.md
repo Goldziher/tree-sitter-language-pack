@@ -1,12 +1,17 @@
 # Tree Sitter Language Pack
 
 This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages
-as both source distribution and pre-built wheels. It is compatible
-with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above. It is strongly typed.
+as both source distribution and pre-built wheels.
 
-Notes:
+## Installation
 
-- This package is a maintained and updated fork of
+```bash
+pip install tree-sitter-language-pack
+```
+
+## Important Notes:
+
+- This package started life as a maintained and updated fork of
   [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages) by Grant Jenks, and it
   incorporates code contributed by ObserverOfTime (see
   this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
@@ -15,12 +20,14 @@ Notes:
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
   no GPL
   licensed languages are included.
+- This library is compatible with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above.
 
-## Installation
+## Features
 
-```bash
-pip install tree-sitter-language-pack
-```
+- 100+ Languages: Support for all major programming languages and many domain-specific languages
+- Pre-built Wheels: Easy installation with no compilation required
+- Type-Safe: Full typing support for better IDE integration and code safety
+- Zero GPL Dependencies: All bundled languages use permissive licenses (MIT, Apache 2.0, etc.)
 
 ## Usage
 
@@ -203,59 +210,64 @@ submitting PRs to avoid disappointment.
 
 1. Clone the repo
 2. Install the system dependencies
-3. Install the full dependencies with `uv sync`
+3. Install the full dependencies with `uv sync --no-install-project`
 4. Install the pre-commit hooks with:
    ```shell
    pre-commit install && pre-commit install --hook-type commit-msg
    ```
-5. Make your changes and submit a PR
+5. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
+6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
+
+### Running Tests
+
+To run the tests, execute the following command:
+
+```shell
+PROJECT_ROOT=. uv run --no-sync pytest tests
+```
 
 ### Adding a new language
 
 #### Install
 
 Some bindings are installed via UV and are added to the package dependencies in
-the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
+the [pyproject.toml](./pyproject.toml) file.
+
+To add an installed package follow these steps:
 
 1. Install the bindings with `uv add <bindings_package_name> --no-install-project`.
-2. Execute the cloning script with `uv run scripts/clone_vendors.py`.
+2. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
 3. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
    [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
-4. Build the bindings by executing: `uv sync -v`.
-5. Execute the tests with `uv run test`.
-6. If the tests pass, commit your changes and open a pull request.
+4. Update the code in the init file as necessary.
+5. Build the bindings by executing: `uv run --no-sync setup.py build_ext --inplace`.
+6. Execute the tests (see above).
+7. If the tests pass, commit your changes and open a pull request.
 
 #### Adding a Binary Wheel Language
 
 1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
-   at the repository's root.
-
-This file contains a mapping of language names to their respective repositories.
-
-```jsonc
-{
-  "name": {
-    "repo": "https://github.com/...",
-    "branch": "master", // not mandatory
-    "directory": "sub-dir/something", // not mandatory
-    "generate": true, // not mandatory
-  },
-}
-```
-
-That is, each object must have a `repo` key, and optionally a `branch`, `directory`, and `generate` keys.
-
-- `repo` is the URL of the tree-sitter repository. This value is mandatory
-- `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
-  i.e. for `master` or other names, specify this).
-- `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
-  the `src` folder is not immediately under the root folder.
-- `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
-  repository / directory combo. This should be specified only if the binding needs to be build in the repository.
-
+   at the repository's root. This file contains a mapping of language names to their respective repositories:
+   ```jsonc
+   {
+     "name": {
+       "repo": "https://github.com/...",
+       "branch": "master", // not mandatory
+       "directory": "sub-dir/something", // not mandatory
+       "generate": true, // not mandatory
+     },
+   }
+   ```
+   - `repo` is the URL of the tree-sitter repository. This value is mandatory
+   - `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
+     i.e. for `master` or other names, specify this).
+   - `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
+     the `src` folder is not immediately under the root folder.
+   - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
+     repository / directory combo. This should be specified only if the binding needs to be build in the repository.
 2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
 3. Install the dev dependencies with `uv sync --no-install-project -v`
-4. Execute the cloning script with `uv run scripts/clone_vendors.py`.
-5. Build the bindings by executing: `uv sync -v`.
-6. Execute the tests with `uv run test`.
+4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+5. Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
+6. Execute the tests (see above).
 7. If the tests pass, commit your changes and open a pull request.
