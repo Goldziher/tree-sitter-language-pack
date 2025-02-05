@@ -8,56 +8,36 @@ jobs:
     name: Clone vendors
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: '22'
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+
     - name: Install tree-sitter cli
       run: npm install -g tree-sitter-cli
-    - uses: pdm-project/setup-pdm@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
       with:
-        python-version: '3.9'
-        cache: true
+        enable-cache: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+
     - name: Install Dependencies
-      run: pdm install -v --no-self
+      run: uv sync --all-extras --dev --no-install-project
+
     - name: Clone vendors
       run: pdm run scripts/clone_vendors.py
+
     - uses: actions/upload-artifact@v4
       with:
         name: language-parsers
         path: parsers
-  build-sdist:
-    needs: clone_vendors
-    name: Build source dist
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-    - uses: actions/checkout@v4
-    - name: Download parsers
-      uses: actions/download-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
-    - uses: pdm-project/setup-pdm@v4
-      with:
-        python-version: '3.9'
-        cache: true
-    - name: Set path in environment
-      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
-    - name: Install and build extensions
-      run: pdm install -v
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
-    - name: Build source dist
-      run: pdm build --no-wheel -v
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
-    - name: Upload sources
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist-sources
-        path: dist/*.tar.gz
-  build-wheels:
+  build:
     needs: clone_vendors
     strategy:
       matrix:
@@ -65,33 +45,46 @@ jobs:
     name: Build wheel on ${{matrix.os}}
     runs-on: ${{matrix.os}}
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Download parsers
       uses: actions/download-artifact@v4
       with:
         name: language-parsers
         path: parsers
-    - uses: pdm-project/setup-pdm@v4
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
       with:
-        python-version: '3.9'
-        cache: true
+        enable-cache: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "pyproject.toml"
+
+    - name: Install Dependencies
+      run: uv sync --all-extras --dev --no-install-project
+
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+
     - name: Install and build extensions
-      run: pdm install -v
+      run: uv sync -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
+
     - name: Build wheels
-      run: pdm build --no-sdist -v
+      run: uv build -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
+
     - uses: actions/upload-artifact@v4
       with:
         name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
-        path: dist/*.whl
+        path: dist
   publish:
     name: Publish Python package
-    needs: [build-sdist, build-wheels]
+    needs: [build]
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -101,8 +94,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: dist
-        pattern: dist-*
         merge-multiple: true
+
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
