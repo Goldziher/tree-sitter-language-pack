@@ -77,6 +77,7 @@ class BuildExt(build_ext):
         language_extension = (cwd / "sources" / "language_extension.c").resolve()
         if not language_extension.is_file():
             raise FileNotFoundError(f"Language extension file not found: {language_extension}")
+
         ext.sources = [str(language_extension.relative_to(cwd))]
 
         parser_dir = mapped_parsers[language_name]
@@ -95,9 +96,10 @@ class BdistWheel(bdist_wheel):
     def get_tag(self) -> tuple[str, str, str]:
         """Get the tag for the wheel."""
         python, abi, platform = super().get_tag()
+        platform = platform.replace("linux", "manylinux2014")
         if python.startswith("cp") and int(python[2:]) >= MIN_PYTHON_VERSION:
             # Support all Python versions >= 3.9 using abi3
-            return f"cp{python[2:]}", "abi3", platform
+            return "cp39", "abi3", platform
         return python, abi, platform
 
 
