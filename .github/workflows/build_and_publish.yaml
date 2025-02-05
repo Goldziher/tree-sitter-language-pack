@@ -37,7 +37,47 @@ jobs:
       with:
         name: language-parsers
         path: parsers
-  build:
+  build-sdist:
+    needs: clone_vendors
+    name: Build SDist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install Dependencies
+        run: uv sync --all-extras --dev --no-install-project
+
+      - name: Set path in environment
+        run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+
+      - name: Build sdist
+        run: uv build --sdist
+        env:
+          PROJECT_ROOT: ${{github.workspace}}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-sdist
+          if-no-files-found: error
+          path: dist
+  build-wheels:
     needs: clone_vendors
     strategy:
       matrix:
@@ -47,11 +87,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
     - name: Download parsers
       uses: actions/download-artifact@v4
       with:
         name: language-parsers
         path: parsers
+
     - name: Install uv
       uses: astral-sh/setup-uv@v5
       with:
@@ -68,23 +110,19 @@ jobs:
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
 
-    - name: Install and build extensions
-      run: uv sync -v
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
-
-    - name: Build wheels
-      run: uv build -v
+    - name: Build wheel
+      run: uv build --wheel
       env:
         PROJECT_ROOT: ${{github.workspace}}
 
     - uses: actions/upload-artifact@v4
       with:
-        name: wheels-${{ matrix.os }}-${{ strategy.job-index }}
+        name: dist-wheel-${{ matrix.os }}-${{ strategy.job-index }}
+        if-no-files-found: error
         path: dist
   publish:
     name: Publish Python package
-    needs: [build]
+    needs: [build-wheels]
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -94,6 +132,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: dist
+        pattern: dist-*
         merge-multiple: true
 
     - name: Publish to PyPI

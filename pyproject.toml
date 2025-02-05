@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 
-requires = [ "cython", "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
+requires = [ "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
 
 [project]
 name = "tree-sitter-language-pack"
@@ -57,7 +57,6 @@ dev = [
 target-version = "py39"
 line-length = 120
 src = [ "tests", "tree_sitter_language_pack" ]
-
 format.docstring-code-line-length = 120
 format.docstring-code-format = true
 lint.select = [
@@ -79,10 +78,7 @@ lint.ignore = [
   "TRY",    # Try except block, rules are too strict
 ]
 lint.per-file-ignores."scripts/**/*.*" = [ "S", "T201" ]
-lint.per-file-ignores."tests/**/*.*" = [
-  "D",
-  "S",
-]
+lint.per-file-ignores."tests/**/*.*" = [ "D", "S" ]
 lint.isort.known-first-party = [ "tree_sitter_language_pack", "tests" ]
 lint.pydocstyle.convention = "google"
 

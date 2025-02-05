@@ -138,11 +138,6 @@ jobs:
     - name: Set path in environment
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
 
-    - name: Install and build extensions
-      run: uv sync -v
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
-
     - name: Build
       run: uv build -v
       env:
