@@ -269,8 +269,7 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-luau"
   },
   "magik": {
-    "repo": "https://github.com/krn-robin/tree-sitter-magik",
-    "generate": true
+    "repo": "https://github.com/krn-robin/tree-sitter-magik"
   },
   "make": {
     "repo": "https://github.com/alemuller/tree-sitter-make"
@@ -457,8 +456,7 @@
     "branch": "master"
   },
   "swift": {
-    "repo": "https://github.com/alex-pinkus/tree-sitter-swift",
-    "generate": true
+    "repo": "https://github.com/alex-pinkus/tree-sitter-swift"
   },
   "tablegen": {
     "repo": "https://github.com/Flakebi/tree-sitter-tablegen",

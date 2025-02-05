@@ -148,7 +148,7 @@ jobs:
         python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
-      run: uv sync --all-extras --dev --no-install-project
+      run: uv sync --no-install-project
 
     - name: Build
       run: uv build -v
