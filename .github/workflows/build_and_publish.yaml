@@ -151,7 +151,7 @@ jobs:
         path: dist
   publish:
     name: Publish Python package
-    needs: [build-wheels]
+    needs: [build-sdist, build-wheels]
     runs-on: ubuntu-latest
     environment:
       name: pypi
