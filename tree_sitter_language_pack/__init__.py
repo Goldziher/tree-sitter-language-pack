@@ -139,7 +139,6 @@ SupportedLanguage = Literal[
     "squirrel",
     "starlark",
     "svelte",
-    "swift",
     "tablegen",
     "tcl",
     "terraform",

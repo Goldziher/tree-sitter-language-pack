@@ -455,9 +455,6 @@
     "repo": "https://github.com/Himujjal/tree-sitter-svelte",
     "branch": "master"
   },
-  "swift": {
-    "repo": "https://github.com/alex-pinkus/tree-sitter-swift"
-  },
   "tablegen": {
     "repo": "https://github.com/Flakebi/tree-sitter-tablegen",
     "branch": "master"
