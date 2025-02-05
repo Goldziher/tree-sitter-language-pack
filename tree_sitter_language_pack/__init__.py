@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from importlib import import_module
 from typing import Callable, Literal, Union, cast
 
@@ -174,7 +176,7 @@ SupportedLanguage = Union[
     InstalledBindings,
 ]
 
-installed_bindings_map: dict[InstalledBindings, Callable[[], int]] = {
+installed_bindings_map: dict[InstalledBindings, Callable[[], object]] = {
     "csharp": c_sharp_language,
     "dtd": dtd_language,
     "embeddedtemplate": embedded_template_language,
@@ -199,7 +201,7 @@ def get_binding(language_name: SupportedLanguage) -> int:
         int: The binding for the language.
     """
     if language_name in installed_bindings_map:
-        return installed_bindings_map[cast(InstalledBindings, language_name)]()
+        return cast(int, installed_bindings_map[cast(InstalledBindings, language_name)]())
 
     try:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
@@ -233,4 +235,4 @@ def get_parser(language_name: SupportedLanguage) -> Parser:
     return Parser(get_language(language_name=language_name))
 
 
-__all__ = ["get_language", "get_parser", "SupportedLanguage"]
+__all__ = ["SupportedLanguage", "get_binding", "get_language", "get_parser"]

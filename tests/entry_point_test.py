@@ -1,12 +1,16 @@
-from collections.abc import Callable
+from __future__ import annotations
+
 from json import loads
 from pathlib import Path
-from typing import Any, cast
+from typing import TYPE_CHECKING, Any, cast
 
 import pytest
 from tree_sitter import Language, Parser
 
 from tree_sitter_language_pack import SupportedLanguage, get_binding, get_language, get_parser
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 language_definitions = cast(
     dict[str, dict[str, str]],
@@ -26,8 +30,8 @@ language_names = [
 
 
 def test_language_names() -> None:
-    supported_langauges = sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__])  # type: ignore[attr-defined]
-    assert supported_langauges == sorted(language_names)
+    supported_languages = sorted([*SupportedLanguage.__args__[0].__args__, *SupportedLanguage.__args__[1].__args__])  # type: ignore[attr-defined]
+    assert supported_languages == sorted(language_names)
 
 
 @pytest.mark.parametrize("language", language_names)

@@ -5,9 +5,9 @@ from platform import system
 from typing import Any
 
 from setuptools import Extension, find_packages, setup
+from setuptools.command.bdist_wheel import bdist_wheel
 from setuptools.command.build_ext import build_ext
 from typing_extensions import NotRequired, TypedDict
-from wheel.bdist_wheel import bdist_wheel  # type: ignore[import-untyped]
 
 
 class LanguageDict(TypedDict):
@@ -74,7 +74,7 @@ data_files = [
 ]
 
 
-class BuildExt(build_ext):  # type: ignore[misc]
+class BuildExt(build_ext):
     """Custom build extension to handle tree-sitter language repositories."""
 
     def build_extension(self, ext: Extension) -> None:
@@ -98,7 +98,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
         super().build_extension(ext)
 
 
-class BdistWheel(bdist_wheel):  # type: ignore[misc]
+class BdistWheel(bdist_wheel):
     """Custom bdist_wheel command to handle Python 3.9 ABI tag."""
 
     def get_tag(self) -> tuple[Any, Any, Any]:

@@ -1,109 +1,97 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+
+requires = [ "cython", "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
+
 [project]
 name = "tree-sitter-language-pack"
 version = "0.2.0"
 description = "Extensive Language Pack for Tree-Sitter"
-authors = [{ name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" }]
-
-keywords = ["tree-sitter"]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Natural Language :: English",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python",
-    "Typing :: Typed"
-]
-
-dependencies = [
-    "tree-sitter>=0.22.0",
-    "tree-sitter-c-sharp>=0.21.2",
-    "tree-sitter-embedded-template>=0.21.0",
-    "tree-sitter-yaml>=0.6.0",
-    "tree-sitter-typescript>=0.21.1",
-    "tree-sitter-php>=0.22.5",
-    "tree-sitter-xml>=0.6.4",
-]
-requires-python = ">=3.9.0"
 readme = "README.md"
-license = {file = "LICENSE"}
+keywords = [ "tree-sitter" ]
+license = { file = "LICENSE" }
 
-[project.urls]
-homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
-
-[build-system]
-requires = ["setuptools>=70.1.1", "wheel>=0.43.0", "typing-extensions>=4.12.2", "cython"]
-build-backend = "setuptools.build_meta"
-
-[tool.pdm]
-parallel_install = true
-distribution = true
-
-[tool.pdm.build]
-run-setuptools = true
-package-dir = ["test_sitter_language_pack"]
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "mypy>=1.10.1",
-    "ruff>=0.4.10",
-    "pytest>=8.2.2",
-    "setuptools>=70.1.1",
-    "wheel>=0.43.0",
-    "pre-commit>=3.7.1",
-    "typing-extensions>=4.12.2",
-    "gitpython>=3.1.43",
-    "anyio>=4.4.0",
-    "aiopath>=0.5.6",
+authors = [ { name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" } ]
+requires-python = ">=3.9.0"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Typing :: Typed",
+]
+dependencies = [
+  "tree-sitter>=0.23.2",
+  "tree-sitter-c-sharp>=0.23.1",
+  "tree-sitter-embedded-template>=0.23.2",
+  "tree-sitter-php>=0.23.11",
+  "tree-sitter-typescript>=0.23.2",
+  "tree-sitter-xml>=0.7.0",
+  "tree-sitter-yaml>=0.7.0",
 ]
 
-[tool.pdm.scripts]
-test = "pytest ./tests"
+urls.homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
 
-# linters configuration below
+[dependency-groups]
+dev = [
+  "aiopath>=0.5.12",
+  "anyio>=3.7.1",
+  "gitpython>=3.1.44",
+  "mypy>=1.15.0",
+  "pre-commit>=4.1.0",
+  "pytest>=8.3.4",
+  "ruff>=0.9.4",
+  "setuptools>=75.8.0",
+  "types-setuptools>=75.8.0.20250110",
+  "typing-extensions>=4.12.2",
+]
+
 [tool.ruff]
-line-length = 120
 target-version = "py39"
+line-length = 120
+src = [ "tests", "tree_sitter_language_pack" ]
+
+format.docstring-code-line-length = 120
+format.docstring-code-format = true
 lint.select = [
-    "ALL",
+  "ALL",
 ]
 lint.ignore = [
-    "ANN401", # dynamically typed ANY
-    "COM812", # Conflicts with formatter
-    "D100", # # pydocstyle - missing docstring in public module
-    "D104", # pydocstyle - missing docstring in public package
-    "D107", # pydocstyle - missing docstring in __init__
-    "D205", # pydocstyle - 1 blank line required between summary line and description
-    "E501", # pycodestyle line too long, handled by ruff format
-    "EM", # Exception messages,
-    "FBT", # Boolean values
-    "FIX", # we allow todo and fixme comments
-    "ISC001", # Conflicts with formatter
-    "TD", # we allow todo and fixme comments
-    "TRY", # Try except block, rules are too strict
+  "ANN401", # dynamically typed ANY
+  "COM812", # Conflicts with formatter
+  "D100",   # # pydocstyle - missing docstring in public module
+  "D104",   # pydocstyle - missing docstring in public package
+  "D107",   # pydocstyle - missing docstring in __init__
+  "D205",   # pydocstyle - 1 blank line required between summary line and description
+  "E501",   # pycodestyle line too long, handled by ruff format
+  "EM",     # Exception messages,
+  "FBT",    # Boolean values
+  "FIX",    # we allow todo and fixme comments
+  "ISC001", # Conflicts with formatter
+  "TD",     # we allow todo and fixme comments
+  "TRY",    # Try except block, rules are too strict
 ]
-src = ["tree_sitter_language_pack", "tests"]
-
-[tool.ruff.lint.per-file-ignores]
-"tests/**/*.*" = [
-    "D", "S"
+lint.per-file-ignores."scripts/**/*.*" = [ "S", "T201" ]
+lint.per-file-ignores."tests/**/*.*" = [
+  "D",
+  "S",
 ]
-"scripts/**/*.*" = ["T201", "S"]
+lint.isort.known-first-party = [ "tree_sitter_language_pack", "tests" ]
+lint.pydocstyle.convention = "google"
 
-[tool.ruff.format]
-docstring-code-format = true
-docstring-code-line-length = 120
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"
-
-[tool.ruff.lint.isort]
-known-first-party = ["tree_sitter_language_pack", "tests"]
+[tool.pyproject-fmt]
+keep_full_version = true
+max_supported_python = "3.12"
 
 [tool.mypy]
-packages = ["tree_sitter_language_pack", "tests"]
+packages = [ "tree_sitter_language_pack", "tests" ]
 python_version = "3.9"
 disallow_untyped_decorators = true
 disallow_any_unimported = true

@@ -220,11 +220,10 @@ the [pyproject.toml](./pyproject.toml) file. To add an installed package follow 
 2. Install the dev dependencies with `pdm install -v --no-self`
 3. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
 4. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
-   [__init .py _](./tree_sitter_language_pack/__init__.py) file.
+   [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
 5. Build the bindings by executing: `pdm install -v`.
 6. Execute the tests with `pdm run test`.
 7. If the tests pass, commit your changes and open a pull request.
-
 
 #### Adding a Binary Wheel Language
 
@@ -237,10 +236,10 @@ This file contains a mapping of language names to their respective repositories.
 {
   "name": {
     "repo": "https://github.com/...",
-    "branch": "master",  // not mandatory
-    "directory": "sub-dir/something",  // not mandatory
-    "generate": true  // not mandatory
-  }
+    "branch": "master", // not mandatory
+    "directory": "sub-dir/something", // not mandatory
+    "generate": true, // not mandatory
+  },
 }
 ```
 
@@ -254,7 +253,7 @@ That is, each object must have a `repo` key, and optionally a `branch`, `directo
 - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
   repository / directory combo. This should be specified only if the binding needs to be build in the repository.
 
-2. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
+2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
 3. Install the dev dependencies with `pdm install -v --no-self`
 4. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
 5. Build the bindings by executing: `pdm install -v`.
