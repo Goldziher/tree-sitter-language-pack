@@ -58,4 +58,3 @@ repos:
         require_serial: true
         language: system
         types: [python]
-        exclude: ^vendor|^parsers|^sources

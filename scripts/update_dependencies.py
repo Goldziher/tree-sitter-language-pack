@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-import tomllib
+import tomllib  # type: ignore[import-not-found]
 
 SKIP_DEPENDENCY_NAMES = {"en-core-web-sm"}
 
@@ -21,7 +21,7 @@ def uv(subcommand: str, packages: list[str], group: str | None) -> None:
 
 def get_pyproject_config() -> dict[str, Any]:
     """Get all pyproject.toml files in the project."""
-    return tomllib.loads((Path(__file__).parent.parent / "pyproject.toml").read_text())
+    return tomllib.loads((Path(__file__).parent.parent / "pyproject.toml").read_text())  # type: ignore[no-any-return]
 
 
 def do_upgrade() -> None:
