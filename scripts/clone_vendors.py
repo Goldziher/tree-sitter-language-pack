@@ -121,7 +121,10 @@ async def main() -> None:
     language_definitions, language_names = get_language_definitions()
     await asyncio.gather(
         *[
-            process_repo(language_name=language_name, language_definition=language_definitions[language_name])
+            process_repo(
+                language_name=language_name,
+                language_definition=language_definitions[language_name],
+            )
             for language_name in language_names
         ]
     )

@@ -24,6 +24,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
   "Typing :: Typed",
 ]
@@ -84,7 +85,7 @@ lint.pydocstyle.convention = "google"
 
 [tool.pyproject-fmt]
 keep_full_version = true
-max_supported_python = "3.12"
+max_supported_python = "3.13"
 
 [tool.mypy]
 packages = [ "tree_sitter_language_pack", "tests" ]

@@ -69,7 +69,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [d](https://github.com/gdamore/tree-sitter-d) - MIT License
 - [dart](https://github.com/UserNobody14/tree-sitter-dart) - MIT License
 - [dockerfile](https://github.com/camdencheek/tree-sitter-dockerfile) - MIT License
-- [dot](https://github.com/rydesun/tree-sitter-dot) - MIT License
 - [doxygen](https://github.com/tree-sitter-grammars/tree-sitter-doxygen) - MIT License
 - [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
 - [elixir](https://github.com/elixir-lang/tree-sitter-elixir) - MIT License
@@ -101,7 +100,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [heex](https://github.com/phoenixframework/tree-sitter-heex) - MIT License
 - [hlsl](https://github.com/tree-sitter-grammars/tree-sitter-hlsl) - MIT License
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
-- [hyperlang](https://github.com/tree-sitter-grammars/tree-sitter-hyperlang) - MIT License
 - [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
 - [janet](https://github.com/GrayJack/tree-sitter-janet) - BSD-3-Clause license
@@ -148,7 +146,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [purescript](https://github.com/postsolar/tree-sitter-purescript) - MIT License
 - [pymanifest](https://github.com/tree-sitter-grammars/tree-sitter-pymanifest) - MIT License
 - [python](https://github.com/tree-sitter/tree-sitter-python) - MIT License
-- [ql](https://github.com/tree-sitter/tree-sitter-ql) - MIT License
 - [qmldir](https://github.com/tree-sitter-grammars/tree-sitter-qmldir) - MIT License
 - [query](https://github.com/tree-sitter-grammars/tree-sitter-query) - Apache License 2.0
 - [r](https://github.com/r-lib/tree-sitter-r) - MIT License
