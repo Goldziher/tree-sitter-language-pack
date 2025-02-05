@@ -5,10 +5,10 @@ requires = [ "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.2.0"
+version = "0.2.1"
 description = "Extensive Language Pack for Tree-Sitter"
 readme = "README.md"
-keywords = [ "tree-sitter" ]
+keywords = [ "code", "text-processing", "tree-sitter" ]
 license = { file = "LICENSE" }
 
 authors = [ { name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" } ]

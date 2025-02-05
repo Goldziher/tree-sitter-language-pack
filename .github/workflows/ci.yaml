@@ -36,7 +36,7 @@ jobs:
       run: uv sync --all-extras --dev --no-install-project
 
     - name: Clone vendors
-      run: pdm run scripts/clone_vendors.py
+      run: uv run scripts/clone_vendors.py
 
     - name: Upload Parsers
       uses: actions/upload-artifact@v4

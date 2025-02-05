@@ -197,33 +197,36 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [yuck](https://github.com/tree-sitter-grammars/tree-sitter-yuck) - MIT License
 - [zig](https://github.com/maxxnino/tree-sitter-zig) - MIT License
 
-## Contributing
+## Contribution
 
-This library is open to and welcomes contributions.
+This library is open to contribution. Feel free to open issues or submit PRs. Its better to discuss issues before
+submitting PRs to avoid disappointment.
 
-### Setup
+### Local Development
 
-1. Fork the repository.
-2. Make sure to have [PDM](https://pdm-project.org/en/latest/) installed on your machine.
-3. You will also need the clang toolchain installed on your machine and available in path. Consult the pertinent
-   documentation for your operating system.
-4. Install and build locally by running `pdm install -v`.
+1. Clone the repo
+2. Install the system dependencies
+3. Install the full dependencies with `uv sync`
+4. Install the pre-commit hooks with:
+   ```shell
+   pre-commit install && pre-commit install --hook-type commit-msg
+   ```
+5. Make your changes and submit a PR
 
 ### Adding a new language
 
-#### Install via PDM
+#### Install
 
-Some bindings are installed via PDM and are added to the package dependencies in
+Some bindings are installed via UV and are added to the package dependencies in
 the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
 
-1. Install the bindings with `pdm add <bindings_package_name> --no-sync`.
-2. Install the dev dependencies with `pdm install -v --no-self`
-3. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
-4. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
+1. Install the bindings with `uv add <bindings_package_name> --no-install-project`.
+2. Execute the cloning script with `uv run scripts/clone_vendors.py`.
+3. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
    [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
-5. Build the bindings by executing: `pdm install -v`.
-6. Execute the tests with `pdm run test`.
-7. If the tests pass, commit your changes and open a pull request.
+4. Build the bindings by executing: `uv sync -v`.
+5. Execute the tests with `uv run test`.
+6. If the tests pass, commit your changes and open a pull request.
 
 #### Adding a Binary Wheel Language
 
@@ -254,8 +257,8 @@ That is, each object must have a `repo` key, and optionally a `branch`, `directo
   repository / directory combo. This should be specified only if the binding needs to be build in the repository.
 
 2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
-3. Install the dev dependencies with `pdm install -v --no-self`
-4. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
-5. Build the bindings by executing: `pdm install -v`.
-6. Execute the tests with `pdm run test`.
+3. Install the dev dependencies with `uv sync --no-install-project -v`
+4. Execute the cloning script with `uv run scripts/clone_vendors.py`.
+5. Build the bindings by executing: `uv sync -v`.
+6. Execute the tests with `uv run test`.
 7. If the tests pass, commit your changes and open a pull request.
