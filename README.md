@@ -125,7 +125,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [luadoc](https://github.com/tree-sitter-grammars/tree-sitter-luadoc) - MIT License
 - [luap](https://github.com/tree-sitter-grammars/tree-sitter-luap) - MIT License
 - [luau](https://github.com/tree-sitter-grammars/tree-sitter-luau) - MIT License
-- [magik](https://github.com/krn-robin/tree-sitter-magik) - MIT License
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
 - [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License

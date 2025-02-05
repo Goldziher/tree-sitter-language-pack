@@ -89,7 +89,6 @@ SupportedLanguage = Literal[
     "luadoc",
     "luap",
     "luau",
-    "magik",
     "make",
     "markdown",
     "matlab",

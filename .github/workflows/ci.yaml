@@ -122,35 +122,3 @@ jobs:
       run: uv run --no-sync pytest tests -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
-  build:
-    needs: [validate, test]
-    name: Build source dist
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Download parsers
-      uses: actions/download-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
-
-    - name: Install Dependencies
-      run: uv sync --no-install-project
-
-    - name: Build
-      run: uv build -v
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
