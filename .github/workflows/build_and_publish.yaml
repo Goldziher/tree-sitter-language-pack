@@ -153,9 +153,9 @@ jobs:
     name: Publish Python package
     needs: [build-sdist, build-wheels]
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/project/tree-sitter-language-pack/
+    environment: pypi
+    permissions:
+      id-token: write
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
