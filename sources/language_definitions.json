@@ -451,6 +451,9 @@
   "starlark": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-starlark"
   },
+  "sparql": {
+    "repo": "https://github.com/GordianDziwis/tree-sitter-sparql"
+  },
   "svelte": {
     "repo": "https://github.com/Himujjal/tree-sitter-svelte",
     "branch": "master"
