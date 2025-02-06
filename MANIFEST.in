@@ -1,2 +1,3 @@
 include sources/*.*
 recursive-include parsers *
+include tree_sitter_language_pack/bindings/*.so

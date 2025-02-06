@@ -1,12 +1,17 @@
 # Tree Sitter Language Pack
 
 This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages
-as both source distribution and pre-built wheels. It is compatible
-with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above. It is strongly typed.
+as both source distribution and pre-built wheels.
 
-Notes:
+## Installation
 
-- This package is a maintained and updated fork of
+```bash
+pip install tree-sitter-language-pack
+```
+
+## Important Notes:
+
+- This package started life as a maintained and updated fork of
   [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages) by Grant Jenks, and it
   incorporates code contributed by ObserverOfTime (see
   this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
@@ -15,12 +20,14 @@ Notes:
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
   no GPL
   licensed languages are included.
+- This library is compatible with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above.
 
-## Installation
+## Features
 
-```bash
-pip install tree-sitter-language-pack
-```
+- 100+ Languages: Support for all major programming languages and many domain-specific languages
+- Pre-built Wheels: Easy installation with no compilation required
+- Type-Safe: Full typing support for better IDE integration and code safety
+- Zero GPL Dependencies: All bundled languages use permissive licenses (MIT, Apache 2.0, etc.)
 
 ## Usage
 
@@ -69,7 +76,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [d](https://github.com/gdamore/tree-sitter-d) - MIT License
 - [dart](https://github.com/UserNobody14/tree-sitter-dart) - MIT License
 - [dockerfile](https://github.com/camdencheek/tree-sitter-dockerfile) - MIT License
-- [dot](https://github.com/rydesun/tree-sitter-dot) - MIT License
 - [doxygen](https://github.com/tree-sitter-grammars/tree-sitter-doxygen) - MIT License
 - [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
 - [elixir](https://github.com/elixir-lang/tree-sitter-elixir) - MIT License
@@ -101,7 +107,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [heex](https://github.com/phoenixframework/tree-sitter-heex) - MIT License
 - [hlsl](https://github.com/tree-sitter-grammars/tree-sitter-hlsl) - MIT License
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
-- [hyperlang](https://github.com/tree-sitter-grammars/tree-sitter-hyperlang) - MIT License
 - [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
 - [janet](https://github.com/GrayJack/tree-sitter-janet) - BSD-3-Clause license
@@ -120,7 +125,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [luadoc](https://github.com/tree-sitter-grammars/tree-sitter-luadoc) - MIT License
 - [luap](https://github.com/tree-sitter-grammars/tree-sitter-luap) - MIT License
 - [luau](https://github.com/tree-sitter-grammars/tree-sitter-luau) - MIT License
-- [magik](https://github.com/krn-robin/tree-sitter-magik) - MIT License
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
 - [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License
@@ -148,7 +152,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [purescript](https://github.com/postsolar/tree-sitter-purescript) - MIT License
 - [pymanifest](https://github.com/tree-sitter-grammars/tree-sitter-pymanifest) - MIT License
 - [python](https://github.com/tree-sitter/tree-sitter-python) - MIT License
-- [ql](https://github.com/tree-sitter/tree-sitter-ql) - MIT License
 - [qmldir](https://github.com/tree-sitter-grammars/tree-sitter-qmldir) - MIT License
 - [query](https://github.com/tree-sitter-grammars/tree-sitter-query) - Apache License 2.0
 - [r](https://github.com/r-lib/tree-sitter-r) - MIT License
@@ -173,7 +176,6 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [sparql](https://github.com/GordianDziwis/tree-sitter-sparql) - MIT License
 - [starlark](https://github.com/tree-sitter-grammars/tree-sitter-starlark) - MIT License
 - [svelte](https://github.com/tree-sitter-grammars/tree-sitter-svelte) - MIT License
-- [swift](https://github.com/alex-pinkus/tree-sitter-swift) - MIT License
 - [tablegen](https://github.com/tree-sitter-grammars/tree-sitter-tablegen) - MIT License
 - [tcl](https://github.com/tree-sitter-grammars/tree-sitter-tcl) - MIT License
 - [test](https://github.com/tree-sitter-grammars/tree-sitter-test) - MIT License
@@ -198,66 +200,73 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [yuck](https://github.com/tree-sitter-grammars/tree-sitter-yuck) - MIT License
 - [zig](https://github.com/maxxnino/tree-sitter-zig) - MIT License
 
-## Contributing
+## Contribution
 
-This library is open to and welcomes contributions.
+This library is open to contribution. Feel free to open issues or submit PRs. Its better to discuss issues before
+submitting PRs to avoid disappointment.
 
-### Setup
+### Local Development
 
-1. Fork the repository.
-2. Make sure to have [PDM](https://pdm-project.org/en/latest/) installed on your machine.
-3. You will also need the clang toolchain installed on your machine and available in path. Consult the pertinent
-   documentation for your operating system.
-4. Install and build locally by running `pdm install -v`.
+1. Clone the repo
+2. Install the system dependencies
+3. Install the full dependencies with `uv sync --no-install-project`
+4. Install the pre-commit hooks with:
+   ```shell
+   pre-commit install && pre-commit install --hook-type commit-msg
+   ```
+5. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
+6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
+
+### Running Tests
+
+To run the tests, execute the following command:
+
+```shell
+PROJECT_ROOT=. uv run --no-sync pytest tests
+```
 
 ### Adding a new language
 
-#### Install via PDM
+#### Install
 
-Some bindings are installed via PDM and are added to the package dependencies in
-the [pyproject.toml](./pyproject.toml) file. To add an installed package follow these steps:
+Some bindings are installed via UV and are added to the package dependencies in
+the [pyproject.toml](./pyproject.toml) file.
 
-1. Install the bindings with `pdm add <bindings_package_name> --no-sync`.
-2. Install the dev dependencies with `pdm install -v --no-self`
-3. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
-4. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
-   [__init .py _](./tree_sitter_language_pack/__init__.py) file.
-5. Build the bindings by executing: `pdm install -v`.
-6. Execute the tests with `pdm run test`.
+To add an installed package follow these steps:
+
+1. Install the bindings with `uv add <bindings_package_name> --no-install-project`.
+2. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+3. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
+   [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
+4. Update the code in the init file as necessary.
+5. Build the bindings by executing: `uv run --no-sync setup.py build_ext --inplace`.
+6. Execute the tests (see above).
 7. If the tests pass, commit your changes and open a pull request.
-
 
 #### Adding a Binary Wheel Language
 
 1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
-   at the repository's root.
-
-This file contains a mapping of language names to their respective repositories.
-
-```jsonc
-{
-  "name": {
-    "repo": "https://github.com/...",
-    "branch": "master",  // not mandatory
-    "directory": "sub-dir/something",  // not mandatory
-    "generate": true  // not mandatory
-  }
-}
-```
-
-That is, each object must have a `repo` key, and optionally a `branch`, `directory`, and `generate` keys.
-
-- `repo` is the URL of the tree-sitter repository. This value is mandatory
-- `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
-  i.e. for `master` or other names, specify this).
-- `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
-  the `src` folder is not immediately under the root folder.
-- `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
-  repository / directory combo. This should be specified only if the binding needs to be build in the repository.
-
-2. Update the `SupportedLanguage` literal type in the [__init__.py](./tree_sitter_language_pack/__init__.py) file.
-3. Install the dev dependencies with `pdm install -v --no-self`
-4. Execute the cloning script with `pdm run scripts/clone_vendors.py`.
-5. Build the bindings by executing: `pdm install -v`.
-6. Execute the tests with `pdm run test`.
+   at the repository's root. This file contains a mapping of language names to their respective repositories:
+   ```jsonc
+   {
+     "name": {
+       "repo": "https://github.com/...",
+       "branch": "master", // not mandatory
+       "directory": "sub-dir/something", // not mandatory
+       "generate": true, // not mandatory
+     },
+   }
+   ```
+   - `repo` is the URL of the tree-sitter repository. This value is mandatory
+   - `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
+     i.e. for `master` or other names, specify this).
+   - `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
+     the `src` folder is not immediately under the root folder.
+   - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
+     repository / directory combo. This should be specified only if the binding needs to be build in the repository.
+2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
+3. Install the dev dependencies with `uv sync --no-install-project -v`
+4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+5. Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
+6. Execute the tests (see above).
 7. If the tests pass, commit your changes and open a pull request.
