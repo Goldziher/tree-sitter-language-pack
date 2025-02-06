@@ -147,6 +147,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [printf](https://github.com/tree-sitter-grammars/tree-sitter-printf) - ISC License
 - [prisma](https://github.com/LumaKernel/tree-sitter-prisma) - MIT License
 - [properties](https://github.com/tree-sitter-grammars/tree-sitter-properties) - MIT License
+- [proto](https://github.com/coder3101/tree-sitter-proto) - MIT License
 - [psv](https://github.com/amaanq/tree-sitter-csv) - MIT License
 - [puppet](https://github.com/tree-sitter-grammars/tree-sitter-puppet) - MIT License
 - [purescript](https://github.com/postsolar/tree-sitter-purescript) - MIT License
@@ -171,9 +172,9 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [smali](https://github.com/tree-sitter-grammars/tree-sitter-smali) - MIT License
 - [smithy](https://github.com/indoorvivants/tree-sitter-smithy) - MIT License
 - [solidity](https://github.com/JoranHonig/tree-sitter-solidity) - MIT License
+- [sparql](https://github.com/GordianDziwis/tree-sitter-sparql) - MIT License
 - [sql](https://github.com/derekstride/tree-sitter-sql) - MIT License
 - [squirrel](https://github.com/tree-sitter-grammars/tree-sitter-squirrel) - MIT License
-- [sparql](https://github.com/GordianDziwis/tree-sitter-sparql) - MIT License
 - [starlark](https://github.com/tree-sitter-grammars/tree-sitter-starlark) - MIT License
 - [svelte](https://github.com/tree-sitter-grammars/tree-sitter-svelte) - MIT License
 - [tablegen](https://github.com/tree-sitter-grammars/tree-sitter-tablegen) - MIT License
