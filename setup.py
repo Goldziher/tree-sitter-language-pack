@@ -27,9 +27,6 @@ def create_extension(*, language_name: str) -> Extension:
     """
     compile_args = (
         [
-            "-Werror=implicit-function-declaration",
-            "-Wno-cast-function-type",
-            "-Wno-unused-but-set-variable",
             "-fvisibility=hidden",
             "-std=c11",
         ]

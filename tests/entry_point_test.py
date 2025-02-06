@@ -26,7 +26,7 @@ def test_language_names() -> None:
 
 @pytest.mark.parametrize("language", language_names)
 def test_get_binding(language: SupportedLanguage) -> None:
-    assert isinstance(get_binding(language), int) or type(get_binding(language)).__name__ == "PyCapsule"
+    assert type(get_binding(language)).__name__ == "PyCapsule"
 
 
 @pytest.mark.parametrize("language", language_names)

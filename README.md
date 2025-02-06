@@ -125,6 +125,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [luadoc](https://github.com/tree-sitter-grammars/tree-sitter-luadoc) - MIT License
 - [luap](https://github.com/tree-sitter-grammars/tree-sitter-luap) - MIT License
 - [luau](https://github.com/tree-sitter-grammars/tree-sitter-luau) - MIT License
+- [magik](https://github.com/krn-robin/tree-sitter-magik) - MIT License
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
 - [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License
@@ -177,6 +178,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [squirrel](https://github.com/tree-sitter-grammars/tree-sitter-squirrel) - MIT License
 - [starlark](https://github.com/tree-sitter-grammars/tree-sitter-starlark) - MIT License
 - [svelte](https://github.com/tree-sitter-grammars/tree-sitter-svelte) - MIT License
+- [swift](https://github.com/alex-pinkus/tree-sitter-swift) - MIT License
 - [tablegen](https://github.com/tree-sitter-grammars/tree-sitter-tablegen) - MIT License
 - [tcl](https://github.com/tree-sitter-grammars/tree-sitter-tcl) - MIT License
 - [test](https://github.com/tree-sitter-grammars/tree-sitter-test) - MIT License
