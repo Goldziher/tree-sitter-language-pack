@@ -116,6 +116,7 @@ SupportedLanguage = Literal[
     "purescript",
     "pymanifest",
     "python",
+    "proto",
     "qmldir",
     "qmljs",
     "query",

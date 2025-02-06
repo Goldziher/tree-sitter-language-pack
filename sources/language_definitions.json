@@ -324,6 +324,9 @@
   "po": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-po"
   },
+  "proto": {
+    "repo": "https://github.com/coder3101/tree-sitter-proto"
+  },
   "pony": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-pony"
   },
