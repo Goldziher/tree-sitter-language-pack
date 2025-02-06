@@ -19,12 +19,12 @@ TSLanguage *TS_LANGUAGE_FUNC(void); // Expands to tree_sitter_<language_name>(vo
 
 // Python method that wraps the TS_LANGUAGE_FUNC and returns a pointer to the TSLanguage struct
 static PyObject* TS_LANGUAGE_METHOD(PyObject *Py_UNUSED(self), PyObject *Py_UNUSED(args)) {
-    return PyLong_FromVoidPtr(TS_LANGUAGE_FUNC());
+    return PyCapsule_New(TS_LANGUAGE_FUNC(), "tree_sitter.Language", NULL);
 }
 
 // Method definition table for the module
 static PyMethodDef methods[] = {
-    {"language", TS_LANGUAGE_METHOD, METH_NOARGS, NULL},
+    {"language", TS_LANGUAGE_METHOD, METH_NOARGS, "Get the tree-sitter language for this grammar."},
     {NULL, NULL, 0, NULL}
 };
 

@@ -136,6 +136,7 @@ SupportedLanguage = Literal[
     "smithy",
     "solidity",
     "sparql",
+    "swift",
     "sql",
     "squirrel",
     "starlark",
@@ -165,10 +166,11 @@ SupportedLanguage = Literal[
     "yaml",
     "yuck",
     "zig",
+    "magik",
 ]
 
 
-def get_binding(language_name: SupportedLanguage) -> int | object:
+def get_binding(language_name: SupportedLanguage) -> object:
     """Get the binding for the given language name.
 
     Args:
@@ -178,7 +180,7 @@ def get_binding(language_name: SupportedLanguage) -> int | object:
         LookupError: If the language is not found.
 
     Returns:
-        int: The binding for the language.
+        A pycapsule object
     """
     if language_name == "yaml":
         return tree_sitter_yaml.language()
@@ -191,7 +193,7 @@ def get_binding(language_name: SupportedLanguage) -> int | object:
 
     try:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
-        return cast(int, module.language())
+        return cast(object, module.language())
     except ModuleNotFoundError as e:
         raise LookupError(f"Language not found: {language_name}") from e
 

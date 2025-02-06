@@ -27,6 +27,7 @@ class LanguageDict(TypedDict):
     directory: NotRequired[str]
     generate: NotRequired[bool]
     rewrite_targets: NotRequired[bool]
+    abi_version: NotRequired[int]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -61,12 +62,13 @@ async def clone_repository(repo_url: str, branch: str | None, language_name: str
     print(f"Cloned {repo_url} successfully")
 
 
-async def handle_generate(language_name: str, directory: str | None) -> None:
+async def handle_generate(language_name: str, directory: str | None, abi_version: int) -> None:
     """Handle the generation of a language.
 
     Args:
         language_name: The name of the language.
         directory: The directory to generate the language in.
+        abi_version: The ABI version to use.
 
     Returns:
         None
@@ -77,7 +79,11 @@ async def handle_generate(language_name: str, directory: str | None) -> None:
         if directory
         else (vendor_directory / language_name).resolve()
     )
-    await run_sync(partial(subprocess.run, ["tree-sitter", "generate"], cwd=str(target_dir), check=False))
+    await run_sync(
+        partial(
+            subprocess.run, ["tree-sitter", "generate", "--abi", str(abi_version)], cwd=str(target_dir), check=False
+        )
+    )
     print(f"Generated {language_name} parser successfully")
 
 
@@ -135,7 +141,11 @@ async def process_repo(language_name: str, language_definition: LanguageDict) ->
         repo_url=language_definition["repo"], branch=language_definition.get("branch"), language_name=language_name
     )
     if language_definition.get("generate", False):
-        await handle_generate(language_name=language_name, directory=language_definition.get("directory"))
+        await handle_generate(
+            language_name=language_name,
+            directory=language_definition.get("directory"),
+            abi_version=language_definition.get("abi_version", 14),
+        )
     await move_src_folder(language_name=language_name, directory=language_definition.get("directory"))
 
 
