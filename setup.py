@@ -2,21 +2,12 @@ from itertools import chain
 from os import environ, getcwd, listdir
 from pathlib import Path
 from platform import system
-from typing import Any
 
 from setuptools import Extension, find_packages, setup
+from setuptools.command.bdist_wheel import bdist_wheel
 from setuptools.command.build_ext import build_ext
-from typing_extensions import NotRequired, TypedDict
-from wheel.bdist_wheel import bdist_wheel  # type: ignore[import-untyped]
 
-
-class LanguageDict(TypedDict):
-    """Language configuration for tree-sitter repositories."""
-
-    repo: str
-    branch: NotRequired[str]
-    directory: NotRequired[str]
-    generate: NotRequired[bool]
+MIN_PYTHON_VERSION = 39
 
 
 def get_mapped_parsers() -> dict[str, Path]:
@@ -74,7 +65,7 @@ data_files = [
 ]
 
 
-class BuildExt(build_ext):  # type: ignore[misc]
+class BuildExt(build_ext):
     """Custom build extension to handle tree-sitter language repositories."""
 
     def build_extension(self, ext: Extension) -> None:
@@ -86,6 +77,7 @@ class BuildExt(build_ext):  # type: ignore[misc]
         language_extension = (cwd / "sources" / "language_extension.c").resolve()
         if not language_extension.is_file():
             raise FileNotFoundError(f"Language extension file not found: {language_extension}")
+
         ext.sources = [str(language_extension.relative_to(cwd))]
 
         parser_dir = mapped_parsers[language_name]
@@ -98,14 +90,16 @@ class BuildExt(build_ext):  # type: ignore[misc]
         super().build_extension(ext)
 
 
-class BdistWheel(bdist_wheel):  # type: ignore[misc]
-    """Custom bdist_wheel command to handle Python 3.9 ABI tag."""
+class BdistWheel(bdist_wheel):
+    """Custom bdist_wheel command to handle Python 3.9+ ABI tag."""
 
-    def get_tag(self) -> tuple[Any, Any, Any]:
-        """Get the tag for the wheel distribution."""
+    def get_tag(self) -> tuple[str, str, str]:
+        """Get the tag for the wheel."""
         python, abi, platform = super().get_tag()
-        if python.startswith("cp"):
-            python, abi = "cp39", "abi3"
+        platform = platform.replace("linux", "manylinux2014")
+        if python.startswith("cp") and int(python[2:]) >= MIN_PYTHON_VERSION:
+            # Support all Python versions >= 3.9 using abi3
+            return "cp39", "abi3", platform
         return python, abi, platform
 
 
