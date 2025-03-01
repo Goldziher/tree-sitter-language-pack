@@ -5,9 +5,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-import tomllib  # type: ignore[import-not-found]
-
-SKIP_DEPENDENCY_NAMES = {"en-core-web-sm"}
+import tomllib  # type: ignore[import-untyped]
 
 
 def uv(subcommand: str, packages: list[str], group: str | None) -> None:
@@ -36,9 +34,6 @@ def do_upgrade() -> None:
         to_add = []
 
         for dependency in dependencies:
-            if any(skip in dependency for skip in SKIP_DEPENDENCY_NAMES):
-                continue
-
             if package_match := package_name_pattern.match(dependency):
                 package, extras = package_match.groups()
                 to_remove.append(package)

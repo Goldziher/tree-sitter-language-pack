@@ -20,7 +20,6 @@ pip install tree-sitter-language-pack
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
   no GPL
   licensed languages are included.
-- This library is compatible with [tree-sitter](https://tree-sitter.github.io/tree-sitter/) v0.22.0 and above.
 
 ## Features
 
@@ -205,7 +204,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 
 ## Contribution
 
-This library is open to contribution. Feel free to open issues or submit PRs. Its better to discuss issues before
+This library is open to contribution. Feel free to open issues or submit PRs. It's better to discuss issues before
 submitting PRs to avoid disappointment.
 
 ### Local Development
@@ -261,12 +260,12 @@ To add an installed package follow these steps:
    }
    ```
    - `repo` is the URL of the tree-sitter repository. This value is mandatory
-   - `branch` the branch of the repository to checkout. You should specify this only when the branch is not called `main` (
+   - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
      i.e. for `master` or other names, specify this).
    - `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
      the `src` folder is not immediately under the root folder.
    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
-     repository / directory combo. This should be specified only if the binding needs to be build in the repository.
+     repository / directory combo. This should be specified only if the binding needs to be built in the repository.
 2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
 3. Install the dev dependencies with `uv sync --no-install-project -v`
 4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.

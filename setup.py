@@ -33,10 +33,10 @@ def create_extension(*, language_name: str) -> Extension:
         if system() != "Windows"
         else [
             "/std:c11",
-            "/wd4244",
-            "/utf-8",  # Force UTF-8 encoding for source files
-            "/wd4819",  # Suppress warnings about source files with encoding issues
+            "/utf-8",
+            "/wd4244",  # Suppress warnings about integer type conversion
             "/wd4566",  # Suppress warnings about character representation
+            "/wd4819",  # Suppress warnings about source files with encoding issues
         ]
     )
 

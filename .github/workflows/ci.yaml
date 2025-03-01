@@ -10,12 +10,8 @@ on:
 
 jobs:
   clone_vendors:
-    name: Clone vendors (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    name: Clone vendors
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -39,25 +35,20 @@ jobs:
     - name: Install Dependencies
       run: uv sync --no-install-project
 
-    - name: Create parsers directory
-      run: mkdir -p parsers
-
     - name: Clone vendors
-      run: uv run --no-sync scripts/clone_vendors.py
+      run: |
+        mkdir parsers
+        uv run --no-sync scripts/clone_vendors.py
 
     - name: Upload Parsers
       uses: actions/upload-artifact@v4
       with:
-        name: language-parsers-${{ matrix.os }}
+        name: language-parsers
         path: parsers
 
   validate:
     needs: clone_vendors
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -65,7 +56,7 @@ jobs:
     - name: Download parsers
       uses: actions/download-artifact@v4
       with:
-        name: language-parsers-${{ matrix.os }}
+        name: language-parsers
         path: parsers
 
     - name: Install uv
@@ -96,7 +87,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -104,7 +95,7 @@ jobs:
     - name: Download parsers
       uses: actions/download-artifact@v4
       with:
-        name: language-parsers-${{ matrix.os }}
+        name: language-parsers
         path: parsers
 
     - name: Install uv
@@ -132,7 +123,6 @@ jobs:
       run: uv run --no-sync setup.py build_ext --inplace
 
     - name: Test
-      shell: bash
       run: uv run --no-sync pytest tests -v
       env:
         PROJECT_ROOT: ${{github.workspace}}
