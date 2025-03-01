@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import platform
+import os
 import re
 import subprocess
 from functools import partial
@@ -16,7 +18,8 @@ from typing_extensions import NotRequired, TypedDict
 vendor_directory = Path(__file__).parent.parent / "vendor"
 parsers_directory = Path(__file__).parent.parent / "parsers"
 
-COMMON_RE_PATTERN = re.compile(r"\.{2}/(?:\.{2}/)*common/")
+# Use raw string with escaped forward slashes to work across platforms
+COMMON_RE_PATTERN = re.compile(r"\.\.[/\\](?:\.\.[/\\])*common[/\\]")
 
 
 class LanguageDict(TypedDict):
@@ -79,9 +82,18 @@ async def handle_generate(language_name: str, directory: str | None, abi_version
         if directory
         else (vendor_directory / language_name).resolve()
     )
+    
+    # 윈도우 환경에서는 cmd.exe /c를 통해 명령어를 실행해야 PATH에서 tree-sitter를 찾을 수 있음
+    if platform.system() == "Windows":
+        cmd = ["cmd", "/c", "tree-sitter", "generate", "--abi", str(abi_version)]
+        shell = False
+    else:
+        cmd = ["tree-sitter", "generate", "--abi", str(abi_version)]
+        shell = False
+        
     await run_sync(
         partial(
-            subprocess.run, ["tree-sitter", "generate", "--abi", str(abi_version)], cwd=str(target_dir), check=False
+            subprocess.run, cmd, cwd=str(target_dir), check=False, shell=shell
         )
     )
     print(f"Generated {language_name} parser successfully")
@@ -119,11 +131,13 @@ async def move_src_folder(language_name: str, directory: str | None) -> None:
             # replace any include statement that points at common with an updated path:
             # e.g. '#include "../../common/scanner.h"' should point at (target_common_dir / 'scanner.h').relative_path()
             file_contents = await AsyncPath(file).read_text()
-            file_contents = COMMON_RE_PATTERN.sub(
-                str((target_source_dir / "common").relative_to(file.parent, walk_up=True)) + "/",  # type: ignore[call-arg]
-                file_contents,
-            )
-
+            
+            # Create a properly formatted replacement path with the correct path separator
+            replacement_path = str((target_source_dir / "common").relative_to(file.parent, walk_up=True))
+            # Ensure forward slashes in replacement path for C includes (even on Windows)
+            replacement_path = replacement_path.replace('\\', '/') + '/'
+            
+            file_contents = COMMON_RE_PATTERN.sub(replacement_path, file_contents)
             await AsyncPath(file).write_text(file_contents)
 
 
