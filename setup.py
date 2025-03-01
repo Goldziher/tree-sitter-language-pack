@@ -34,9 +34,9 @@ def create_extension(*, language_name: str) -> Extension:
         else [
             "/std:c11",
             "/wd4244",
-            "/utf-8",      # Force UTF-8 encoding for source files
-            "/wd4819",     # Suppress warnings about source files with encoding issues
-            "/wd4566",     # Suppress warnings about character representation
+            "/utf-8",  # Force UTF-8 encoding for source files
+            "/wd4819",  # Suppress warnings about source files with encoding issues
+            "/wd4566",  # Suppress warnings about character representation
         ]
     )
 
