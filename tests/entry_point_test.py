@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+import os
 from json import loads
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
@@ -12,10 +14,23 @@ from tree_sitter_language_pack import SupportedLanguage, get_binding, get_langua
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-language_definitions = cast(
-    dict[str, dict[str, str]],
-    loads((Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json").read_text()),
-)
+
+def load_language_definitions() -> dict[str, dict[str, str]]:
+    possible_paths = [
+        Path(__file__).parent.parent.resolve() / "sources" / "language_definitions.json",
+        Path(os.environ.get("PROJECT_ROOT", ".")) / "sources" / "language_definitions.json",
+        Path.cwd() / "sources" / "language_definitions.json",
+    ]
+
+    for path in possible_paths:
+        if path.exists():
+            return cast(dict[str, dict[str, str]], loads(path.read_text()))
+
+    logging.warning("language_definitions.json not found, using SupportedLanguage directly")
+    return {lang: {} for lang in SupportedLanguage.__args__}  # type: ignore[attr-defined]
+
+
+language_definitions = load_language_definitions()
 language_names = sorted([*list(language_definitions.keys()), "yaml", "csharp", "embeddedtemplate"])
 
 
