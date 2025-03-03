@@ -28,10 +28,10 @@ jobs:
       with:
         enable-cache: true
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
       run: uv sync --no-install-project
@@ -110,10 +110,10 @@ jobs:
       with:
         enable-cache: true
 
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-version-file: "pyproject.toml"
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Dependencies
       run: uv sync --no-install-project
@@ -127,7 +127,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: tree_sitter_language_pack/bindings
-        key: ${{ runner.os }}-bindings-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h') }}
+        key: ${{ runner.os }}-bindings-py${{ matrix.python-version }}-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h') }}
 
     - name: Build Extensions
       if: steps.cache-bindings.outputs.cache-hit != 'true'
@@ -142,7 +142,7 @@ jobs:
         path: |
           build
           dist
-        key: ${{ runner.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h', 'setup.py') }}
+        key: ${{ runner.os }}-build-py${{ matrix.python-version }}-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h', 'setup.py') }}
 
     - name: Build wheel
       if: steps.cache-build.outputs.cache-hit != 'true'

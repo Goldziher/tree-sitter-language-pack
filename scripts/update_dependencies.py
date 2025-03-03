@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-import tomllib  # type: ignore[import-untyped]
+import tomllib  # type: ignore[import-not-found]
 
 
 def uv(subcommand: str, packages: list[str], group: str | None) -> None:
