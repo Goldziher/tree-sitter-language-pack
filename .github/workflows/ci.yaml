@@ -28,10 +28,10 @@ jobs:
       with:
         enable-cache: true
 
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
-        python-version-file: "pyproject.toml"
+        python-version: ${{ matrix.python-version }}
 
     - name: Install Dependencies
       run: uv sync --no-install-project
@@ -91,6 +91,10 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: "3.13"
+        include:
+          - os: windows-latest
+            python-version: "3.12"
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -149,7 +153,7 @@ jobs:
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v4
       with:
-        name: wheel-${{ matrix.os }}
+        name: wheel-${{ matrix.os }}-py${{ matrix.python-version }}
         path: dist/*.whl
         if-no-files-found: error
 
@@ -171,10 +175,19 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Set wheel Python version
+      run: |
+        if [[ "${{ matrix.os }}" == "windows-latest" && "${{ matrix.python-version }}" != "3.13" ]]; then
+          echo "WHEEL_PYTHON_VERSION=3.12" >> $GITHUB_ENV
+        else
+          echo "WHEEL_PYTHON_VERSION=3.13" >> $GITHUB_ENV
+        fi
+      shell: bash
+
     - name: Download wheel artifact
       uses: actions/download-artifact@v4
       with:
-        name: wheel-${{ matrix.os }}
+        name: wheel-${{ matrix.os }}-py${{ env.WHEEL_PYTHON_VERSION }}
         path: dist
 
     - name: Install wheel
