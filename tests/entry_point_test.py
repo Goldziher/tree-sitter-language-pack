@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import platform
 from json import loads
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, cast
@@ -57,15 +56,3 @@ def test_get_parser(language: SupportedLanguage) -> None:
 def test_raises_exception_for_invalid_name(handler: Callable[[str], Any]) -> None:
     with pytest.raises(LookupError):
         handler("invalid")
-
-
-@pytest.mark.skipif(platform.system() != "Windows", reason="Windows specific test")
-@pytest.mark.parametrize("language", language_names)
-def test_import_languages_on_windows(language: SupportedLanguage) -> None:
-    language_obj = get_language(language)
-    assert language_obj is not None, f"The language {language} could not be loaded"
-    assert isinstance(language_obj, Language)
-
-    parser = get_parser(language)
-    assert parser is not None, f"The parser for {language} could not be created"
-    assert isinstance(parser, Parser)
