@@ -198,6 +198,9 @@ def get_binding(language_name: SupportedLanguage) -> object:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
         return cast(object, module.language())
     except (ModuleNotFoundError, ImportError) as e:
+        # Workaround for Windows environments where wheels built with one Python version (e.g., 3.12)
+        # and installed on a different version (e.g., 3.9) fail with "DLL load failed while importing".
+        # This may be a Python bug, handling cases where the normal import_module mechanism fails.
         package_path = Path(__file__).parent
         ext = ".pyd" if sys.platform.startswith("win") else ".so"
         lib_path = package_path / "bindings" / f"{language_name}{ext}"
