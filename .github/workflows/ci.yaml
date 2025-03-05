@@ -7,6 +7,7 @@ on:
   push:
     branches:
     - main
+    - fix/*
 
 jobs:
   clone_vendors:
@@ -81,7 +82,9 @@ jobs:
 
     - name: Run Linters
       run: uv run --no-sync pre-commit run --show-diff-on-failure --color=always --all-files
-  test:
+
+  build-wheel:
+    name: Build wheel
     needs: clone_vendors
     runs-on: ${{ matrix.os }}
     strategy:
@@ -111,18 +114,73 @@ jobs:
     - name: Install Dependencies
       run: uv sync --no-install-project
 
-    - name: Cache Bindings
-      id: cache-bindings
+    - name: Set path in environment
+      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Cache Build
+      id: cache-build
       uses: actions/cache@v4
       with:
-        path: tree_sitter_language_pack/bindings
-        key: ${{ hashFiles('sources/*') }}-language-definitions
+        path: |
+          dist
+        key: ${{ runner.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
 
-    - name: Build Extensions
-      if: steps.cache-bindings.outputs.cache-hit != 'true'
-      run: uv run --no-sync setup.py build_ext --inplace
-
-    - name: Test
-      run: uv run --no-sync pytest tests -v
+    - name: Build wheel
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      run: uv build --wheel
       env:
         PROJECT_ROOT: ${{github.workspace}}
+
+    - name: Upload wheel artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: wheel-${{ matrix.os }}
+        path: dist/*.whl
+        if-no-files-found: error
+
+  test-wheel:
+    name: Test wheel
+    needs: build-wheel
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Download wheel artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: wheel-${{ matrix.os }}
+        path: dist
+
+    - name: Install wheel
+      shell: bash
+      run: |
+        wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1)
+        if [ -z "$wheel_file" ]; then
+          wheel_file=$(find dist -name "*.whl" -type f | head -n 1)
+        fi
+        echo "Installing wheel: $wheel_file"
+        pip install "$wheel_file"
+
+    - name: Install pytest
+      run: pip install pytest
+
+    - name: Test with installed wheel
+      run: |
+        mkdir -p /tmp/test_wheel
+        cp tests/entry_point_test.py /tmp/test_wheel/
+        cd /tmp/test_wheel
+        pytest entry_point_test.py -v
+      env:
+        PROJECT_ROOT: ${{ github.workspace }}

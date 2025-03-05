@@ -2,10 +2,14 @@ from __future__ import annotations
 
 import re
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
-import tomllib  # type: ignore[import-untyped]
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib  # type: ignore[import-not-found]
 
 
 def uv(subcommand: str, packages: list[str], group: str | None) -> None:

@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import ctypes
+import sys
 from importlib import import_module
+from pathlib import Path
 from typing import Literal, cast
 
 import tree_sitter_c_sharp
@@ -194,8 +197,21 @@ def get_binding(language_name: SupportedLanguage) -> object:
     try:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
         return cast(object, module.language())
-    except ModuleNotFoundError as e:
-        raise LookupError(f"Language not found: {language_name}") from e
+    except (ModuleNotFoundError, ImportError) as e:
+        # Workaround for Windows environments where wheels built with one Python version (e.g., 3.12)
+        # and installed on a different version (e.g., 3.9) fail with "DLL load failed while importing".
+        # This may be a Python bug, handling cases where the normal import_module mechanism fails.
+        package_path = Path(__file__).parent
+        ext = ".pyd" if sys.platform.startswith("win") else ".so"
+        lib_path = package_path / "bindings" / f"{language_name}{ext}"
+
+        if lib_path.exists():
+            lib = ctypes.cdll.LoadLibrary(str(lib_path))
+            language_fn = getattr(lib, f"tree_sitter_{language_name}", None)
+            if language_fn:
+                return language_fn()
+
+        raise LookupError(f"Could not find language library for {language_name}") from e
 
 
 def get_language(language_name: SupportedLanguage) -> Language:
