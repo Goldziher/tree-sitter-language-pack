@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import ctypes
+import sys
 from importlib import import_module
+from pathlib import Path
 from typing import Literal, cast
 
 import tree_sitter_c_sharp
@@ -194,8 +197,23 @@ def get_binding(language_name: SupportedLanguage) -> object:
     try:
         module = import_module(name=f".bindings.{language_name}", package=__package__)
         return cast(object, module.language())
-    except ModuleNotFoundError as e:
-        raise LookupError(f"Language not found: {language_name}") from e
+    except (ModuleNotFoundError, ImportError) as e:
+        package_path = Path(__file__).parent
+
+        ext = ".pyd" if sys.platform.startswith("win") else ".so"
+
+        possible_paths = [
+            package_path / "bindings" / f"{language_name}{ext}",
+        ]
+
+        lib_path = next((p for p in possible_paths if p.exists()), None)
+
+        if lib_path is None:
+            raise LookupError(f"Could not find language library for {language_name}") from e
+
+        lib = ctypes.cdll.LoadLibrary(str(lib_path))
+        language_fn = getattr(lib, f"tree_sitter_{language_name}")
+        return language_fn()
 
 
 def get_language(language_name: SupportedLanguage) -> Language:
