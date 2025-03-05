@@ -91,10 +91,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.13"]
-        include:
-          - os: windows-latest
-            python-version: "3.12"
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -110,10 +106,10 @@ jobs:
       with:
         enable-cache: true
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version-file: "pyproject.toml"
 
     - name: Install Dependencies
       run: uv sync --no-install-project
@@ -122,27 +118,13 @@ jobs:
       run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
       shell: bash
 
-    - name: Cache Bindings
-      id: cache-bindings
-      uses: actions/cache@v4
-      with:
-        path: tree_sitter_language_pack/bindings
-        key: ${{ runner.os }}-bindings-py${{ matrix.python-version }}-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h') }}
-
-    - name: Build Extensions
-      if: steps.cache-bindings.outputs.cache-hit != 'true'
-      run: uv run --no-sync setup.py build_ext --inplace
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
-
     - name: Cache Build
       id: cache-build
       uses: actions/cache@v4
       with:
         path: |
-          build
           dist
-        key: ${{ runner.os }}-build-py${{ matrix.python-version }}-${{ hashFiles('sources/**/*', 'parsers/**/*.c', 'parsers/**/*.h', 'setup.py') }}
+        key: ${{ runner.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
 
     - name: Build wheel
       if: steps.cache-build.outputs.cache-hit != 'true'
@@ -153,7 +135,7 @@ jobs:
     - name: Upload wheel artifact
       uses: actions/upload-artifact@v4
       with:
-        name: wheel-${{ matrix.os }}-py${{ matrix.python-version }}
+        name: wheel-${{ matrix.os }}
         path: dist/*.whl
         if-no-files-found: error
 
@@ -175,19 +157,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Set wheel Python version
-      run: |
-        if [[ "${{ matrix.os }}" == "windows-latest" && "${{ matrix.python-version }}" != "3.13" ]]; then
-          echo "WHEEL_PYTHON_VERSION=3.12" >> $GITHUB_ENV
-        else
-          echo "WHEEL_PYTHON_VERSION=3.13" >> $GITHUB_ENV
-        fi
-      shell: bash
-
     - name: Download wheel artifact
       uses: actions/download-artifact@v4
       with:
-        name: wheel-${{ matrix.os }}-py${{ env.WHEEL_PYTHON_VERSION }}
+        name: wheel-${{ matrix.os }}
         path: dist
 
     - name: Install wheel
