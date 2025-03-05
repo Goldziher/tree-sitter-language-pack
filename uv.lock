@@ -611,7 +611,7 @@ wheels = [
 
 [[package]]
 name = "tree-sitter-language-pack"
-version = "0.4.0"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "tree-sitter", version = "0.23.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -634,6 +634,7 @@ dev = [
     { name = "pytest" },
     { name = "ruff" },
     { name = "setuptools" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "types-setuptools" },
     { name = "typing-extensions" },
 ]
@@ -656,6 +657,7 @@ dev = [
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "ruff", specifier = ">=0.9.9" },
     { name = "setuptools", specifier = ">=75.8.2" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "types-setuptools", specifier = ">=75.8.2.20250301" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
