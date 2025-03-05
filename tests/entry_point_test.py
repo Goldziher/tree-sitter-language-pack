@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 import os
 from json import loads
 from pathlib import Path
@@ -26,8 +25,7 @@ def load_language_definitions() -> dict[str, dict[str, str]]:
         if path.exists():
             return cast(dict[str, dict[str, str]], loads(path.read_text()))
 
-raise AssertionError("language_definitions.json not found, using SupportedLanguage directly")
-    return {lang: {} for lang in SupportedLanguage.__args__}  # type: ignore[attr-defined]
+    raise AssertionError("language_definitions.json not found, using SupportedLanguage directly")
 
 
 language_definitions = load_language_definitions()

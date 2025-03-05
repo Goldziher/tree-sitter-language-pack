@@ -199,21 +199,16 @@ def get_binding(language_name: SupportedLanguage) -> object:
         return cast(object, module.language())
     except (ModuleNotFoundError, ImportError) as e:
         package_path = Path(__file__).parent
-
         ext = ".pyd" if sys.platform.startswith("win") else ".so"
+        lib_path = package_path / "bindings" / f"{language_name}{ext}"
 
-        possible_paths = [
-            package_path / "bindings" / f"{language_name}{ext}",
-        ]
+        if lib_path.exists():
+            lib = ctypes.cdll.LoadLibrary(str(lib_path))
+            language_fn = getattr(lib, f"tree_sitter_{language_name}", None)
+            if language_fn:
+                return language_fn()
 
-        lib_path = next((p for p in possible_paths if p.exists()), None)
-
-        if lib_path is None:
-            raise LookupError(f"Could not find language library for {language_name}") from e
-
-        lib = ctypes.cdll.LoadLibrary(str(lib_path))
-        language_fn = getattr(lib, f"tree_sitter_{language_name}")
-        return language_fn()
+        raise LookupError(f"Could not find language library for {language_name}") from e
 
 
 def get_language(language_name: SupportedLanguage) -> Language:
