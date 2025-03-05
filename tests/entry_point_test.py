@@ -26,7 +26,7 @@ def load_language_definitions() -> dict[str, dict[str, str]]:
         if path.exists():
             return cast(dict[str, dict[str, str]], loads(path.read_text()))
 
-    logging.warning("language_definitions.json not found, using SupportedLanguage directly")
+raise AssertionError("language_definitions.json not found, using SupportedLanguage directly")
     return {lang: {} for lang in SupportedLanguage.__args__}  # type: ignore[attr-defined]
 
 
