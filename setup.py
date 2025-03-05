@@ -47,7 +47,7 @@ def create_extension(*, language_name: str) -> Extension:
     ]
 
     if system() == "Windows":
-        define_macros.append(("Py_LIMITED_API", str(0x03090000)))  # Python 3.9+
+        define_macros.append(("Py_LIMITED_API", "0x03090000"))  # Python 3.9+
 
     return Extension(
         name=f"tree_sitter_language_pack.bindings.{language_name}",
@@ -106,10 +106,6 @@ class BdistWheel(bdist_wheel):
             # Support all Python versions >= 3.9 using abi3
             return "cp39", "abi3", platform
         return python, abi, platform
-
-    def finalize_options(self) -> None:
-        """Finalize options for wheel building."""
-        self.py_limited_api = f"cp{MIN_PYTHON_VERSION}"
 
 
 setup(
