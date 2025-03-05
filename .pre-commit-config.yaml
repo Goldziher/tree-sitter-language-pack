@@ -19,19 +19,19 @@ repos:
       - id: check-case-conflict
       - id: detect-private-key
   - repo: https://github.com/tillig/json-sort-cli
-    rev: v2.0.2
+    rev: v2.0.3
     hooks:
       - id: json-sort
         args:
           - --autofix
           - --insert-final-newline=true
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: "v3.5.2"
+    rev: "v3.5.3"
     hooks:
       - id: prettier
         exclude: ^tests|^.idea|^migrations|^.git
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "v2.5.0"
+    rev: "v2.5.1"
     hooks:
       - id: pyproject-fmt
   - repo: https://github.com/astral-sh/ruff-pre-commit
