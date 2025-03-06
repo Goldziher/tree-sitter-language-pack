@@ -4,13 +4,14 @@ import asyncio
 import os
 import platform
 import re
-import subprocess
+import sys
 from functools import partial
 from json import loads
 from pathlib import Path
-from shutil import move
+from shutil import move, rmtree, which
 
 from anyio import Path as AsyncPath
+from anyio import run_process
 from anyio.to_thread import run_sync
 from git import Repo
 from typing_extensions import NotRequired, TypedDict
@@ -52,6 +53,9 @@ async def clone_repository(repo_url: str, branch: str | None, language_name: str
         branch: The branch to clone.
         language_name: The name of the repository.
 
+    Raises:
+        RuntimeError: If cloning fails
+
     Returns:
         Repo: The cloned repository.
     """
@@ -59,10 +63,12 @@ async def clone_repository(repo_url: str, branch: str | None, language_name: str
     kwargs = {"url": repo_url, "to_path": vendor_directory / language_name, "depth": 1}
     if branch:
         kwargs["branch"] = branch
-    handler = partial(Repo.clone_from, **kwargs)  # type: ignore[arg-type]
 
-    await run_sync(handler)
-    print(f"Cloned {repo_url} successfully")
+    try:
+        await run_sync(partial(Repo.clone_from, **kwargs))  # type: ignore[arg-type]
+        print(f"Cloned {repo_url} successfully")
+    except Exception as e:
+        raise RuntimeError(f"failed to clone repo {repo_url} error: {e}") from e
 
 
 async def handle_generate(language_name: str, directory: str | None, abi_version: int) -> None:
@@ -72,6 +78,9 @@ async def handle_generate(language_name: str, directory: str | None, abi_version
         language_name: The name of the language.
         directory: The directory to generate the language in.
         abi_version: The ABI version to use.
+
+    Raises:
+        RuntimeError: if generate fails.
 
     Returns:
         None
@@ -85,13 +94,14 @@ async def handle_generate(language_name: str, directory: str | None, abi_version
 
     if platform.system() == "Windows":
         cmd = ["cmd", "/c", "tree-sitter", "generate", "--abi", str(abi_version)]
-        shell = False
     else:
         cmd = ["tree-sitter", "generate", "--abi", str(abi_version)]
-        shell = False
 
-    await run_sync(partial(subprocess.run, cmd, cwd=str(target_dir), check=False, shell=shell))
-    print(f"Generated {language_name} parser successfully")
+    try:
+        await run_process(cmd, cwd=str(target_dir), check=False)
+        print(f"Generated {language_name} parser successfully")
+    except Exception as e:
+        raise RuntimeError(f"failed to clone {language_name} due to an exception: {e}") from e
 
 
 async def move_src_folder(language_name: str, directory: str | None) -> None:
@@ -175,4 +185,15 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    if not which("tree-sitter"):
+        sys.exit("tree-sitter is a required system dependency. Please install it with 'npm i -g tree-sitter-cli'")
+
+    if vendor_directory.exists():
+        print("vendor directory already exists, removing")
+        rmtree(vendor_directory)
+
+    if parsers_directory.exists():
+        print("parsers directory already exists, removing")
+        rmtree(parsers_directory)
+
     asyncio.run(main())
