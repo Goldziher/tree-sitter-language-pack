@@ -262,7 +262,7 @@ To add an installed package follow these steps:
    - `repo` is the URL of the tree-sitter repository. This value is mandatory
    - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
      i.e. for `master` or other names, specify this).
-   - `directory` is the directory under which there is an `src` folder. This should be specified only in cases where
+   - `directory` is the directory under which there is a `src` folder. This should be specified only in cases where
      the `src` folder is not immediately under the root folder.
    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
      repository / directory combo. This should be specified only if the binding needs to be built in the repository.
