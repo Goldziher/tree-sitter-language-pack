@@ -1,5 +1,5 @@
 from itertools import chain
-from os import environ, getcwd
+from os import environ, getcwd, listdir
 from pathlib import Path
 from platform import system
 
@@ -13,7 +13,7 @@ MIN_PYTHON_VERSION = 39
 def get_mapped_parsers() -> dict[str, Path]:
     """Get the language definitions."""
     parsers_dir = Path(environ.get("PROJECT_ROOT", getcwd())).resolve() / "parsers"  # noqa: PTH109
-    return {str(dir_name): (parsers_dir / dir_name) for dir_name in parsers_dir.iterdir()}
+    return {dir_name: (parsers_dir / dir_name) for dir_name in listdir(parsers_dir)}  # noqa: PTH208
 
 
 def create_extension(*, language_name: str) -> Extension:

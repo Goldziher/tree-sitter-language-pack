@@ -131,7 +131,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: tree_sitter_language_pack/bindings
-        key: ${{ hashFiles('sources/*') }}-language-definitions
+        key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
 
     - name: Build Extensions
       if: steps.cache-bindings.outputs.cache-hit != 'true'

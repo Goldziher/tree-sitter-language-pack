@@ -44,11 +44,11 @@ dev = [
   "gitpython>=3.1.44",
   "mypy>=1.15.0",
   "pre-commit>=4.1.0",
-  "pytest>=8.3.4",
-  "ruff>=0.9.9",
-  "setuptools>=75.8.2",
+  "pytest>=8.3.5",
+  "ruff>=0.11.0",
+  "setuptools>=76.0.0",
   "tomli>=2.2.1; python_version<'3.11'",
-  "types-setuptools>=75.8.2.20250301",
+  "types-setuptools>=76.0.0.20250313",
   "typing-extensions>=4.12.2",
 ]
 
