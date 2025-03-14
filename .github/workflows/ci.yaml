@@ -124,7 +124,7 @@ jobs:
       with:
         path: |
           dist
-        key: ${{ runner.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
+        key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
 
     - name: Build wheel
       if: steps.cache-build.outputs.cache-hit != 'true'
