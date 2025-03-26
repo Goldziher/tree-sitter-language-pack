@@ -30,7 +30,7 @@ def create_extension(*, language_name: str) -> Extension:
             "-fvisibility=hidden",
             "-std=c11",
         ]
-        if system() != "Windows"
+        if system() != "Windows" or "MSYSTEM" in environ
         else [
             "/std:c11",
             "/utf-8",
