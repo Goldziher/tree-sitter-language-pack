@@ -102,6 +102,8 @@ SupportedLanguage = Literal[
     "nix",
     "nqc",
     "objc",
+    "ocaml",
+    "ocaml_interface",
     "odin",
     "org",
     "pascal",

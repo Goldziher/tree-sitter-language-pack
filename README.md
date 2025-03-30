@@ -135,6 +135,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [nix](https://github.com/nix-community/tree-sitter-nix) - MIT License
 - [nqc](https://github.com/tree-sitter-grammars/tree-sitter-nqc) - MIT License
 - [objc](https://github.com/tree-sitter-grammars/tree-sitter-objc) - MIT License
+- [ocaml/ocaml_interface](https://github.com/tree-sitter/tree-sitter-ocaml) - MIT License
 - [odin](https://github.com/tree-sitter-grammars/tree-sitter-odin) - MIT License
 - [org](https://github.com/milisims/tree-sitter-org) - MIT License
 - [pascal](https://github.com/Isopod/tree-sitter-pascal) - MIT License
