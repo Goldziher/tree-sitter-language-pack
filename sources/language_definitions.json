@@ -284,6 +284,11 @@
     "directory": "tree-sitter-markdown",
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
   },
+  "markdown_inline": {
+    "branch": "split_parser",
+    "directory": "tree-sitter-markdown-inline",
+    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+  },
   "matlab": {
     "repo": "https://github.com/acristoffers/tree-sitter-matlab"
   },

@@ -127,6 +127,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [magik](https://github.com/krn-robin/tree-sitter-magik) - MIT License
 - [make](https://github.com/tree-sitter-grammars/tree-sitter-make) - MIT License
 - [markdown](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
+- [markdown_inline](https://github.com/tree-sitter-grammars/tree-sitter-markdown) - MIT License
 - [matlab](https://github.com/acristoffers/tree-sitter-matlab) - MIT License
 - [mermaid](https://github.com/monaqa/tree-sitter-mermaid) - MIT License
 - [meson](https://github.com/tree-sitter-grammars/tree-sitter-meson) - MIT License
