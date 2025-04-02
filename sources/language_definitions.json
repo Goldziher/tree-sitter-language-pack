@@ -115,7 +115,8 @@
     "repo": "https://github.com/elixir-lang/tree-sitter-elixir"
   },
   "elm": {
-    "repo": "https://github.com/razzeee/tree-sitter-elm"
+    "repo": "https://github.com/razzeee/tree-sitter-elm",
+    "rev": "c26afd7f2316f689410a1622f1780eff054994b1"
   },
   "erlang": {
     "repo": "https://github.com/WhatsApp/tree-sitter-erlang"
@@ -415,8 +416,8 @@
     "repo": "https://github.com/tree-sitter/tree-sitter-ruby"
   },
   "rust": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-rust"
+    "repo": "https://github.com/tree-sitter/tree-sitter-rust",
+    "rev": "3d087c3df25286140393ddecc339208fae107149"
   },
   "scala": {
     "branch": "master",

@@ -634,7 +634,7 @@ dev = [
     { name = "pytest" },
     { name = "ruff" },
     { name = "setuptools" },
-    { name = "tomli" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "types-setuptools" },
     { name = "typing-extensions" },
 ]
@@ -657,7 +657,7 @@ dev = [
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "ruff", specifier = ">=0.11.0" },
     { name = "setuptools", specifier = ">=76.0.0" },
-    { name = "tomli", specifier = ">=2.2.1" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
