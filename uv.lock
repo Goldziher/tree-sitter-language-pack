@@ -637,6 +637,7 @@ dev = [
     { name = "tomli", marker = "python_full_version < '3.11'" },
     { name = "types-setuptools" },
     { name = "typing-extensions" },
+    { name = "uv-bump" },
 ]
 
 [package.metadata]
@@ -660,6 +661,7 @@ dev = [
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "types-setuptools", specifier = ">=76.0.0.20250313" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
+    { name = "uv-bump", git = "https://github.com/Goldziher/uv-bump" },
 ]
 
 [[package]]
@@ -697,6 +699,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/df/db/f35a00659bc03fec3
 wheels = [
     { url = "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d", size = 37438 },
 ]
+
+[[package]]
+name = "uv-bump"
+version = "0.1.0"
+source = { git = "https://github.com/Goldziher/uv-bump#9fd064c404d8ffdc4ab562860f228bc79bdad60b" }
 
 [[package]]
 name = "virtualenv"

@@ -5,7 +5,7 @@ requires = [ "cython", "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.6.1"
+version = "0.7.0"
 description = "Extensive Language Pack for Tree-Sitter"
 readme = "README.md"
 keywords = [ "code", "text-processing", "tree-sitter" ]
@@ -50,6 +50,7 @@ dev = [
   "tomli>=2.2.1; python_version<'3.11'",
   "types-setuptools>=76.0.0.20250313",
   "typing-extensions>=4.12.2",
+  "uv-bump",
 ]
 
 [tool.ruff]
@@ -93,3 +94,6 @@ disallow_any_unimported = true
 show_error_codes = true
 strict = true
 warn_unreachable = true
+
+[tool.uv.sources]
+uv-bump = { git = "https://github.com/Goldziher/uv-bump" }
