@@ -94,6 +94,7 @@ SupportedLanguage = Literal[
     "luau",
     "make",
     "markdown",
+    "markdown_inline",
     "matlab",
     "mermaid",
     "meson",

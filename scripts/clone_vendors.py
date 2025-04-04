@@ -32,6 +32,7 @@ class LanguageDict(TypedDict):
     generate: NotRequired[bool]
     rewrite_targets: NotRequired[bool]
     abi_version: NotRequired[int]
+    rev: NotRequired[str]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -45,13 +46,14 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     return language_definitions, language_names
 
 
-async def clone_repository(repo_url: str, branch: str | None, language_name: str) -> None:
+async def clone_repository(repo_url: str, branch: str | None, language_name: str, rev: str | None = None) -> None:
     """Clone a repository.
 
     Args:
         repo_url: The repository URL.
         branch: The branch to clone.
         language_name: The name of the repository.
+        rev: The revision to clone.  If passed, perform  a non-shallow clone.
 
     Raises:
         RuntimeError: If cloning fails
@@ -60,13 +62,18 @@ async def clone_repository(repo_url: str, branch: str | None, language_name: str
         Repo: The cloned repository.
     """
     print(f"Cloning {repo_url}")
-    kwargs = {"url": repo_url, "to_path": vendor_directory / language_name, "depth": 1}
+    kwargs = {"url": repo_url, "to_path": vendor_directory / language_name}
     if branch:
         kwargs["branch"] = branch
+    if not rev:
+        kwargs["depth"] = 1
 
     try:
-        await run_sync(partial(Repo.clone_from, **kwargs))  # type: ignore[arg-type]
+        repo = await run_sync(partial(Repo.clone_from, **kwargs))  # type: ignore[arg-type]
         print(f"Cloned {repo_url} successfully")
+        if rev:
+            await run_sync(lambda: repo.git.checkout(rev))
+            print(f"Checked out {rev}")
     except Exception as e:
         raise RuntimeError(f"failed to clone repo {repo_url} error: {e}") from e
 
@@ -157,7 +164,10 @@ async def process_repo(language_name: str, language_definition: LanguageDict) ->
         None
     """
     await clone_repository(
-        repo_url=language_definition["repo"], branch=language_definition.get("branch"), language_name=language_name
+        repo_url=language_definition["repo"],
+        branch=language_definition.get("branch"),
+        language_name=language_name,
+        rev=language_definition.get("rev"),
     )
     if language_definition.get("generate", False):
         await handle_generate(
