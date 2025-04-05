@@ -1,0 +1,478 @@
+[submodule "vendor/actionscript"]
+	path = vendor/actionscript
+	url = https://github.com/Rileran/tree-sitter-actionscript
+[submodule "vendor/ada"]
+	path = vendor/ada
+	url = https://github.com/briot/tree-sitter-ada
+[submodule "vendor/agda"]
+	path = vendor/agda
+	url = https://github.com/tree-sitter/tree-sitter-agda
+[submodule "vendor/arduino"]
+	path = vendor/arduino
+	url = https://github.com/ObserverOfTime/tree-sitter-arduino
+[submodule "vendor/asm"]
+	path = vendor/asm
+	url = https://github.com/rush-rs/tree-sitter-asm
+[submodule "vendor/astro"]
+	path = vendor/astro
+	url = https://github.com/virchau13/tree-sitter-astro
+[submodule "vendor/bash"]
+	path = vendor/bash
+	url = https://github.com/tree-sitter/tree-sitter-bash
+[submodule "vendor/beancount"]
+	path = vendor/beancount
+	url = https://github.com/polarmutex/tree-sitter-beancount
+[submodule "vendor/bibtex"]
+	path = vendor/bibtex
+	url = https://github.com/latex-lsp/tree-sitter-bibtex
+[submodule "vendor/bicep"]
+	path = vendor/bicep
+	url = https://github.com/tree-sitter-grammars/tree-sitter-bicep
+[submodule "vendor/bitbake"]
+	path = vendor/bitbake
+	url = https://github.com/tree-sitter-grammars/tree-sitter-bitbake
+[submodule "vendor/c"]
+	path = vendor/c
+	url = https://github.com/tree-sitter/tree-sitter-c
+[submodule "vendor/cairo"]
+	path = vendor/cairo
+	url = https://github.com/tree-sitter-grammars/tree-sitter-cairo
+[submodule "vendor/capnp"]
+	path = vendor/capnp
+	url = https://github.com/tree-sitter-grammars/tree-sitter-capnp
+[submodule "vendor/chatito"]
+	path = vendor/chatito
+	url = https://github.com/tree-sitter-grammars/tree-sitter-chatito
+[submodule "vendor/clarity"]
+	path = vendor/clarity
+	url = https://github.com/xlittlerag/tree-sitter-clarity
+[submodule "vendor/clojure"]
+	path = vendor/clojure
+	url = https://github.com/sogaiu/tree-sitter-clojure
+[submodule "vendor/cmake"]
+	path = vendor/cmake
+	url = https://github.com/uyha/tree-sitter-cmake
+[submodule "vendor/comment"]
+	path = vendor/comment
+	url = https://github.com/stsewd/tree-sitter-comment
+[submodule "vendor/commonlisp"]
+	path = vendor/commonlisp
+	url = https://github.com/theHamsta/tree-sitter-commonlisp
+[submodule "vendor/cpon"]
+	path = vendor/cpon
+	url = https://github.com/tree-sitter-grammars/tree-sitter-cpon
+[submodule "vendor/cpp"]
+	path = vendor/cpp
+	url = https://github.com/tree-sitter/tree-sitter-cpp
+[submodule "vendor/css"]
+	path = vendor/css
+	url = https://github.com/tree-sitter/tree-sitter-css
+[submodule "vendor/csv"]
+	path = vendor/csv
+	url = https://github.com/amaanq/tree-sitter-csv
+[submodule "vendor/cuda"]
+	path = vendor/cuda
+	url = https://github.com/tree-sitter-grammars/tree-sitter-cuda
+[submodule "vendor/d"]
+	path = vendor/d
+	url = https://github.com/gdamore/tree-sitter-d
+[submodule "vendor/dart"]
+	path = vendor/dart
+	url = https://github.com/UserNobody14/tree-sitter-dart
+[submodule "vendor/dockerfile"]
+	path = vendor/dockerfile
+	url = https://github.com/camdencheek/tree-sitter-dockerfile
+[submodule "vendor/doxygen"]
+	path = vendor/doxygen
+	url = https://github.com/tree-sitter-grammars/tree-sitter-doxygen
+[submodule "vendor/dtd"]
+	path = vendor/dtd
+	url = https://github.com/tree-sitter-grammars/tree-sitter-xml
+[submodule "vendor/elisp"]
+	path = vendor/elisp
+	url = https://github.com/Wilfred/tree-sitter-elisp
+[submodule "vendor/elixir"]
+	path = vendor/elixir
+	url = https://github.com/elixir-lang/tree-sitter-elixir
+[submodule "vendor/elm"]
+	path = vendor/elm
+	url = https://github.com/razzeee/tree-sitter-elm
+[submodule "vendor/erlang"]
+	path = vendor/erlang
+	url = https://github.com/WhatsApp/tree-sitter-erlang
+[submodule "vendor/fennel"]
+	path = vendor/fennel
+	url = https://github.com/TravonteD/tree-sitter-fennel
+[submodule "vendor/firrtl"]
+	path = vendor/firrtl
+	url = https://github.com/tree-sitter-grammars/tree-sitter-firrtl
+[submodule "vendor/fish"]
+	path = vendor/fish
+	url = https://github.com/ram02z/tree-sitter-fish
+[submodule "vendor/fortran"]
+	path = vendor/fortran
+	url = https://github.com/stadelmanma/tree-sitter-fortran
+[submodule "vendor/func"]
+	path = vendor/func
+	url = https://github.com/tree-sitter-grammars/tree-sitter-func
+[submodule "vendor/gdscript"]
+	path = vendor/gdscript
+	url = https://github.com/PrestonKnopp/tree-sitter-gdscript
+[submodule "vendor/gitattributes"]
+	path = vendor/gitattributes
+	url = https://github.com/ObserverOfTime/tree-sitter-gitattributes
+[submodule "vendor/gitcommit"]
+	path = vendor/gitcommit
+	url = https://github.com/gbprod/tree-sitter-gitcommit
+[submodule "vendor/gitignore"]
+	path = vendor/gitignore
+	url = https://github.com/shunsambongi/tree-sitter-gitignore
+[submodule "vendor/gleam"]
+	path = vendor/gleam
+	url = https://github.com/gleam-lang/tree-sitter-gleam
+[submodule "vendor/glsl"]
+	path = vendor/glsl
+	url = https://github.com/theHamsta/tree-sitter-glsl
+[submodule "vendor/gn"]
+	path = vendor/gn
+	url = https://github.com/tree-sitter-grammars/tree-sitter-gn
+[submodule "vendor/go"]
+	path = vendor/go
+	url = https://github.com/tree-sitter/tree-sitter-go
+[submodule "vendor/gomod"]
+	path = vendor/gomod
+	url = https://github.com/camdencheek/tree-sitter-go-mod
+[submodule "vendor/gosum"]
+	path = vendor/gosum
+	url = https://github.com/tree-sitter-grammars/tree-sitter-go-sum
+[submodule "vendor/groovy"]
+	path = vendor/groovy
+	url = https://github.com/Decodetalkers/tree-sitter-groovy
+	branch = gh-pages
+[submodule "vendor/gstlaunch"]
+	path = vendor/gstlaunch
+	url = https://github.com/tree-sitter-grammars/tree-sitter-gstlaunch
+[submodule "vendor/hack"]
+	path = vendor/hack
+	url = https://github.com/slackhq/tree-sitter-hack
+[submodule "vendor/hare"]
+	path = vendor/hare
+	url = https://github.com/tree-sitter-grammars/tree-sitter-hare
+[submodule "vendor/haskell"]
+	path = vendor/haskell
+	url = https://github.com/tree-sitter/tree-sitter-haskell
+[submodule "vendor/haxe"]
+	path = vendor/haxe
+	url = https://github.com/vantreeseba/tree-sitter-haxe
+[submodule "vendor/hcl"]
+	path = vendor/hcl
+	url = https://github.com/MichaHoffmann/tree-sitter-hcl
+[submodule "vendor/heex"]
+	path = vendor/heex
+	url = https://github.com/phoenixframework/tree-sitter-heex
+[submodule "vendor/hlsl"]
+	path = vendor/hlsl
+	url = https://github.com/theHamsta/tree-sitter-hlsl
+[submodule "vendor/html"]
+	path = vendor/html
+	url = https://github.com/tree-sitter/tree-sitter-html
+[submodule "vendor/hyprlang"]
+	path = vendor/hyprlang
+	url = https://github.com/tree-sitter-grammars/tree-sitter-hyprlang
+[submodule "vendor/ispc"]
+	path = vendor/ispc
+	url = https://github.com/tree-sitter-grammars/tree-sitter-ispc
+[submodule "vendor/janet"]
+	path = vendor/janet
+	url = https://github.com/GrayJack/tree-sitter-janet
+[submodule "vendor/java"]
+	path = vendor/java
+	url = https://github.com/tree-sitter/tree-sitter-java
+[submodule "vendor/javascript"]
+	path = vendor/javascript
+	url = https://github.com/tree-sitter/tree-sitter-javascript
+[submodule "vendor/jsdoc"]
+	path = vendor/jsdoc
+	url = https://github.com/tree-sitter/tree-sitter-jsdoc
+[submodule "vendor/json"]
+	path = vendor/json
+	url = https://github.com/tree-sitter/tree-sitter-json
+[submodule "vendor/jsonnet"]
+	path = vendor/jsonnet
+	url = https://github.com/sourcegraph/tree-sitter-jsonnet
+[submodule "vendor/julia"]
+	path = vendor/julia
+	url = https://github.com/tree-sitter/tree-sitter-julia
+[submodule "vendor/kconfig"]
+	path = vendor/kconfig
+	url = https://github.com/tree-sitter-grammars/tree-sitter-kconfig
+[submodule "vendor/kdl"]
+	path = vendor/kdl
+	url = https://github.com/tree-sitter-grammars/tree-sitter-kdl
+[submodule "vendor/kotlin"]
+	path = vendor/kotlin
+	url = https://github.com/fwcd/tree-sitter-kotlin
+[submodule "vendor/latex"]
+	path = vendor/latex
+	url = https://github.com/latex-lsp/tree-sitter-latex
+[submodule "vendor/linkerscript"]
+	path = vendor/linkerscript
+	url = https://github.com/tree-sitter-grammars/tree-sitter-linkerscript
+[submodule "vendor/llvm"]
+	path = vendor/llvm
+	url = https://github.com/benwilliamgraham/tree-sitter-llvm
+[submodule "vendor/lua"]
+	path = vendor/lua
+	url = https://github.com/MunifTanjim/tree-sitter-lua
+[submodule "vendor/luadoc"]
+	path = vendor/luadoc
+	url = https://github.com/tree-sitter-grammars/tree-sitter-luadoc
+[submodule "vendor/luap"]
+	path = vendor/luap
+	url = https://github.com/tree-sitter-grammars/tree-sitter-luap
+[submodule "vendor/luau"]
+	path = vendor/luau
+	url = https://github.com/tree-sitter-grammars/tree-sitter-luau
+[submodule "vendor/magik"]
+	path = vendor/magik
+	url = https://github.com/krn-robin/tree-sitter-magik
+[submodule "vendor/make"]
+	path = vendor/make
+	url = https://github.com/alemuller/tree-sitter-make
+[submodule "vendor/markdown"]
+	path = vendor/markdown
+	url = https://github.com/tree-sitter-grammars/tree-sitter-markdown
+	branch = split_parser
+[submodule "vendor/markdown_inline"]
+	path = vendor/markdown_inline
+	url = https://github.com/tree-sitter-grammars/tree-sitter-markdown
+	branch = split_parser
+[submodule "vendor/matlab"]
+	path = vendor/matlab
+	url = https://github.com/acristoffers/tree-sitter-matlab
+[submodule "vendor/mermaid"]
+	path = vendor/mermaid
+	url = https://github.com/monaqa/tree-sitter-mermaid
+[submodule "vendor/meson"]
+	path = vendor/meson
+	url = https://github.com/Decodetalkers/tree-sitter-meson
+[submodule "vendor/ninja"]
+	path = vendor/ninja
+	url = https://github.com/alemuller/tree-sitter-ninja
+[submodule "vendor/nix"]
+	path = vendor/nix
+	url = https://github.com/nix-community/tree-sitter-nix
+[submodule "vendor/nqc"]
+	path = vendor/nqc
+	url = https://github.com/tree-sitter-grammars/tree-sitter-nqc
+[submodule "vendor/objc"]
+	path = vendor/objc
+	url = https://github.com/tree-sitter-grammars/tree-sitter-objc
+[submodule "vendor/ocaml"]
+	path = vendor/ocaml
+	url = https://github.com/tree-sitter/tree-sitter-ocaml
+[submodule "vendor/ocaml_interface"]
+	path = vendor/ocaml_interface
+	url = https://github.com/tree-sitter/tree-sitter-ocaml
+[submodule "vendor/odin"]
+	path = vendor/odin
+	url = https://github.com/tree-sitter-grammars/tree-sitter-odin
+[submodule "vendor/org"]
+	path = vendor/org
+	url = https://github.com/milisims/tree-sitter-org
+[submodule "vendor/pascal"]
+	path = vendor/pascal
+	url = https://github.com/Isopod/tree-sitter-pascal
+[submodule "vendor/pem"]
+	path = vendor/pem
+	url = https://github.com/tree-sitter-grammars/tree-sitter-pem
+[submodule "vendor/perl"]
+	path = vendor/perl
+	url = https://github.com/tree-sitter-perl/tree-sitter-perl
+	branch = release
+[submodule "vendor/pgn"]
+	path = vendor/pgn
+	url = https://github.com/rolandwalker/tree-sitter-pgn
+[submodule "vendor/php"]
+	path = vendor/php
+	url = https://github.com/tree-sitter/tree-sitter-php
+[submodule "vendor/po"]
+	path = vendor/po
+	url = https://github.com/tree-sitter-grammars/tree-sitter-po
+[submodule "vendor/pony"]
+	path = vendor/pony
+	url = https://github.com/tree-sitter-grammars/tree-sitter-pony
+[submodule "vendor/powershell"]
+	path = vendor/powershell
+	url = https://github.com/airbus-cert/tree-sitter-powershell
+[submodule "vendor/printf"]
+	path = vendor/printf
+	url = https://github.com/tree-sitter-grammars/tree-sitter-printf
+[submodule "vendor/prisma"]
+	path = vendor/prisma
+	url = https://github.com/LumaKernel/tree-sitter-prisma
+[submodule "vendor/properties"]
+	path = vendor/properties
+	url = https://github.com/tree-sitter-grammars/tree-sitter-properties
+[submodule "vendor/proto"]
+	path = vendor/proto
+	url = https://github.com/coder3101/tree-sitter-proto
+[submodule "vendor/psv"]
+	path = vendor/psv
+	url = https://github.com/amaanq/tree-sitter-csv
+[submodule "vendor/puppet"]
+	path = vendor/puppet
+	url = https://github.com/tree-sitter-grammars/tree-sitter-puppet
+[submodule "vendor/purescript"]
+	path = vendor/purescript
+	url = https://github.com/postsolar/tree-sitter-purescript
+[submodule "vendor/pymanifest"]
+	path = vendor/pymanifest
+	url = https://github.com/tree-sitter-grammars/tree-sitter-pymanifest
+[submodule "vendor/python"]
+	path = vendor/python
+	url = https://github.com/tree-sitter/tree-sitter-python
+[submodule "vendor/qmldir"]
+	path = vendor/qmldir
+	url = https://github.com/tree-sitter-grammars/tree-sitter-qmldir
+[submodule "vendor/qmljs"]
+	path = vendor/qmljs
+	url = https://github.com/yuja/tree-sitter-qmljs
+[submodule "vendor/query"]
+	path = vendor/query
+	url = https://github.com/tree-sitter-grammars/tree-sitter-query
+[submodule "vendor/r"]
+	path = vendor/r
+	url = https://github.com/r-lib/tree-sitter-r
+[submodule "vendor/racket"]
+	path = vendor/racket
+	url = https://github.com/6cdh/tree-sitter-racket
+[submodule "vendor/re2c"]
+	path = vendor/re2c
+	url = https://github.com/tree-sitter-grammars/tree-sitter-re2c
+[submodule "vendor/readline"]
+	path = vendor/readline
+	url = https://github.com/tree-sitter-grammars/tree-sitter-readline
+[submodule "vendor/requirements"]
+	path = vendor/requirements
+	url = https://github.com/tree-sitter-grammars/tree-sitter-requirements
+[submodule "vendor/ron"]
+	path = vendor/ron
+	url = https://github.com/tree-sitter-grammars/tree-sitter-ron
+[submodule "vendor/rst"]
+	path = vendor/rst
+	url = https://github.com/stsewd/tree-sitter-rst
+[submodule "vendor/ruby"]
+	path = vendor/ruby
+	url = https://github.com/tree-sitter/tree-sitter-ruby
+[submodule "vendor/rust"]
+	path = vendor/rust
+	url = https://github.com/tree-sitter/tree-sitter-rust
+[submodule "vendor/scala"]
+	path = vendor/scala
+	url = https://github.com/tree-sitter/tree-sitter-scala
+[submodule "vendor/scheme"]
+	path = vendor/scheme
+	url = https://github.com/6cdh/tree-sitter-scheme
+[submodule "vendor/scss"]
+	path = vendor/scss
+	url = https://github.com/tree-sitter-grammars/tree-sitter-scss
+[submodule "vendor/smali"]
+	path = vendor/smali
+	url = https://github.com/tree-sitter-grammars/tree-sitter-smali
+[submodule "vendor/smithy"]
+	path = vendor/smithy
+	url = https://github.com/indoorvivants/tree-sitter-smithy
+[submodule "vendor/solidity"]
+	path = vendor/solidity
+	url = https://github.com/JoranHonig/tree-sitter-solidity
+[submodule "vendor/sparql"]
+	path = vendor/sparql
+	url = https://github.com/GordianDziwis/tree-sitter-sparql
+[submodule "vendor/sql"]
+	path = vendor/sql
+	url = https://github.com/DerekStride/tree-sitter-sql
+[submodule "vendor/squirrel"]
+	path = vendor/squirrel
+	url = https://github.com/tree-sitter-grammars/tree-sitter-squirrel
+[submodule "vendor/starlark"]
+	path = vendor/starlark
+	url = https://github.com/tree-sitter-grammars/tree-sitter-starlark
+[submodule "vendor/svelte"]
+	path = vendor/svelte
+	url = https://github.com/Himujjal/tree-sitter-svelte
+[submodule "vendor/swift"]
+	path = vendor/swift
+	url = https://github.com/alex-pinkus/tree-sitter-swift
+[submodule "vendor/tablegen"]
+	path = vendor/tablegen
+	url = https://github.com/Flakebi/tree-sitter-tablegen
+[submodule "vendor/tcl"]
+	path = vendor/tcl
+	url = https://github.com/lewis6991/tree-sitter-tcl
+[submodule "vendor/terraform"]
+	path = vendor/terraform
+	url = https://github.com/tree-sitter-grammars/tree-sitter-hcl
+[submodule "vendor/test"]
+	path = vendor/test
+	url = https://github.com/tree-sitter-grammars/tree-sitter-test
+[submodule "vendor/thrift"]
+	path = vendor/thrift
+	url = https://github.com/tree-sitter-grammars/tree-sitter-thrift
+[submodule "vendor/toml"]
+	path = vendor/toml
+	url = https://github.com/tree-sitter-grammars/tree-sitter-toml
+[submodule "vendor/tsv"]
+	path = vendor/tsv
+	url = https://github.com/amaanq/tree-sitter-csv
+[submodule "vendor/tsx"]
+	path = vendor/tsx
+	url = https://github.com/tree-sitter/tree-sitter-typescript
+[submodule "vendor/twig"]
+	path = vendor/twig
+	url = https://github.com/gbprod/tree-sitter-twig
+[submodule "vendor/typescript"]
+	path = vendor/typescript
+	url = https://github.com/tree-sitter/tree-sitter-typescript
+[submodule "vendor/typst"]
+	path = vendor/typst
+	url = https://github.com/uben0/tree-sitter-typst
+[submodule "vendor/udev"]
+	path = vendor/udev
+	url = https://github.com/tree-sitter-grammars/tree-sitter-udev
+[submodule "vendor/ungrammar"]
+	path = vendor/ungrammar
+	url = https://github.com/tree-sitter-grammars/tree-sitter-ungrammar
+[submodule "vendor/uxntal"]
+	path = vendor/uxntal
+	url = https://github.com/tree-sitter-grammars/tree-sitter-uxntal
+[submodule "vendor/v"]
+	path = vendor/v
+	url = https://github.com/nedpals/tree-sitter-v
+[submodule "vendor/verilog"]
+	path = vendor/verilog
+	url = https://github.com/tree-sitter/tree-sitter-verilog
+[submodule "vendor/vhdl"]
+	path = vendor/vhdl
+	url = https://github.com/alemuller/tree-sitter-vhdl
+[submodule "vendor/vim"]
+	path = vendor/vim
+	url = https://github.com/tree-sitter-grammars/tree-sitter-vim
+[submodule "vendor/vue"]
+	path = vendor/vue
+	url = https://github.com/tree-sitter-grammars/tree-sitter-vue
+[submodule "vendor/wgsl"]
+	path = vendor/wgsl
+	url = https://github.com/szebniok/tree-sitter-wgsl
+[submodule "vendor/xcompose"]
+	path = vendor/xcompose
+	url = https://github.com/tree-sitter-grammars/tree-sitter-xcompose
+[submodule "vendor/xml"]
+	path = vendor/xml
+	url = https://github.com/tree-sitter-grammars/tree-sitter-xml
+[submodule "vendor/yuck"]
+	path = vendor/yuck
+	url = https://github.com/tree-sitter-grammars/tree-sitter-yuck
+[submodule "vendor/zig"]
+	path = vendor/zig
+	url = https://github.com/maxxnino/tree-sitter-zig

@@ -1,557 +1,194 @@
 {
-  "actionscript": {
-    "repo": "https://github.com/Rileran/tree-sitter-actionscript"
-  },
-  "ada": {
-    "branch": "master",
-    "repo": "https://github.com/briot/tree-sitter-ada"
-  },
-  "agda": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-agda"
-  },
-  "arduino": {
-    "branch": "master",
-    "repo": "https://github.com/ObserverOfTime/tree-sitter-arduino"
-  },
-  "asm": {
-    "repo": "https://github.com/rush-rs/tree-sitter-asm"
-  },
-  "astro": {
-    "branch": "master",
-    "repo": "https://github.com/virchau13/tree-sitter-astro"
-  },
-  "bash": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-bash"
-  },
-  "beancount": {
-    "branch": "master",
-    "repo": "https://github.com/polarmutex/tree-sitter-beancount"
-  },
-  "bibtex": {
-    "branch": "master",
-    "repo": "https://github.com/latex-lsp/tree-sitter-bibtex"
-  },
-  "bicep": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-bicep"
-  },
-  "bitbake": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-bitbake"
-  },
-  "c": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-c"
-  },
-  "cairo": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-cairo"
-  },
-  "capnp": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-capnp"
-  },
-  "chatito": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-chatito"
-  },
-  "clarity": {
-    "repo": "https://github.com/xlittlerag/tree-sitter-clarity"
-  },
-  "clojure": {
-    "branch": "master",
-    "repo": "https://github.com/sogaiu/tree-sitter-clojure"
-  },
-  "cmake": {
-    "branch": "master",
-    "repo": "https://github.com/uyha/tree-sitter-cmake"
-  },
-  "comment": {
-    "branch": "master",
-    "repo": "https://github.com/stsewd/tree-sitter-comment"
-  },
-  "commonlisp": {
-    "branch": "master",
-    "repo": "https://github.com/theHamsta/tree-sitter-commonlisp"
-  },
-  "cpon": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-cpon"
-  },
-  "cpp": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-cpp"
-  },
-  "css": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-css"
-  },
+  "actionscript": {},
+  "ada": {},
+  "agda": {},
+  "arduino": {},
+  "asm": {},
+  "astro": {},
+  "bash": {},
+  "beancount": {},
+  "bibtex": {},
+  "bicep": {},
+  "bitbake": {},
+  "c": {},
+  "cairo": {},
+  "capnp": {},
+  "chatito": {},
+  "clarity": {},
+  "clojure": {},
+  "cmake": {},
+  "comment": {},
+  "commonlisp": {},
+  "cpon": {},
+  "cpp": {},
+  "css": {},
   "csv": {
-    "branch": "master",
-    "directory": "csv",
-    "repo": "https://github.com/amaanq/tree-sitter-csv"
+    "directory": "csv"
   },
-  "cuda": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-cuda"
-  },
-  "d": {
-    "repo": "https://github.com/gdamore/tree-sitter-d"
-  },
-  "dart": {
-    "branch": "master",
-    "repo": "https://github.com/UserNobody14/tree-sitter-dart"
-  },
-  "dockerfile": {
-    "repo": "https://github.com/camdencheek/tree-sitter-dockerfile"
-  },
-  "doxygen": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-doxygen"
-  },
+  "cuda": {},
+  "d": {},
+  "dart": {},
+  "dockerfile": {},
+  "doxygen": {},
   "dtd": {
-    "directory": "dtd",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-xml"
+    "directory": "dtd"
   },
-  "elisp": {
-    "repo": "https://github.com/Wilfred/tree-sitter-elisp"
-  },
-  "elixir": {
-    "repo": "https://github.com/elixir-lang/tree-sitter-elixir"
-  },
-  "elm": {
-    "repo": "https://github.com/razzeee/tree-sitter-elm",
-    "rev": "c26afd7f2316f689410a1622f1780eff054994b1"
-  },
-  "erlang": {
-    "repo": "https://github.com/WhatsApp/tree-sitter-erlang"
-  },
-  "fennel": {
-    "branch": "master",
-    "repo": "https://github.com/TravonteD/tree-sitter-fennel"
-  },
-  "firrtl": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-firrtl"
-  },
-  "fish": {
-    "branch": "master",
-    "repo": "https://github.com/ram02z/tree-sitter-fish"
-  },
-  "fortran": {
-    "branch": "master",
-    "repo": "https://github.com/stadelmanma/tree-sitter-fortran"
-  },
-  "func": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-func"
-  },
-  "gdscript": {
-    "branch": "master",
-    "repo": "https://github.com/PrestonKnopp/tree-sitter-gdscript"
-  },
-  "gitattributes": {
-    "branch": "master",
-    "repo": "https://github.com/ObserverOfTime/tree-sitter-gitattributes"
-  },
-  "gitcommit": {
-    "repo": "https://github.com/gbprod/tree-sitter-gitcommit"
-  },
-  "gitignore": {
-    "repo": "https://github.com/shunsambongi/tree-sitter-gitignore"
-  },
-  "gleam": {
-    "repo": "https://github.com/gleam-lang/tree-sitter-gleam"
-  },
-  "glsl": {
-    "branch": "master",
-    "repo": "https://github.com/theHamsta/tree-sitter-glsl"
-  },
-  "gn": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-gn"
-  },
-  "go": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-go"
-  },
-  "gomod": {
-    "repo": "https://github.com/camdencheek/tree-sitter-go-mod"
-  },
-  "gosum": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-go-sum"
-  },
-  "groovy": {
-    "branch": "gh-pages",
-    "repo": "https://github.com/Decodetalkers/tree-sitter-groovy"
-  },
-  "gstlaunch": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-gstlaunch"
-  },
-  "hack": {
-    "repo": "https://github.com/slackhq/tree-sitter-hack"
-  },
-  "hare": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-hare"
-  },
-  "haskell": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-haskell"
-  },
-  "haxe": {
-    "repo": "https://github.com/vantreeseba/tree-sitter-haxe"
-  },
-  "hcl": {
-    "repo": "https://github.com/MichaHoffmann/tree-sitter-hcl"
-  },
-  "heex": {
-    "repo": "https://github.com/phoenixframework/tree-sitter-heex"
-  },
-  "hlsl": {
-    "branch": "master",
-    "repo": "https://github.com/theHamsta/tree-sitter-hlsl"
-  },
-  "html": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-html"
-  },
-  "hyprlang": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang"
-  },
-  "ispc": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-ispc"
-  },
-  "janet": {
-    "branch": "master",
-    "repo": "https://github.com/GrayJack/tree-sitter-janet"
-  },
-  "java": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-java"
-  },
-  "javascript": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-javascript"
-  },
-  "jsdoc": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-jsdoc"
-  },
-  "json": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-json"
-  },
-  "jsonnet": {
-    "repo": "https://github.com/sourcegraph/tree-sitter-jsonnet"
-  },
-  "julia": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-julia"
-  },
-  "kconfig": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-kconfig"
-  },
-  "kdl": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-kdl"
-  },
-  "kotlin": {
-    "repo": "https://github.com/fwcd/tree-sitter-kotlin"
-  },
+  "elisp": {},
+  "elixir": {},
+  "elm": {},
+  "erlang": {},
+  "fennel": {},
+  "firrtl": {},
+  "fish": {},
+  "fortran": {},
+  "func": {},
+  "gdscript": {},
+  "gitattributes": {},
+  "gitcommit": {},
+  "gitignore": {},
+  "gleam": {},
+  "glsl": {},
+  "gn": {},
+  "go": {},
+  "gomod": {},
+  "gosum": {},
+  "groovy": {},
+  "gstlaunch": {},
+  "hack": {},
+  "hare": {},
+  "haskell": {},
+  "haxe": {},
+  "hcl": {},
+  "heex": {},
+  "hlsl": {},
+  "html": {},
+  "hyprlang": {},
+  "ispc": {},
+  "janet": {},
+  "java": {},
+  "javascript": {},
+  "jsdoc": {},
+  "json": {},
+  "jsonnet": {},
+  "julia": {},
+  "kconfig": {},
+  "kdl": {},
+  "kotlin": {},
   "latex": {
-    "branch": "master",
-    "generate": true,
-    "repo": "https://github.com/latex-lsp/tree-sitter-latex"
+    "generate": true
   },
-  "linkerscript": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-linkerscript"
-  },
-  "llvm": {
-    "repo": "https://github.com/benwilliamgraham/tree-sitter-llvm"
-  },
-  "lua": {
-    "repo": "https://github.com/MunifTanjim/tree-sitter-lua"
-  },
-  "luadoc": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-luadoc"
-  },
-  "luap": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-luap"
-  },
-  "luau": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-luau"
-  },
+  "linkerscript": {},
+  "llvm": {},
+  "lua": {},
+  "luadoc": {},
+  "luap": {},
+  "luau": {},
   "magik": {
-    "generate": true,
-    "repo": "https://github.com/krn-robin/tree-sitter-magik"
+    "generate": true
   },
-  "make": {
-    "repo": "https://github.com/alemuller/tree-sitter-make"
-  },
+  "make": {},
   "markdown": {
-    "branch": "split_parser",
-    "directory": "tree-sitter-markdown",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+    "directory": "tree-sitter-markdown"
   },
   "markdown_inline": {
-    "branch": "split_parser",
-    "directory": "tree-sitter-markdown-inline",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+    "directory": "tree-sitter-markdown-inline"
   },
-  "matlab": {
-    "repo": "https://github.com/acristoffers/tree-sitter-matlab"
-  },
-  "mermaid": {
-    "branch": "master",
-    "repo": "https://github.com/monaqa/tree-sitter-mermaid"
-  },
-  "meson": {
-    "branch": "master",
-    "repo": "https://github.com/Decodetalkers/tree-sitter-meson"
-  },
-  "ninja": {
-    "repo": "https://github.com/alemuller/tree-sitter-ninja"
-  },
-  "nix": {
-    "branch": "master",
-    "repo": "https://github.com/nix-community/tree-sitter-nix"
-  },
-  "nqc": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-nqc"
-  },
-  "objc": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-objc"
-  },
+  "matlab": {},
+  "mermaid": {},
+  "meson": {},
+  "ninja": {},
+  "nix": {},
+  "nqc": {},
+  "objc": {},
   "ocaml": {
-    "branch": "master",
-    "directory": "grammars/ocaml",
-    "repo": "https://github.com/tree-sitter/tree-sitter-ocaml"
+    "directory": "grammars/ocaml"
   },
   "ocaml_interface": {
-    "branch": "master",
-    "directory": "grammars/interface",
-    "repo": "https://github.com/tree-sitter/tree-sitter-ocaml"
+    "directory": "grammars/interface"
   },
-  "odin": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-odin"
-  },
-  "org": {
-    "repo": "https://github.com/milisims/tree-sitter-org"
-  },
-  "pascal": {
-    "branch": "master",
-    "repo": "https://github.com/Isopod/tree-sitter-pascal"
-  },
-  "pem": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-pem"
-  },
-  "perl": {
-    "branch": "release",
-    "repo": "https://github.com/tree-sitter-perl/tree-sitter-perl"
-  },
-  "pgn": {
-    "branch": "master",
-    "repo": "https://github.com/rolandwalker/tree-sitter-pgn"
-  },
+  "odin": {},
+  "org": {},
+  "pascal": {},
+  "pem": {},
+  "perl": {},
+  "pgn": {},
   "php": {
-    "directory": "php",
-    "repo": "https://github.com/tree-sitter/tree-sitter-php"
+    "directory": "php"
   },
-  "po": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-po"
-  },
-  "pony": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-pony"
-  },
-  "powershell": {
-    "repo": "https://github.com/airbus-cert/tree-sitter-powershell"
-  },
-  "printf": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-printf"
-  },
-  "prisma": {
-    "branch": "master",
-    "repo": "https://github.com/LumaKernel/tree-sitter-prisma"
-  },
-  "properties": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-properties"
-  },
-  "proto": {
-    "repo": "https://github.com/coder3101/tree-sitter-proto"
-  },
+  "po": {},
+  "pony": {},
+  "powershell": {},
+  "printf": {},
+  "prisma": {},
+  "properties": {},
+  "proto": {},
   "psv": {
-    "branch": "master",
-    "directory": "psv",
-    "repo": "https://github.com/amaanq/tree-sitter-csv"
+    "directory": "psv"
   },
-  "puppet": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-puppet"
-  },
-  "purescript": {
-    "repo": "https://github.com/postsolar/tree-sitter-purescript"
-  },
-  "pymanifest": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-pymanifest"
-  },
-  "python": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-python"
-  },
-  "qmldir": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-qmldir"
-  },
-  "qmljs": {
-    "branch": "master",
-    "repo": "https://github.com/yuja/tree-sitter-qmljs"
-  },
-  "query": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-query"
-  },
-  "r": {
-    "repo": "https://github.com/r-lib/tree-sitter-r"
-  },
-  "racket": {
-    "repo": "https://github.com/6cdh/tree-sitter-racket"
-  },
-  "re2c": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-re2c"
-  },
-  "readline": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-readline"
-  },
-  "requirements": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-requirements"
-  },
-  "ron": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-ron"
-  },
-  "rst": {
-    "branch": "master",
-    "repo": "https://github.com/stsewd/tree-sitter-rst"
-  },
-  "ruby": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-ruby"
-  },
-  "rust": {
-    "repo": "https://github.com/tree-sitter/tree-sitter-rust",
-    "rev": "3d087c3df25286140393ddecc339208fae107149"
-  },
-  "scala": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter/tree-sitter-scala"
-  },
-  "scheme": {
-    "repo": "https://github.com/6cdh/tree-sitter-scheme"
-  },
-  "scss": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-scss"
-  },
-  "smali": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-smali"
-  },
-  "smithy": {
-    "repo": "https://github.com/indoorvivants/tree-sitter-smithy"
-  },
-  "solidity": {
-    "branch": "master",
-    "repo": "https://github.com/JoranHonig/tree-sitter-solidity"
-  },
-  "sparql": {
-    "repo": "https://github.com/GordianDziwis/tree-sitter-sparql"
-  },
+  "puppet": {},
+  "purescript": {},
+  "pymanifest": {},
+  "python": {},
+  "qmldir": {},
+  "qmljs": {},
+  "query": {},
+  "r": {},
+  "racket": {},
+  "re2c": {},
+  "readline": {},
+  "requirements": {},
+  "ron": {},
+  "rst": {},
+  "ruby": {},
+  "rust": {},
+  "scala": {},
+  "scheme": {},
+  "scss": {},
+  "smali": {},
+  "smithy": {},
+  "solidity": {},
+  "sparql": {},
   "sql": {
-    "generate": true,
-    "repo": "https://github.com/DerekStride/tree-sitter-sql"
+    "generate": true
   },
-  "squirrel": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-squirrel"
-  },
-  "starlark": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-starlark"
-  },
-  "svelte": {
-    "branch": "master",
-    "repo": "https://github.com/Himujjal/tree-sitter-svelte"
-  },
+  "squirrel": {},
+  "starlark": {},
+  "svelte": {},
   "swift": {
-    "generate": true,
-    "repo": "https://github.com/alex-pinkus/tree-sitter-swift"
+    "generate": true
   },
-  "tablegen": {
-    "branch": "master",
-    "repo": "https://github.com/Flakebi/tree-sitter-tablegen"
-  },
-  "tcl": {
-    "repo": "https://github.com/lewis6991/tree-sitter-tcl",
-    "rev": "ce03bbd6bb74f902adfaa37a294c34cbe05ef940"
-  },
+  "tablegen": {},
+  "tcl": {},
   "terraform": {
-    "directory": "dialects/terraform",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-hcl"
+    "directory": "dialects/terraform"
   },
-  "test": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-test"
-  },
-  "thrift": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-thrift"
-  },
-  "toml": {
-    "branch": "master",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-toml"
-  },
+  "test": {},
+  "thrift": {},
+  "toml": {},
   "tsv": {
-    "branch": "master",
-    "directory": "tsv",
-    "repo": "https://github.com/amaanq/tree-sitter-csv"
+    "directory": "tsv"
   },
   "tsx": {
-    "directory": "tsx",
-    "repo": "https://github.com/tree-sitter/tree-sitter-typescript"
+    "directory": "tsx"
   },
-  "twig": {
-    "repo": "https://github.com/gbprod/tree-sitter-twig"
-  },
+  "twig": {},
   "typescript": {
-    "directory": "typescript",
-    "repo": "https://github.com/tree-sitter/tree-sitter-typescript"
+    "directory": "typescript"
   },
-  "typst": {
-    "branch": "master",
-    "repo": "https://github.com/uben0/tree-sitter-typst"
-  },
-  "udev": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-udev"
-  },
-  "ungrammar": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-ungrammar"
-  },
-  "uxntal": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-uxntal"
-  },
-  "v": {
-    "branch": "master",
-    "repo": "https://github.com/nedpals/tree-sitter-v"
-  },
-  "verilog": {
-    "repo": "https://github.com/tree-sitter/tree-sitter-verilog"
-  },
-  "vhdl": {
-    "repo": "https://github.com/alemuller/tree-sitter-vhdl"
-  },
-  "vim": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-vim"
-  },
-  "vue": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-vue"
-  },
-  "wgsl": {
-    "branch": "master",
-    "repo": "https://github.com/szebniok/tree-sitter-wgsl"
-  },
-  "xcompose": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-xcompose"
-  },
+  "typst": {},
+  "udev": {},
+  "ungrammar": {},
+  "uxntal": {},
+  "v": {},
+  "verilog": {},
+  "vhdl": {},
+  "vim": {},
+  "vue": {},
+  "wgsl": {},
+  "xcompose": {},
   "xml": {
-    "directory": "xml",
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-xml"
+    "directory": "xml"
   },
-  "yuck": {
-    "repo": "https://github.com/tree-sitter-grammars/tree-sitter-yuck"
-  },
-  "zig": {
-    "repo": "https://github.com/maxxnino/tree-sitter-zig"
-  }
+  "yuck": {},
+  "zig": {}
 }
