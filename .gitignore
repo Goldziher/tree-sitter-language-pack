@@ -24,5 +24,4 @@ coverage.xml
 dist/
 parsers/
 requirements.txt
-vendor/
 wheelhouse/
