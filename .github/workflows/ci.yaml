@@ -10,12 +10,14 @@ on:
     - fix/*
 
 jobs:
-  clone_vendors:
-    name: Clone vendors
+  process_vendors:
+    name: Process vendors & Generate Parsers
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Setup Node
       uses: actions/setup-node@v4
@@ -36,10 +38,10 @@ jobs:
     - name: Install Dependencies
       run: uv sync --no-install-project
 
-    - name: Clone vendors
+    - name: Process vendors and generate parsers
       run: |
         mkdir parsers
-        uv run --no-sync scripts/clone_vendors.py
+        uv run --no-sync scripts/process_vendors.py
 
     - name: Upload Parsers
       uses: actions/upload-artifact@v4
@@ -48,7 +50,7 @@ jobs:
         path: parsers
 
   validate:
-    needs: clone_vendors
+    needs: process_vendors
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -85,7 +87,7 @@ jobs:
 
   build-wheel:
     name: Build wheel
-    needs: clone_vendors
+    needs: process_vendors
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
