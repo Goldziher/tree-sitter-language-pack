@@ -211,15 +211,30 @@ submitting PRs to avoid disappointment.
 
 ### Local Development
 
-1. Clone the repo
-2. Install the system dependencies
-3. Install the full dependencies with `uv sync --no-install-project`
+1. Clone the repo:
+   ```shell
+   git clone --recurse-submodules --shallow-submodules --jobs 8 <repository-url>
+   ```
+   If you have already cloned the repository without the submodules, you can initialize them with:
+   ```shell
+   git submodule update --init --recursive --shallow-submodules --jobs 8
+   ```
+   - We are performing shallow clone of the submodules here. If you want to browse the Git history, please convert it to an full clone using the following command:
+     ```shell
+     cd path/to/submodule && git fetch --unshallow
+     ```
+     To do this for all submodule:
+     ```shell
+     git submodule foreach 'git fetch --unshallow || echo "$name is not shallow"'
+     ```
+2. Install the system dependencies (e.g., `tree-sitter-cli` via `npm i -g tree-sitter-cli`).
+3. Install the full Python dependencies with `uv sync --no-install-project`.
 4. Install the pre-commit hooks with:
    ```shell
    pre-commit install && pre-commit install --hook-type commit-msg
    ```
-5. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
-6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
+5. Process the vendor submodules (move source files, generate parsers if needed) with `uv run --no-sync scripts/process_vendors.py`.
+6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
 
 ### Running Tests
 
@@ -239,7 +254,7 @@ the [pyproject.toml](./pyproject.toml) file.
 To add an installed package follow these steps:
 
 1. Install the bindings with `uv add <bindings_package_name> --no-install-project`.
-2. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+2. Execute the vendor processing script with `uv run --no-sync scripts/process_vendors.py`.
 3. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
    [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
 4. Update the code in the init file as necessary.
@@ -254,23 +269,22 @@ To add an installed package follow these steps:
    ```jsonc
    {
      "name": {
-       "repo": "https://github.com/...",
-       "branch": "master", // not mandatory
        "directory": "sub-dir/something", // not mandatory
        "generate": true, // not mandatory
      },
    }
    ```
-   - `repo` is the URL of the tree-sitter repository. This value is mandatory
-   - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
-     i.e. for `master` or other names, specify this).
    - `directory` is the directory under which there is a `src` folder. This should be specified only in cases where
      the `src` folder is not immediately under the root folder.
    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
      repository / directory combo. This should be specified only if the binding needs to be built in the repository.
-2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
-3. Install the dev dependencies with `uv sync --no-install-project -v`
-4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
-5. Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
-6. Execute the tests (see above).
-7. If the tests pass, commit your changes and open a pull request.
+2. Add the new language repository as a git submodule under the `vendor/` directory.
+   ```shell
+   git submodule add <repository-url> vendor/<language_name>
+   ```
+3. Update the `SupportedLanguage` literal type in the [\_\_init\_\_.py](./tree_sitter_language_pack/__init__.py) file.
+4. Install the dev dependencies with `uv sync --no-install-project -v`
+5. Execute the vendor processing script with `uv run --no-sync scripts/process_vendors.py`.
+6. Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
+7. Execute the tests (see above).
+8. If the tests pass, commit your changes (including the `.gitmodules` update) and open a pull request.
