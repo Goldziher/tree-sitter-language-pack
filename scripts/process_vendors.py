@@ -5,7 +5,6 @@ import os
 import platform
 import re
 import sys
-from functools import partial
 from json import loads
 from pathlib import Path
 from shutil import move, rmtree, which
@@ -13,7 +12,6 @@ from shutil import move, rmtree, which
 from anyio import Path as AsyncPath
 from anyio import run_process
 from anyio.to_thread import run_sync
-from git import Repo
 from typing_extensions import NotRequired, TypedDict
 
 vendor_directory = Path(__file__).parent.parent / "vendor"
@@ -26,13 +24,10 @@ COMMON_RE_PATTERN = re.compile(r"\.\.[/\\](?:\.\.[/\\])*common[/\\]")
 class LanguageDict(TypedDict):
     """Language configuration for tree-sitter repositories."""
 
-    repo: str
-    branch: NotRequired[str]
     directory: NotRequired[str]
     generate: NotRequired[bool]
     rewrite_targets: NotRequired[bool]
     abi_version: NotRequired[int]
-    rev: NotRequired[str]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -44,38 +39,6 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     # return a list of language names
     language_names = list(language_definitions.keys())
     return language_definitions, language_names
-
-
-async def clone_repository(repo_url: str, branch: str | None, language_name: str, rev: str | None = None) -> None:
-    """Clone a repository.
-
-    Args:
-        repo_url: The repository URL.
-        branch: The branch to clone.
-        language_name: The name of the repository.
-        rev: The revision to clone.  If passed, perform  a non-shallow clone.
-
-    Raises:
-        RuntimeError: If cloning fails
-
-    Returns:
-        Repo: The cloned repository.
-    """
-    print(f"Cloning {repo_url}")
-    kwargs = {"url": repo_url, "to_path": vendor_directory / language_name}
-    if branch:
-        kwargs["branch"] = branch
-    if not rev:
-        kwargs["depth"] = 1
-
-    try:
-        repo = await run_sync(partial(Repo.clone_from, **kwargs))  # type: ignore[arg-type]
-        print(f"Cloned {repo_url} successfully")
-        if rev:
-            await run_sync(lambda: repo.git.checkout(rev))
-            print(f"Checked out {rev}")
-    except Exception as e:
-        raise RuntimeError(f"failed to clone repo {repo_url} error: {e}") from e
 
 
 async def handle_generate(language_name: str, directory: str | None, abi_version: int) -> None:
@@ -163,12 +126,6 @@ async def process_repo(language_name: str, language_definition: LanguageDict) ->
     Returns:
         None
     """
-    await clone_repository(
-        repo_url=language_definition["repo"],
-        branch=language_definition.get("branch"),
-        language_name=language_name,
-        rev=language_definition.get("rev"),
-    )
     if language_definition.get("generate", False):
         await handle_generate(
             language_name=language_name,
@@ -183,6 +140,28 @@ async def main() -> None:
     parsers_directory.mkdir(exist_ok=True, parents=True)
 
     language_definitions, language_names = get_language_definitions()
+
+    # Check if submodule directories exist and are initialized
+    print("Checking vendor submodules...")
+    all_submodules_initialized = True
+    for lang_name in language_names:
+        submodule_path = vendor_directory / lang_name
+        if not submodule_path.is_dir() or not list(Path(submodule_path).iterdir()):
+            print(
+                f"Error: Submodule for '{lang_name}' not found or not initialized in '{submodule_path}'.",
+                file=sys.stderr,
+            )
+            all_submodules_initialized = False
+
+    if not all_submodules_initialized:
+        print(
+            "\nPlease initialize/update the submodules using:",
+            file=sys.stderr,
+        )
+        print("  git submodule update --init --recursive", file=sys.stderr)
+        sys.exit(1)
+    print("All vendor submodules appear to be initialized.")
+
     await asyncio.gather(
         *[
             process_repo(
@@ -197,10 +176,6 @@ async def main() -> None:
 if __name__ == "__main__":
     if not which("tree-sitter"):
         sys.exit("tree-sitter is a required system dependency. Please install it with 'npm i -g tree-sitter-cli'")
-
-    if vendor_directory.exists():
-        print("vendor directory already exists, removing")
-        rmtree(vendor_directory)
 
     if parsers_directory.exists():
         print("parsers directory already exists, removing")
