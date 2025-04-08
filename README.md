@@ -221,6 +221,37 @@ submitting PRs to avoid disappointment.
 5. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
 6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
 
+### Pinning Vendor Dependencies
+
+The `pin_vendors.py` script helps pin all language repositories to specific commit hashes, ensuring reproducible builds and stable dependencies. This script:
+
+1. Reads the language definitions from `sources/language_definitions.json`
+2. For each language, fetches the latest commit hash from its source repository
+3. Updates the `rev` field in the language definition with the latest commit hash
+4. Writes the updated definitions back to the file
+
+Usage:
+
+```shell
+# Update all languages with their latest commit hashes
+uv run --no-sync scripts/pin_vendors.py
+
+# Only update languages that don't already have a rev field
+uv run --no-sync scripts/pin_vendors.py --only-missing
+
+# Update specific languages (comma-separated list)
+uv run --no-sync scripts/pin_vendors.py --languages=python,rust,go
+
+# Control concurrency (default is 2x CPU cores)
+uv run --no-sync scripts/pin_vendors.py --workers=8
+```
+
+The script creates a backup of the original file (`.json.bak`) before making changes. This is particularly useful when:
+
+- Preparing a new release and wanting to pin all dependencies
+- Updating dependencies in a controlled manner
+- Ensuring reproducible builds across different environments
+
 ### Running Tests
 
 To run the tests, execute the following command:
@@ -258,6 +289,7 @@ To add an installed package follow these steps:
        "branch": "master", // not mandatory
        "directory": "sub-dir/something", // not mandatory
        "generate": true, // not mandatory
+       "rev": "commit-hash", // not mandatory, can be set with pin_vendors.py
      },
    }
    ```
@@ -268,6 +300,8 @@ To add an installed package follow these steps:
      the `src` folder is not immediately under the root folder.
    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
      repository / directory combo. This should be specified only if the binding needs to be built in the repository.
+   - `rev` specifies a specific commit hash to use when cloning. This ensures reproducible builds. You can use the
+     `pin_vendors.py` script to automatically update all languages to their latest commit hashes.
 2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
 3. Install the dev dependencies with `uv sync --no-install-project -v`
 4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
