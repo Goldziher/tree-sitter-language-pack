@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 
-requires = [ "cython", "setuptools>=75.8.0", "typing-extensions>=4.12.2" ]
+requires = [ "cython", "setuptools>=78.1.0", "typing-extensions>=4.13.1" ]
 
 [project]
 name = "tree-sitter-language-pack"
@@ -39,17 +39,16 @@ urls.homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
 
 [dependency-groups]
 dev = [
-  "aiopath>=0.5.12",
-  "anyio>=3.7.1",
+  "anyio>=4.9.0",
   "gitpython>=3.1.44",
   "mypy>=1.15.0",
-  "pre-commit>=4.1.0",
+  "pre-commit>=4.2.0",
   "pytest>=8.3.5",
-  "ruff>=0.11.0",
-  "setuptools>=76.0.0",
+  "ruff>=0.11.4",
+  "setuptools>=78.1.0",
   "tomli>=2.2.1; python_version<'3.11'",
-  "types-setuptools>=76.0.0.20250313",
-  "typing-extensions>=4.12.2",
+  "types-setuptools>=78.1.0.20250329",
+  "typing-extensions>=4.13.1",
   "uv-bump",
 ]
 
