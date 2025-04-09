@@ -9,17 +9,17 @@ as both source distribution and pre-built wheels.
 pip install tree-sitter-language-pack
 ```
 
-## Important Notes:
+## Important Notes
 
 - This package started life as a maintained and updated fork of
-  [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages) by Grant Jenks, and it
-  incorporates code contributed by ObserverOfTime (see
-  this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
+    [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages) by Grant Jenks, and it
+    incorporates code contributed by ObserverOfTime (see
+    this [PR](https://github.com/grantjenks/py-tree-sitter-languages/pull/65)).
 - This package is MIT licensed and the original package of which this is a fork has an Apache 2.0 License. Both licenses
-  are available in the LICENSE file.
+    are available in the LICENSE file.
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
-  no GPL
-  licensed languages are included.
+    no GPL
+    licensed languages are included.
 
 ## Features
 
@@ -35,14 +35,14 @@ This library exposes two functions `get_language` and `get_parser`.
 ```python
 from tree_sitter_language_pack import get_binding, get_language, get_parser
 
-python_binding = get_binding('python')  # this is a pycapsule object pointing to the C binding
-python_lang = get_language('python')  # this is an instance of tree_sitter.Language
-python_parser = get_parser('python')  # this is an instance of tree_sitter.Parser
+python_binding = get_binding("python")  # this is a pycapsule object pointing to the C binding
+python_lang = get_language("python")  # this is an instance of tree_sitter.Language
+python_parser = get_parser("python")  # this is an instance of tree_sitter.Parser
 ```
 
 See the list of available languages below to get the name of the language you want to use.
 
-## Available Languages:
+## Available Languages
 
 Each language below is identified by the key used to retrieve it from the `get_language` and `get_parser` functions.
 
@@ -212,23 +212,29 @@ submitting PRs to avoid disappointment.
 ### Local Development
 
 1. Clone the repo
-2. Install the system dependencies
-3. Install the full dependencies with `uv sync --no-install-project`
-4. Install the pre-commit hooks with:
-   ```shell
-   pre-commit install && pre-commit install --hook-type commit-msg
-   ```
-5. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
-6. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
+
+1. Install the system dependencies
+
+1. Install the full dependencies with `uv sync --no-install-project`
+
+1. Install the pre-commit hooks with:
+
+    ```shell
+    pre-commit install && pre-commit install --hook-type commit-msg
+    ```
+
+1. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
+
+1. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
 
 ### Pinning Vendor Dependencies
 
 The `pin_vendors.py` script helps pin all language repositories to specific commit hashes, ensuring reproducible builds and stable dependencies. This script:
 
 1. Reads the language definitions from `sources/language_definitions.json`
-2. For each language, fetches the latest commit hash from its source repository
-3. Updates the `rev` field in the language definition with the latest commit hash
-4. Writes the updated definitions back to the file
+1. For each language, fetches the latest commit hash from its source repository
+1. Updates the `rev` field in the language definition with the latest commit hash
+1. Writes the updated definitions back to the file
 
 Usage:
 
@@ -241,16 +247,7 @@ uv run --no-sync scripts/pin_vendors.py --only-missing
 
 # Update specific languages (comma-separated list)
 uv run --no-sync scripts/pin_vendors.py --languages=python,rust,go
-
-# Control concurrency (default is 2x CPU cores)
-uv run --no-sync scripts/pin_vendors.py --workers=8
 ```
-
-The script creates a backup of the original file (`.json.bak`) before making changes. This is particularly useful when:
-
-- Preparing a new release and wanting to pin all dependencies
-- Updating dependencies in a controlled manner
-- Ensuring reproducible builds across different environments
 
 ### Running Tests
 
@@ -269,42 +266,49 @@ the [pyproject.toml](./pyproject.toml) file.
 
 To add an installed package follow these steps:
 
-1. Install the bindings with `uv add <bindings_package_name> --no-install-project`.
-2. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
-3. Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
-   [\__init .py _](./tree_sitter_language_pack/__init__.py) file.
-4. Update the code in the init file as necessary.
-5. Build the bindings by executing: `uv run --no-sync setup.py build_ext --inplace`.
-6. Execute the tests (see above).
-7. If the tests pass, commit your changes and open a pull request.
+- Install the bindings with `uv add <bindings_package_name> --no-install-project`.
+- Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+- Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
+    [\_\_init .py \_](./tree_sitter_language_pack/__init__.py) file.
+- Update the code in the init file as necessary.
+- Build the bindings by executing: `uv run --no-sync setup.py build_ext --inplace`.
+- Execute the tests (see above).
+- If the tests pass, commit your changes and open a pull request.
 
 #### Adding a Binary Wheel Language
 
-1. Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
-   at the repository's root. This file contains a mapping of language names to their respective repositories:
-   ```jsonc
-   {
-     "name": {
-       "repo": "https://github.com/...",
-       "branch": "master", // not mandatory
-       "directory": "sub-dir/something", // not mandatory
-       "generate": true, // not mandatory
-       "rev": "commit-hash", // not mandatory, can be set with pin_vendors.py
-     },
-   }
-   ```
-   - `repo` is the URL of the tree-sitter repository. This value is mandatory
-   - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
-     i.e. for `master` or other names, specify this).
-   - `directory` is the directory under which there is a `src` folder. This should be specified only in cases where
-     the `src` folder is not immediately under the root folder.
-   - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
-     repository / directory combo. This should be specified only if the binding needs to be built in the repository.
-   - `rev` specifies a specific commit hash to use when cloning. This ensures reproducible builds. You can use the
-     `pin_vendors.py` script to automatically update all languages to their latest commit hashes.
-2. Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
-3. Install the dev dependencies with `uv sync --no-install-project -v`
-4. Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
-5. Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
-6. Execute the tests (see above).
-7. If the tests pass, commit your changes and open a pull request.
+- Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
+    at the repository's root. This file contains a mapping of language names to their respective repositories:
+
+    ```jsonc
+    {
+      "name": {
+        "repo": "https://github.com/...",
+        "rev": "commit-hash", // required
+        "branch": "master", // not mandatory
+        "directory": "sub-dir/something", // not mandatory
+        "generate": true, // not mandatory
+      },
+    }
+    ```
+
+    - `repo` is the URL of the tree-sitter repository. This value is mandatory
+    - `rev` specifies a specific commit hash to use when cloning. This ensures reproducible builds.
+    - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
+        i.e. for `master` or other names, specify this).
+    - `directory` is the directory under which there is a `src` folder. This should be specified only in cases where
+        the `src` folder is not immediately under the root folder.
+    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
+        repository / directory combo. This should be specified only if the binding needs to be built in the repository.
+
+- Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
+
+- Install the dev dependencies with `uv sync --no-install-project -v`
+
+- Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
+
+- Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
+
+- Execute the tests (see above).
+
+- If the tests pass, commit your changes and open a pull request.

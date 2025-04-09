@@ -25,19 +25,15 @@ def get_latest_commit_hash(repo_url: str, branch: str | None = None) -> str | No
     """
     print(f"Fetching latest commit for {repo_url} on branch {branch or 'default'}")
 
-    # Create a temporary directory for cloning
     temp_dir = tempfile.mkdtemp()
 
     try:
-        # Clone into the temporary directory
         clone_kwargs = {}
         if branch:
             clone_kwargs["branch"] = branch
 
-        # Clone the repository - avoid passing additional parameters to fix mypy errors
         temp_repo = Repo.clone_from(url=repo_url, to_path=temp_dir)
 
-        # Get the latest commit hash
         latest_commit = temp_repo.head.commit.hexsha
         print(f"Latest commit for {repo_url}: {latest_commit}")
         return latest_commit
@@ -47,7 +43,6 @@ def get_latest_commit_hash(repo_url: str, branch: str | None = None) -> str | No
         return None
 
     finally:
-        # Clean up the temporary directory
         try:
             shutil.rmtree(temp_dir, ignore_errors=True)
         except (PermissionError, OSError) as e:
@@ -71,13 +66,11 @@ async def process_language(
     branch = language_def.get("branch")
     language_def_copy = language_def.copy()
 
-    # Skip if --only-missing is set and rev already exists
     if args.only_missing and "rev" in language_def_copy:
         print(f"Skipping {language_name} as it already has a revision pinned")
         return language_name, language_def_copy
 
     try:
-        # Use thread pool for git operations
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             loop = asyncio.get_event_loop()
             latest_commit = await loop.run_in_executor(executor, get_latest_commit_hash, repo_url, branch)
@@ -96,18 +89,14 @@ async def process_language(
 
 async def main(args: argparse.Namespace) -> None:
     """Main function."""
-    # Determine level of concurrency based on CPU count
     max_workers = args.workers if args.workers else min(32, (os.cpu_count() or 4) * 2)
     print(f"Using up to {max_workers} concurrent workers")
 
-    # Load the language definitions
     definitions_path = Path(__file__).parent.parent / "sources" / "language_definitions.json"
     print(f"Loading language definitions from {definitions_path}")
 
-    # Use async-compatible file operation
     language_definitions = json.loads(await asyncio.to_thread(lambda: Path(definitions_path).read_text()))
 
-    # Filter languages if a specific subset was requested
     if args.languages:
         requested_languages = args.languages.split(",")
         language_definitions = {k: v for k, v in language_definitions.items() if k in requested_languages}
@@ -115,42 +104,28 @@ async def main(args: argparse.Namespace) -> None:
     else:
         print(f"Processing all {len(language_definitions)} languages")
 
-    # Process repositories with a semaphore to limit concurrency
     semaphore = asyncio.Semaphore(max_workers)
     tasks = []
 
     async def process_with_semaphore(language_name: str, language_def: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         async with semaphore:
-            return await process_language(
-                language_name, language_def, 1
-            )  # 1 worker per task since we're already parallelizing tasks
+            return await process_language(language_name, language_def, 1)
 
     for language_name, language_def in language_definitions.items():
         tasks.append(process_with_semaphore(language_name, language_def))
 
-    # Wait for all tasks to complete
     results = await asyncio.gather(*tasks)
 
-    # Create a new dictionary with the updated definitions using dictionary comprehension
     updated_definitions = dict(results)
 
-    # Make sure to preserve all original languages even if they weren't processed
     if args.languages:
-        # Read the original file again to make sure we have the complete dataset
         all_definitions = json.loads(await asyncio.to_thread(lambda: Path(definitions_path).read_text()))
 
-        # Update only the processed languages
         for lang_name, lang_def in updated_definitions.items():
             all_definitions[lang_name] = lang_def
 
         updated_definitions = all_definitions
 
-    # Create a backup of the original file
-    backup_path = definitions_path.with_suffix(".json.bak")
-    shutil.copy2(definitions_path, backup_path)
-    print(f"Created backup at {backup_path}")
-
-    # Write the updated definitions back to the file
     print(f"Writing updated language definitions to {definitions_path}")
     await asyncio.to_thread(lambda: Path(definitions_path).write_text(json.dumps(updated_definitions, indent=2)))
 
