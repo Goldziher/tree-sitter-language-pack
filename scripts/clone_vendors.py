@@ -19,7 +19,6 @@ from typing_extensions import NotRequired, TypedDict
 vendor_directory = Path(__file__).parent.parent / "vendor"
 parsers_directory = Path(__file__).parent.parent / "parsers"
 
-# Use raw string with escaped forward slashes to work across platforms
 COMMON_RE_PATTERN = re.compile(r"\.\.[/\\](?:\.\.[/\\])*common[/\\]")
 
 
@@ -27,12 +26,12 @@ class LanguageDict(TypedDict):
     """Language configuration for tree-sitter repositories."""
 
     repo: str
+    rev: str
     branch: NotRequired[str]
     directory: NotRequired[str]
     generate: NotRequired[bool]
     rewrite_targets: NotRequired[bool]
     abi_version: NotRequired[int]
-    rev: NotRequired[str]
 
 
 def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
@@ -41,7 +40,7 @@ def get_language_definitions() -> tuple[dict[str, LanguageDict], list[str]]:
     language_definitions: dict[str, LanguageDict] = loads(
         (Path(__file__).parent.parent / "sources" / "language_definitions.json").read_text()
     )
-    # return a list of language names
+
     language_names = list(language_definitions.keys())
     return language_definitions, language_names
 
@@ -140,13 +139,10 @@ async def move_src_folder(language_name: str, directory: str | None) -> None:
         print(f"Moved {language_name} common files successfully")
 
         for file in target_source_dir.glob("**/*.c"):
-            # replace any include statement that points at common with an updated path:
-            # e.g. '#include "../../common/scanner.h"' should point at (target_common_dir / 'scanner.h').relative_path()
             file_contents = await AsyncPath(file).read_text()
 
-            # Create a properly formatted replacement path with the correct path separator
             replacement_path = os.path.relpath(target_source_dir / "common", file.parent)
-            # Ensure forward slashes in replacement path for C includes (even on Windows)
+
             replacement_path = replacement_path.replace("\\", "/") + "/"
 
             file_contents = COMMON_RE_PATTERN.sub(replacement_path, file_contents)
