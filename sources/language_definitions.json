@@ -148,7 +148,7 @@
   },
   "elm": {
     "repo": "https://github.com/razzeee/tree-sitter-elm",
-    "rev": "3b373a3ccb48f31aa4b7ddc9092e2f5e24ab7aed"
+    "rev": "e34bdc5c512918628b05b48e633f711123204e45"
   },
   "erlang": {
     "repo": "https://github.com/WhatsApp/tree-sitter-erlang",
@@ -547,7 +547,7 @@
   },
   "rust": {
     "repo": "https://github.com/tree-sitter/tree-sitter-rust",
-    "rev": "3691201b01cacb2f96ffca4c632c4e938bfacd88"
+    "rev": "377ca9607970a5961201158a7bf620fb39038e14"
   },
   "scala": {
     "branch": "master",
