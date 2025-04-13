@@ -13,6 +13,11 @@
     "repo": "https://github.com/tree-sitter/tree-sitter-agda",
     "rev": "b9b32fa042c2952a7bfca86847ea325e44ccc897"
   },
+  "apex": {
+    "branch": "main",
+    "repo": "https://github.com/aheber/tree-sitter-sfapex",
+    "rev": "3597575a429766dd7ecce9f5bb97f6fec4419d5d"
+  },
   "arduino": {
     "branch": "master",
     "repo": "https://github.com/ObserverOfTime/tree-sitter-arduino",
