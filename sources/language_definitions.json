@@ -16,6 +16,7 @@
   "apex": {
     "branch": "main",
     "repo": "https://github.com/aheber/tree-sitter-sfapex",
+    "directory": "apex",
     "rev": "3597575a429766dd7ecce9f5bb97f6fec4419d5d"
   },
   "arduino": {
