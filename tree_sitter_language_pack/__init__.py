@@ -15,6 +15,7 @@ SupportedLanguage = Literal[
     "actionscript",
     "ada",
     "agda",
+    "apex",
     "arduino",
     "asm",
     "astro",
