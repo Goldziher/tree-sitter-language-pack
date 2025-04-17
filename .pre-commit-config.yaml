@@ -21,11 +21,6 @@ repos:
     rev: v0.24.1
     hooks:
       - id: validate-pyproject
-  - repo: https://github.com/Goldziher/uncomment
-    rev: v1.0.4
-    hooks:
-      - id: uncomment
-        args: ["-i", "# codespell:ignore"]
   - repo: https://github.com/executablebooks/mdformat
     rev: 0.7.22
     hooks:
