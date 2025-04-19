@@ -25,20 +25,24 @@ def create_extension(*, language_name: str) -> Extension:
     Returns:
         Extension: The extension for the language.
     """
-    compile_args = (
-        [
-            "-fvisibility=hidden",
-            "-std=c11",
-        ]
-        if system() != "Windows" or "MSYSTEM" in environ
-        else [
+    is_msys2 = "MSYSTEM" in environ
+    is_windows = system() == "Windows"
+
+    if is_windows and not is_msys2:
+        # Windows with MSVC
+        compile_args = [
             "/std:c11",
             "/utf-8",
             "/wd4244",  # Suppress warnings about integer type conversion
             "/wd4566",  # Suppress warnings about character representation
             "/wd4819",  # Suppress warnings about source files with encoding issues
         ]
-    )
+    else:
+        # Unix-like systems or MSYS2
+        compile_args = [
+            "-fvisibility=hidden",
+            "-std=c11",
+        ]
 
     define_macros = [
         ("PY_SSIZE_T_CLEAN", None),

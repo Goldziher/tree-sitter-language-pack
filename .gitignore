@@ -1,6 +1,6 @@
 *$py.class
-*.Cache
 *.bak
+*.Cache
 *.cscfg
 *.egg-info/
 *.log
@@ -8,9 +8,9 @@
 *.so
 *.suo
 *.user
-.DS_store
 .coverage
 .dist/
+.DS_store
 .env
 .idea/
 .mypy_cache
