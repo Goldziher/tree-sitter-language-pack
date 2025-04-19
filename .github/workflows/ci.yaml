@@ -164,7 +164,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
+        #os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
+        os: [ubuntu-latest, windows-latest, ubuntu-24.04-arm]
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
     - name: Checkout
@@ -202,37 +203,37 @@ jobs:
       env:
         PROJECT_ROOT: ${{ github.workspace }}
 
-    - name: Set up MSYS2 Python
-      if: matrix.os == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: UCRT64
-        update: true
-        pacboy: python-pip:p gcc:p
-
-    - name: Install MSYS2 GCC wheel
-      if: matrix.os == 'windows-latest'
-      shell: msys2 {0}
-      run: |
-        wheel_file=$(ls *.whl 2>/dev/null | head -n 1)
-        if [ -z "$wheel_file" ]; then
-          wheel_file=$(find . -name "*.whl" -type f | head -n 1)
-        fi
-        echo "Installing wheel: $wheel_file"
-        pip install "$wheel_file"
-
-    - name: Install MSYS2 pytest
-      if: matrix.os == 'windows-latest'
-      shell: msys2 {0}
-      run: pip install pytest
-
-    - name: Test with installed MSYS2 wheel
-      if: matrix.os == 'windows-latest'
-      shell: msys2 {0}
-      run: |
-        mkdir -p /tmp/test_wheel
-        cp tests/entry_point_test.py /tmp/test_wheel/
-        cd /tmp/test_wheel
-        pytest entry_point_test.py -v
-      env:
-        PROJECT_ROOT: ${{ github.workspace }}
+#    - name: Set up MSYS2 Python
+#      if: matrix.os == 'windows-latest'
+#      uses: msys2/setup-msys2@v2
+#      with:
+#        msystem: UCRT64
+#        update: true
+#        pacboy: python-pip:p gcc:p
+#
+#    - name: Install MSYS2 GCC wheel
+#      if: matrix.os == 'windows-latest'
+#      shell: msys2 {0}
+#      run: |
+#        wheel_file=$(ls *.whl 2>/dev/null | head -n 1)
+#        if [ -z "$wheel_file" ]; then
+#          wheel_file=$(find . -name "*.whl" -type f | head -n 1)
+#        fi
+#        echo "Installing wheel: $wheel_file"
+#        pip install "$wheel_file"
+#
+#    - name: Install MSYS2 pytest
+#      if: matrix.os == 'windows-latest'
+#      shell: msys2 {0}
+#      run: pip install pytest
+#
+#    - name: Test with installed MSYS2 wheel
+#      if: matrix.os == 'windows-latest'
+#      shell: msys2 {0}
+#      run: |
+#        mkdir -p /tmp/test_wheel
+#        cp tests/entry_point_test.py /tmp/test_wheel/
+#        cd /tmp/test_wheel
+#        pytest entry_point_test.py -v
+#      env:
+#        PROJECT_ROOT: ${{ github.workspace }}

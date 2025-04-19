@@ -50,7 +50,7 @@ def create_extension(*, language_name: str) -> Extension:
         ("TS_LANGUAGE_NAME", language_name),
     ]
 
-    if system() == "Windows":
+    if is_windows:
         define_macros.append(("Py_LIMITED_API", "0x03090000"))  # Python 3.9+
 
     return Extension(
