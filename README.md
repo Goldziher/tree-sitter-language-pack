@@ -49,6 +49,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [actionscript](https://github.com/Rileran/tree-sitter-actionscript) - MIT License
 - [ada](https://github.com/briot/tree-sitter-ada) - MIT License
 - [agda](https://github.com/tree-sitter/tree-sitter-agda) - MIT License
+- [apex](https://github.com/aheber/tree-sitter-sfapex) - MIT License
 - [arduino](https://github.com/tree-sitter-grammars/tree-sitter-arduino) - MIT License
 - [asm](https://github.com/rush-rs/tree-sitter-asm) - MIT License
 - [astro](https://github.com/virchau13/tree-sitter-astro) - MIT License
