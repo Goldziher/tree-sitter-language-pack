@@ -5,7 +5,7 @@ requires = [ "cython>=3.0.12", "setuptools>=78.1.0", "typing-extensions>=4.13.1"
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.7.2"
+version = "0.7.3"
 description = "Extensive Language Pack for Tree-Sitter"
 readme = "README.md"
 keywords = [ "code", "text-processing", "tree-sitter" ]
