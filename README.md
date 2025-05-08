@@ -108,6 +108,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [hlsl](https://github.com/tree-sitter-grammars/tree-sitter-hlsl) - MIT License
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
 - [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
+- [idris](https://github.com/kayhide/tree-sitter-idris) - MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
 - [janet](https://github.com/GrayJack/tree-sitter-janet) - BSD-3-Clause license
 - [java](https://github.com/tree-sitter/tree-sitter-java) - MIT License
