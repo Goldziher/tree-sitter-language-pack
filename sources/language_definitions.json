@@ -504,6 +504,10 @@
     "repo": "https://github.com/tree-sitter/tree-sitter-python",
     "rev": "710796b8b877a970297106e5bbc8e2afa47f86ec"
   },
+  "purescript": {
+    "repo": "https://github.com/postsolar/tree-sitter-purescript",
+    "rev": "daf9b3e2be18b0b2996a1281f7783e0d041d8b80"
+  },
   "qmldir": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-qmldir",
     "rev": "6b2b5e41734bd6f07ea4c36ac20fb6f14061c841"
