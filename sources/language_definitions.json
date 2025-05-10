@@ -391,6 +391,10 @@
     "repo": "https://github.com/Decodetalkers/tree-sitter-meson",
     "rev": "e39eeb2b1d8bcedb85c1a7f83ac6de6012a5f22b"
   },
+  "netlinx": {
+    "repo": "https://github.com/Norgate-AV/tree-sitter-netlinx",
+    "rev": "6d3c01e54d150c6d3dcf99cad95a1f5fa0293018"
+  },
   "ninja": {
     "repo": "https://github.com/alemuller/tree-sitter-ninja",
     "rev": "0a95cfdc0745b6ae82f60d3a339b37f19b7b9267"

@@ -99,6 +99,7 @@ SupportedLanguage = Literal[
     "matlab",
     "mermaid",
     "meson",
+    "netlinx",
     "ninja",
     "nix",
     "nqc",
