@@ -276,6 +276,10 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang",
     "rev": "d719158abe537b1916daaea6fa03287089f0b601"
   },
+  "idris": {
+    "repo": "https://github.com/kayhide/tree-sitter-idris",
+    "rev": "c56a25cf57c68ff929356db25505c1cc4c7820f6"
+  },
   "ispc": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-ispc",
     "rev": "9b2f9aec2106b94b4e099fe75e73ebd8ae707c04"

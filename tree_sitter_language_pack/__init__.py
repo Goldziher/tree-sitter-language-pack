@@ -75,6 +75,7 @@ SupportedLanguage = Literal[
     "hlsl",
     "html",
     "hyprlang",
+    "idris",
     "ispc",
     "janet",
     "java",
