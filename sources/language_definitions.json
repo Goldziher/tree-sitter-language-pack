@@ -529,11 +529,6 @@
     "repo": "https://github.com/6cdh/tree-sitter-racket",
     "rev": "5b211bf93021d1c45f39aa96898be9f794f087e4"
   },
-  "rago": {
-    "generate": true,
-    "repo": "https://github.com/FallenAngel97/tree-sitter-rego",
-    "rev": "20b5a5958c837bc9f74b231022a68a594a313f6d"
-  },
   "re2c": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-re2c",
     "rev": "c18a3c2f4b6665e35b7e50d6048ea3cff770c572"
@@ -541,6 +536,11 @@
   "readline": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-readline",
     "rev": "74addc90fc539d31d413c0c7cf7581997a7fa46e"
+  },
+    "rego": {
+    "generate": true,
+    "repo": "https://github.com/FallenAngel97/tree-sitter-rego",
+    "rev": "20b5a5958c837bc9f74b231022a68a594a313f6d"
   },
   "requirements": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-requirements",
