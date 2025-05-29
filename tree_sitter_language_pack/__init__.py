@@ -130,6 +130,7 @@ SupportedLanguage = Literal[
     "query",
     "r",
     "racket",
+    "rago",
     "re2c",
     "readline",
     "requirements",
