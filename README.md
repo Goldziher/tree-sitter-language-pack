@@ -97,6 +97,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [go](https://github.com/tree-sitter/tree-sitter-go) - MIT License
 - [gomod](https://github.com/camdencheek/tree-sitter-go-mod) - MIT License
 - [gosum](https://github.com/tree-sitter-grammars/tree-sitter-go-sum) - MIT License
+- [graphql](https://github.com/bkegley/tree-sitter-graphql0) - MIT License
 - [groovy](https://github.com/Decodetalkers/tree-sitter-groovy) - MIT License
 - [gstlaunch](https://github.com/tree-sitter-grammars/tree-sitter-gstlaunch) - MIT License
 - [hack](https://github.com/slackhq/tree-sitter-hack) - MIT License
