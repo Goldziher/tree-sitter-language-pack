@@ -537,7 +537,7 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-readline",
     "rev": "74addc90fc539d31d413c0c7cf7581997a7fa46e"
   },
-    "rego": {
+  "rego": {
     "generate": true,
     "repo": "https://github.com/FallenAngel97/tree-sitter-rego",
     "rev": "20b5a5958c837bc9f74b231022a68a594a313f6d"
