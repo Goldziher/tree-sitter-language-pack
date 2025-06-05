@@ -165,6 +165,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [rbs](https://github.com/joker1007/tree-sitter-rbs) - MIT License
 - [re2c](https://github.com/tree-sitter-grammars/tree-sitter-re2c) - MIT License
 - [readline](https://github.com/tree-sitter-grammars/tree-sitter-readline) - MIT License
+- [rego](https://github.com/FallenAngel97/tree-sitter-rego) - MIT License
 - [requirements](https://github.com/tree-sitter-grammars/tree-sitter-requirements) - MIT License
 - [ron](https://github.com/tree-sitter-grammars/tree-sitter-ron) - Apache License 2.0
 - [rst](https://github.com/stsewd/tree-sitter-rst) - MIT License

@@ -133,6 +133,7 @@ SupportedLanguage = Literal[
     "racket",
     "re2c",
     "readline",
+    "rego",
     "requirements",
     "ron",
     "rst",
