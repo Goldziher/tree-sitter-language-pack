@@ -64,6 +64,7 @@ SupportedLanguage = Literal[
     "go",
     "gomod",
     "gosum",
+    "graphql",
     "groovy",
     "gstlaunch",
     "hack",

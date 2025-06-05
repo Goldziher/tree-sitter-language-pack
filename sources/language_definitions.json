@@ -227,6 +227,10 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-go-sum",
     "rev": "e2ac513b2240c7ff1069ae33b2df29ce90777c11"
   },
+  "graphql": {
+    "repo": "https://github.com/bkegley/tree-sitter-graphql",
+    "rev": "5e66e961eee421786bdda8495ed1db045e06b5fe"
+  },
   "groovy": {
     "branch": "gh-pages",
     "repo": "https://github.com/Decodetalkers/tree-sitter-groovy",
