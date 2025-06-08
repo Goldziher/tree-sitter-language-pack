@@ -77,12 +77,6 @@ jobs:
           path: tree_sitter_language_pack/bindings
           key: ${{ hashFiles('sources/*') }}-language-definitions
 
-      - name: Build Extensions
-        if: steps.cache-bindings.outputs.cache-hit != 'true'
-        run: uv run setup.py build_ext --inplace
-        env:
-          PROJECT_ROOT: ${{github.workspace}}
-
       - name: Build sdist
         run: uv build --sdist
         env:

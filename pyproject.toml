@@ -1,22 +1,21 @@
 [build-system]
 build-backend = "setuptools.build_meta"
 
-requires = [ "cython>=3.0.12", "setuptools>=78.1.0", "typing-extensions>=4.13.1" ]
+requires = [ "cython>=3.0.12", "setuptools>=80.9.0", "typing-extensions>=4.14.0" ]
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.7.4"
-description = "Extensive Language Pack for Tree-Sitter"
+version = "0.8.0"
+description = "Comprehensive collection of 160+ tree-sitter language parsers"
 readme = "README.md"
-keywords = [ "code", "text-processing", "tree-sitter" ]
-license = { file = "LICENSE" }
+keywords = [ "ast", "code", "parser", "parsing", "syntax", "text-processing", "tree-sitter" ]
+license = "MIT OR Apache-2.0"
 
 authors = [ { name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" } ]
 requires-python = ">=3.9.0"
 classifiers = [
-  "Development Status :: 4 - Beta",
+  "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
@@ -32,23 +31,26 @@ dependencies = [
   "tree-sitter>=0.23.2",
   "tree-sitter-c-sharp>=0.23.1",
   "tree-sitter-embedded-template>=0.23.2",
-  "tree-sitter-yaml>=0.7.0",
+  "tree-sitter-yaml>=0.7.1",
 ]
 
+urls.documentation = "https://github.com/Goldziher/tree-sitter-language-pack#readme"
 urls.homepage = "https://github.com/Goldziher/tree-sitter-language-pack"
+urls.issues = "https://github.com/Goldziher/tree-sitter-language-pack/issues"
+urls.repository = "https://github.com/Goldziher/tree-sitter-language-pack"
 
 [dependency-groups]
 dev = [
   "anyio>=4.9.0",
   "gitpython>=3.1.44",
-  "mypy>=1.15.0",
+  "mypy>=1.16.0",
   "pre-commit>=4.2.0",
-  "pytest>=8.3.5",
-  "ruff>=0.11.4",
-  "setuptools>=78.1.0",
+  "pytest>=8.4.0",
+  "ruff>=0.11.13",
+  "setuptools>=80.9.0",
   "tomli>=2.2.1; python_version<'3.11'",
-  "types-setuptools>=78.1.0.20250329",
-  "typing-extensions>=4.13.1",
+  "types-setuptools>=80.9.0.20250529",
+  "typing-extensions>=4.14.0",
   "uv-bump",
 ]
 
