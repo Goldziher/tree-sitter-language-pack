@@ -1,5 +1,10 @@
 # Tree Sitter Language Pack
 
+[![PyPI](https://img.shields.io/pypi/v/tree-sitter-language-pack)](https://pypi.org/project/tree-sitter-language-pack/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/tree-sitter-language-pack)](https://pypi.org/project/tree-sitter-language-pack/)
+[![License](https://img.shields.io/pypi/l/tree-sitter-language-pack)](https://github.com/Goldziher/tree-sitter-language-pack/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/pypi/dm/tree-sitter-language-pack)](https://pypi.org/project/tree-sitter-language-pack/)
+
 This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages
 as both source distribution and pre-built wheels.
 
@@ -23,14 +28,14 @@ pip install tree-sitter-language-pack
 
 ## Features
 
-- 100+ Languages: Support for all major programming languages and many domain-specific languages
+- 165+ Languages: Support for all major programming languages and many domain-specific languages
 - Pre-built Wheels: Easy installation with no compilation required
 - Type-Safe: Full typing support for better IDE integration and code safety
 - Zero GPL Dependencies: All bundled languages use permissive licenses (MIT, Apache 2.0, etc.)
 
 ## Usage
 
-This library exposes two functions `get_language` and `get_parser`.
+This library exposes three functions: `get_binding`, `get_language`, and `get_parser`.
 
 ```python
 from tree_sitter_language_pack import get_binding, get_language, get_parser
@@ -77,6 +82,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [dart](https://github.com/UserNobody14/tree-sitter-dart) - MIT License
 - [dockerfile](https://github.com/camdencheek/tree-sitter-dockerfile) - MIT License
 - [doxygen](https://github.com/tree-sitter-grammars/tree-sitter-doxygen) - MIT License
+- [dtd](https://github.com/tree-sitter-grammars/tree-sitter-xml) - MIT License
 - [elisp](https://github.com/Wilfred/tree-sitter-elisp) - MIT License
 - [elixir](https://github.com/elixir-lang/tree-sitter-elixir) - MIT License
 - [elm](https://github.com/elm-tooling/tree-sitter-elm) - MIT License
@@ -108,7 +114,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [heex](https://github.com/phoenixframework/tree-sitter-heex) - MIT License
 - [hlsl](https://github.com/tree-sitter-grammars/tree-sitter-hlsl) - MIT License
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
-- [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) MIT License
+- [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) - MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
 - [janet](https://github.com/GrayJack/tree-sitter-janet) - BSD-3-Clause license
 - [java](https://github.com/tree-sitter/tree-sitter-java) - MIT License
@@ -120,6 +126,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [kconfig](https://github.com/tree-sitter-grammars/tree-sitter-kconfig) - MIT License
 - [kdl](https://github.com/tree-sitter-grammars/tree-sitter-kdl) - MIT License
 - [kotlin](https://github.com/fwcd/tree-sitter-kotlin) - MIT License
+- [latex](https://github.com/latex-lsp/tree-sitter-latex) - MIT License
 - [linkerscript](https://github.com/tree-sitter-grammars/tree-sitter-linkerscript) - MIT License
 - [llvm](https://github.com/benwilliamgraham/tree-sitter-llvm) - MIT License
 - [lua](https://github.com/tree-sitter-grammars/tree-sitter-lua) - MIT License
@@ -159,6 +166,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [pymanifest](https://github.com/tree-sitter-grammars/tree-sitter-pymanifest) - MIT License
 - [python](https://github.com/tree-sitter/tree-sitter-python) - MIT License
 - [qmldir](https://github.com/tree-sitter-grammars/tree-sitter-qmldir) - MIT License
+- [qmljs](https://github.com/yuja/tree-sitter-qmljs) - MIT License
 - [query](https://github.com/tree-sitter-grammars/tree-sitter-query) - Apache License 2.0
 - [r](https://github.com/r-lib/tree-sitter-r) - MIT License
 - [racket](https://github.com/6cdh/tree-sitter-racket) - MIT License
@@ -190,6 +198,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [thrift](https://github.com/tree-sitter-grammars/tree-sitter-thrift) - MIT License
 - [toml](https://github.com/tree-sitter-grammars/tree-sitter-toml) - MIT License
 - [tsv](https://github.com/amaanq/tree-sitter-csv) - MIT License
+- [tsx](https://github.com/tree-sitter/tree-sitter-typescript) - MIT License
 - [twig](https://github.com/gbprod/tree-sitter-twig) - WTFPL License
 - [typescript](https://github.com/tree-sitter/tree-sitter-typescript) - MIT License
 - [typst](https://github.com/uben0/tree-sitter-typst) - MIT License
@@ -208,111 +217,19 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [yuck](https://github.com/tree-sitter-grammars/tree-sitter-yuck) - MIT License
 - [zig](https://github.com/maxxnino/tree-sitter-zig) - MIT License
 
-## Contribution
+## Contributing
 
-This library is open to contribution. Feel free to open issues or submit PRs. It's better to discuss issues before
-submitting PRs to avoid disappointment.
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
 
-### Local Development
+- Setting up your development environment
+- Adding new languages
+- Running tests
+- Submitting pull requests
 
-1. Clone the repo
+## License
 
-1. Install the system dependencies
+This project is licensed under the MIT OR Apache-2.0 license. See the [LICENSE](LICENSE) file for details.
 
-1. Install the full dependencies with `uv sync --no-install-project`
+## Acknowledgments
 
-1. Install the pre-commit hooks with:
-
-    ```shell
-    pre-commit install && pre-commit install --hook-type commit-msg
-    ```
-
-1. Clone the vendors with `uv run --no-sync scripts/clone_vendors.py`
-
-1. Build the local extensions with `PROJECT_ROOT=. uv run setup.py build_ext --inplace`
-
-### Pinning Vendor Dependencies
-
-The `pin_vendors.py` script helps pin all language repositories to specific commit hashes, ensuring reproducible builds and stable dependencies. This script:
-
-1. Reads the language definitions from `sources/language_definitions.json`
-1. For each language, fetches the latest commit hash from its source repository
-1. Updates the `rev` field in the language definition with the latest commit hash
-1. Writes the updated definitions back to the file
-
-Usage:
-
-```shell
-# Update all languages with their latest commit hashes
-uv run --no-sync scripts/pin_vendors.py
-
-# Only update languages that don't already have a rev field
-uv run --no-sync scripts/pin_vendors.py --only-missing
-
-# Update specific languages (comma-separated list)
-uv run --no-sync scripts/pin_vendors.py --languages=python,rust,go
-```
-
-### Running Tests
-
-To run the tests, execute the following command:
-
-```shell
-PROJECT_ROOT=. uv run --no-sync pytest tests
-```
-
-### Adding a new language
-
-#### Install
-
-Some bindings are installed via UV and are added to the package dependencies in
-the [pyproject.toml](./pyproject.toml) file.
-
-To add an installed package follow these steps:
-
-- Install the bindings with `uv add <bindings_package_name> --no-install-project`.
-- Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
-- Update both the literal type `InstalledBindings` and the `installed_bindings_map` dictionary in the
-    [\_\_init .py \_](./tree_sitter_language_pack/__init__.py) file.
-- Update the code in the init file as necessary.
-- Build the bindings by executing: `uv run --no-sync setup.py build_ext --inplace`.
-- Execute the tests (see above).
-- If the tests pass, commit your changes and open a pull request.
-
-#### Adding a Binary Wheel Language
-
-- Add the language to the [sources/language_definitions.json](sources/language_definitions.json) file
-    at the repository's root. This file contains a mapping of language names to their respective repositories:
-
-    ```jsonc
-    {
-      "name": {
-        "repo": "https://github.com/...",
-        "rev": "commit-hash", // required
-        "branch": "master", // not mandatory
-        "directory": "sub-dir/something", // not mandatory
-        "generate": true, // not mandatory
-      },
-    }
-    ```
-
-    - `repo` is the URL of the tree-sitter repository. This value is mandatory
-    - `rev` specifies a specific commit hash to use when cloning. This ensures reproducible builds.
-    - `branch` the branch of the repository to check out. You should specify this only when the branch is not called `main` (
-        i.e. for `master` or other names, specify this).
-    - `directory` is the directory under which there is a `src` folder. This should be specified only in cases where
-        the `src` folder is not immediately under the root folder.
-    - `generate` is a flag that dictates whether the `tree-sitter-cli` generate command should be executed in the given
-        repository / directory combo. This should be specified only if the binding needs to be built in the repository.
-
-- Update the `SupportedLanguage` literal type in the [**init**.py](./tree_sitter_language_pack/__init__.py) file.
-
-- Install the dev dependencies with `uv sync --no-install-project -v`
-
-- Execute the cloning script with `uv run --no-sync scripts/clone_vendors.py`.
-
-- Build the bindings by executing: `PROJECT_ROOT=. uv run setup.py build_ext --inplace`.
-
-- Execute the tests (see above).
-
-- If the tests pass, commit your changes and open a pull request.
+This package started as a maintained fork of [tree-sitter-languages](https://github.com/grantjenks/py-tree-sitter-languages) by Grant Jenks.

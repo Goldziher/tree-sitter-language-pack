@@ -27,3 +27,7 @@ parsers/
 requirements.txt
 vendor/
 wheelhouse/
+
+# Claude artifacts
+CLAUDE.md
+.claude/

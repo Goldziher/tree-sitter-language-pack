@@ -1,3 +1,40 @@
+# Include source files
 include sources/*.*
 recursive-include parsers *
-include tree_sitter_language_pack/bindings/*.so
+
+# Include tests
+graft tests
+
+# Include package source
+recursive-include tree_sitter_language_pack *.py
+include tree_sitter_language_pack/py.typed
+
+# Include project files
+include LICENSE
+include README.md
+include pyproject.toml
+include setup.py
+include MANIFEST.in
+
+# Include scripts
+graft scripts
+
+# Exclude compiled files and binaries
+global-exclude *.so
+global-exclude *.pyd
+global-exclude *.dll
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.DS_Store
+
+# Exclude build directories
+prune build
+prune dist
+prune .eggs
+prune vendor
+prune .git
+prune .github
+prune .mypy_cache
+prune .pytest_cache
+prune .ruff_cache
