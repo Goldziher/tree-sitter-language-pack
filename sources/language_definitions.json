@@ -619,7 +619,7 @@
   "swift": {
     "generate": true,
     "repo": "https://github.com/alex-pinkus/tree-sitter-swift",
-    "rev": "f67f569270ce8664a065313f1086a3484a3bec77"
+    "rev": "ebefe3134fba71f61c1103cbf27047f749f2b587"
   },
   "tablegen": {
     "branch": "master",
