@@ -101,6 +101,7 @@ SupportedLanguage = Literal[
     "mermaid",
     "meson",
     "netlinx",
+    "nim",
     "ninja",
     "nix",
     "nqc",
