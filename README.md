@@ -116,6 +116,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [html](https://github.com/tree-sitter/tree-sitter-html) - MIT License
 - [hyprlang](https://github.com/tree-sitter-grammars/tree-sitter-hyprlang) - MIT License
 - [ispc](https://github.com/tree-sitter-grammars/tree-sitter-ispc) - MIT License
+- [ini](https://github.com/justinmk/tree-sitter-ini) - Apache License 2.0
 - [janet](https://github.com/GrayJack/tree-sitter-janet) - BSD-3-Clause license
 - [java](https://github.com/tree-sitter/tree-sitter-java) - MIT License
 - [javascript](https://github.com/tree-sitter/tree-sitter-javascript) - MIT License
