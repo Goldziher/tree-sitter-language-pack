@@ -404,6 +404,11 @@
     "repo": "https://github.com/Norgate-AV/tree-sitter-netlinx",
     "rev": "6d3c01e54d150c6d3dcf99cad95a1f5fa0293018"
   },
+  "nim": {
+    "repo": "https://github.com/alaviss/tree-sitter-nim",
+    "branch": "main",
+    "rev": "9ed4696d7f76e4937e2b63512a249a3ead7a0399"
+  },
   "ninja": {
     "repo": "https://github.com/alemuller/tree-sitter-ninja",
     "rev": "0a95cfdc0745b6ae82f60d3a339b37f19b7b9267"

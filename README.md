@@ -142,6 +142,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [mermaid](https://github.com/monaqa/tree-sitter-mermaid) - MIT License
 - [meson](https://github.com/tree-sitter-grammars/tree-sitter-meson) - MIT License
 - [netlinx](https://github.com/Norgate-AV/tree-sitter-netlinx) - MIT License
+- [nim](https://github.com/alaviss/tree-sitter-nim) - MPL-2.0 License
 - [ninja](https://github.com/alemuller/tree-sitter-ninja) - MIT License
 - [nix](https://github.com/nix-community/tree-sitter-nix) - MIT License
 - [nqc](https://github.com/tree-sitter-grammars/tree-sitter-nqc) - MIT License
