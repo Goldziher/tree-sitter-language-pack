@@ -280,6 +280,11 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-hyprlang",
     "rev": "d719158abe537b1916daaea6fa03287089f0b601"
   },
+  "ini": {
+    "branch": "master",
+    "repo": "https://github.com/justinmk/tree-sitter-ini",
+    "rev": "31899dfa3b91622ea39e5c0bcddc88f45a9a3cfe"
+  },
   "ispc": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-ispc",
     "rev": "9b2f9aec2106b94b4e099fe75e73ebd8ae707c04"
