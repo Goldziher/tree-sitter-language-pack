@@ -5,10 +5,18 @@ requires = [ "cython>=3.0.12", "setuptools>=80.9.0", "typing-extensions>=4.14.0"
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.8.0"
+version = "0.9.0"
 description = "Comprehensive collection of 160+ tree-sitter language parsers"
 readme = "README.md"
-keywords = [ "ast", "code", "parser", "parsing", "syntax", "text-processing", "tree-sitter" ]
+keywords = [
+  "ast",
+  "code",
+  "parser",
+  "parsing",
+  "syntax",
+  "text-processing",
+  "tree-sitter",
+]
 license = "MIT OR Apache-2.0"
 
 authors = [ { name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" } ]
@@ -60,9 +68,7 @@ line-length = 120
 src = [ "tests", "tree_sitter_language_pack" ]
 format.docstring-code-line-length = 120
 format.docstring-code-format = true
-lint.select = [
-  "ALL",
-]
+lint.select = [ "ALL" ]
 lint.ignore = [
   "ANN401", # dynamically typed ANY
   "COM812", # Conflicts with formatter
