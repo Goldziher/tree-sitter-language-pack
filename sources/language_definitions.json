@@ -179,6 +179,12 @@
     "repo": "https://github.com/stadelmanma/tree-sitter-fortran",
     "rev": "d738334e4a21866a1ab81fb3f27f9b0b2ad2e515"
   },
+  "fsharp": {
+    "branch": "main",
+    "repo": "https://github.com/ionide/tree-sitter-fsharp",
+    "rev": "f29605148f24199cf4d9c4a203a5debc0cbcc648",
+    "directory": "fsharp"
+  },
   "func": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-func",
     "rev": "f780ca55e65e7d7360d0229331763e16c452fc98"
