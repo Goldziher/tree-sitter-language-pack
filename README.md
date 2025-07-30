@@ -92,6 +92,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [firrtl](https://github.com/tree-sitter-grammars/tree-sitter-firrtl) - Apache License 2.0
 - [fish](https://github.com/ram02z/tree-sitter-fish) - Unlicense license
 - [fortran](https://github.com/stadelmanma/tree-sitter-fortran) - MIT License
+- [fsharp/fsharp_signature](https://github.com/ionide/tree-sitter-fsharp) - MIT License
 - [func](https://github.com/tree-sitter-grammars/tree-sitter-func) - MIT License
 - [gdscript](https://github.com/PrestonKnopp/tree-sitter-gdscript) - MIT License
 - [gitattributes](https://github.com/tree-sitter-grammars/tree-sitter-gitattributes) - MIT License
