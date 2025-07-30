@@ -185,6 +185,12 @@
     "rev": "f29605148f24199cf4d9c4a203a5debc0cbcc648",
     "directory": "fsharp"
   },
+  "fsharp_signature": {
+    "branch": "main",
+    "repo": "https://github.com/ionide/tree-sitter-fsharp",
+    "rev": "f29605148f24199cf4d9c4a203a5debc0cbcc648",
+    "directory": "fsharp_signature"
+  },
   "func": {
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-func",
     "rev": "f780ca55e65e7d7360d0229331763e16c452fc98"

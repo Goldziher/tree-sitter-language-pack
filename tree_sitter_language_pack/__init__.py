@@ -54,6 +54,7 @@ SupportedLanguage = Literal[
     "fish",
     "fortran",
     "fsharp",
+    "fsharp_signature",
     "func",
     "gdscript",
     "gitattributes",
