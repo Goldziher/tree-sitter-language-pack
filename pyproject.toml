@@ -89,6 +89,9 @@ lint.per-file-ignores."tests/**/*.*" = [ "D", "S" ]
 lint.isort.known-first-party = [ "tree_sitter_language_pack", "tests" ]
 lint.pydocstyle.convention = "google"
 
+[tool.codespell]
+ignore-words-list = "wast"
+
 [tool.pyproject-fmt]
 keep_full_version = true
 max_supported_python = "3.13"

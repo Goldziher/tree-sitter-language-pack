@@ -174,6 +174,8 @@ SupportedLanguage = Literal[
     "vhdl",
     "vim",
     "vue",
+    "wast",
+    "wat",
     "wgsl",
     "xcompose",
     "xml",

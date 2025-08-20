@@ -213,6 +213,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [vhdl](https://github.com/alemuller/tree-sitter-vhdl) - MIT License
 - [vim](https://github.com/tree-sitter-grammars/tree-sitter-vim) - MIT License
 - [vue](https://github.com/tree-sitter-grammars/tree-sitter-vue) - MIT License
+- [wast & wat](https://github.com/mkatychev/tree-sitter-wasm) - Apache License 2.0 WITH LLVM-exception
 - [wgsl](https://github.com/szebniok/tree-sitter-wgsl) - MIT License
 - [xcompose](https://github.com/tree-sitter-grammars/tree-sitter-xcompose) - MIT License
 - [xml](https://github.com/tree-sitter-grammars/tree-sitter-xml) - MIT License

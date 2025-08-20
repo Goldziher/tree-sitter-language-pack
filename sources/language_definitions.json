@@ -728,6 +728,16 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-vue",
     "rev": "7e48557b903a9db9c38cea3b7839ef7e1f36c693"
   },
+  "wast": {
+    "repo": "https://github.com/mkatychev/tree-sitter-wasm",
+    "rev": "2357ad78eed2d703071f737b2ece1ae7ea49bf42",
+    "directory": "wast"
+  },
+  "watt": {
+    "repo": "https://github.com/mkatychev/tree-sitter-wasm",
+    "rev": "2357ad78eed2d703071f737b2ece1ae7ea49bf42",
+    "directory": "wat"
+  },
   "wgsl": {
     "branch": "master",
     "repo": "https://github.com/szebniok/tree-sitter-wgsl",
