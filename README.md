@@ -8,6 +8,14 @@
 This package bundles a comprehensive collection of [tree-sitter](https://tree-sitter.github.io/tree-sitter/) languages
 as both source distribution and pre-built wheels.
 
+## Support This Project
+
+If you find tree-sitter-language-pack useful, please consider sponsoring the development:
+
+<a href="https://github.com/sponsors/Goldziher"><img src="https://img.shields.io/badge/Sponsor-%E2%9D%A4-pink?logo=github-sponsors" alt="Sponsor on GitHub" height="32"></a>
+
+Your support helps maintain and improve this package for the community! 🚀
+
 ## Installation
 
 ```bash
