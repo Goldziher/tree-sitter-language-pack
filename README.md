@@ -33,6 +33,7 @@ pip install tree-sitter-language-pack
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
     no GPL
     licensed languages are included.
+- This package follows the general Python life-cycle. This means it will drop support for Python 3.9 on October 25th 2025, and ONLY after this point in time will tree-sitter 0.24.0+ will be supported (tree-sitter 0.24 dropped support for Python 3.9 early.)
 
 ## Features
 
