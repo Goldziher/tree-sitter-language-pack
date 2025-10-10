@@ -73,15 +73,20 @@ jobs:
     - name: Install Dependencies
       run: uv sync --no-install-project
 
-    - name: Load Cached Pre-Commit Dependencies
-      id: cached-pre-commit-dependencies
+    - name: Install prek
+      run: |
+        uv tool install prek
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Load Cached Prek Dependencies
+      id: cached-prek-dependencies
       uses: actions/cache@v4
       with:
-        path: ~/.cache/pre-commit/
-        key: pre-commit-4|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+        path: ~/.cache/prek/
+        key: prek|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
-    - name: Run Linters
-      run: uv run --no-sync pre-commit run --show-diff-on-failure --color=always --all-files
+    - name: Execute Prek
+      run: prek run --show-diff-on-failure --color=always --all-files
 
   build-wheel:
     name: Build wheel
@@ -166,7 +171,7 @@ jobs:
       matrix:
         #os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
         os: [ubuntu-latest, windows-latest, ubuntu-24.04-arm]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
