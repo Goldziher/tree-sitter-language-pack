@@ -36,10 +36,10 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "tree-sitter==0.23.2",
-  "tree-sitter-c-sharp==0.23.1",
-  "tree-sitter-embedded-template==0.23.2",
-  "tree-sitter-yaml==0.7.0",
+  "tree-sitter>=0.25.2",
+  "tree-sitter-c-sharp>=0.23.1",
+  "tree-sitter-embedded-template>=0.25.0",
+  "tree-sitter-yaml>=0.7.2",
 ]
 
 urls.documentation = "https://github.com/Goldziher/tree-sitter-language-pack#readme"
