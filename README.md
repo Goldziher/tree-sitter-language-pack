@@ -33,8 +33,8 @@ pip install tree-sitter-language-pack
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
     no GPL
     licensed languages are included.
-- This package follows the general Python life-cycle and now requires Python 3.10 or newer. We aligned early with tree-sitter
-    0.24.0+, which removed Python 3.9 support ahead of the upstream EOL.
+- This package follows the general Python life-cycle and now requires Python 3.10 or newer. We align with tree-sitter
+    0.25.x and newer, which dropped Python 3.9 support ahead of the upstream EOL.
 
 ## Features
 
