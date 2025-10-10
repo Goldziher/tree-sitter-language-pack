@@ -19,14 +19,14 @@ Before contributing, please:
 
 1. Check existing [issues](https://github.com/Goldziher/tree-sitter-language-pack/issues) and [pull requests](https://github.com/Goldziher/tree-sitter-language-pack/pulls) to avoid duplicating work
 1. For significant changes, open an issue first to discuss your proposal
-1. Ensure you have Python 3.9+ installed
+1. Ensure you have Python 3.10+ installed
 1. Install [uv](https://github.com/astral-sh/uv) for dependency management
 
 ## Development Setup
 
 ### Prerequisites
 
-- Python 3.9 or higher
+- Python 3.10 or higher
 - C compiler (gcc, clang, or MSVC)
 - Git
 - [uv](https://github.com/astral-sh/uv) package manager
@@ -46,11 +46,20 @@ Before contributing, please:
     uv sync --no-install-project
     ```
 
-1. **Install pre-commit hooks**
+1. **Generate AI rule documentation**
 
     ```bash
-    pre-commit install
-    pre-commit install --hook-type commit-msg
+    npx -y ai-rulez@latest --update-gitignore
+    ```
+
+    This command refreshes `AGENTS.md`, `CLAUDE.md`, and the other AI guidance files while keeping the generated artifacts out of version control.
+
+1. **Install prek hooks**
+
+    ```bash
+    uv tool install prek
+    prek install
+    prek install --hook-type commit-msg
     ```
 
 1. **Clone language repositories**
@@ -87,18 +96,21 @@ The project uses several tools to maintain code quality:
 
 - **Ruff** for linting and formatting
 - **mypy** for type checking
-- **pre-commit** for automated checks
+- **prek** for automated checks
 
 Run all checks manually:
 
 ```bash
-# Linting
-uv run --no-sync ruff check
+# Run all linters and formatters managed by prek
+prek run --all-files
 
 # Type checking
 uv run --no-sync mypy
 
-# Format code
+# Linting without auto-fixes (optional)
+uv run --no-sync ruff check
+
+# Format code (optional when not using prek)
 uv run --no-sync ruff format
 ```
 

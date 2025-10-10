@@ -7,7 +7,7 @@ from setuptools import Extension, find_packages, setup
 from setuptools.command.bdist_wheel import bdist_wheel
 from setuptools.command.build_ext import build_ext
 
-MIN_PYTHON_VERSION = 39
+MIN_PYTHON_VERSION = 310
 
 
 def get_mapped_parsers() -> dict[str, Path]:
@@ -51,7 +51,7 @@ def create_extension(*, language_name: str) -> Extension:
     ]
 
     if is_windows:
-        define_macros.append(("Py_LIMITED_API", "0x03090000"))  # Python 3.9+
+        define_macros.append(("Py_LIMITED_API", "0x030A0000"))  # Python 3.10+
 
     return Extension(
         name=f"tree_sitter_language_pack.bindings.{language_name}",
@@ -100,15 +100,15 @@ class BuildExt(build_ext):
 
 
 class BdistWheel(bdist_wheel):
-    """Custom bdist_wheel command to handle Python 3.9+ ABI tag."""
+    """Custom bdist_wheel command to handle Python 3.10+ ABI tag."""
 
     def get_tag(self) -> tuple[str, str, str]:
         """Get the tag for the wheel."""
         python, abi, platform = super().get_tag()
         platform = platform.replace("linux", "manylinux2014")
         if python.startswith("cp") and int(python[2:]) >= MIN_PYTHON_VERSION:
-            # Support all Python versions >= 3.9 using abi3
-            return "cp39", "abi3", platform
+            # Support all Python versions >= 3.10 using abi3
+            return "cp310", "abi3", platform
         return python, abi, platform
 
 

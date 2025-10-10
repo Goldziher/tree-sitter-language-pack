@@ -31,3 +31,13 @@ wheelhouse/
 # Claude artifacts
 CLAUDE.md
 .claude/
+
+# AI Rules generated files
+.claude/agents/
+.cursor/rules/
+.gemini/settings.json
+.github/copilot-instructions.md
+.mcp.json
+.windsurf/
+AGENTS.md
+GEMINI.md

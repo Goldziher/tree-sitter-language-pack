@@ -5,7 +5,7 @@ requires = [ "cython>=3.0.12", "setuptools>=80.9.0", "typing-extensions>=4.15.0"
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.9.1"
+version = "0.10.0"
 description = "Comprehensive collection of 160+ tree-sitter language parsers"
 readme = "README.md"
 keywords = [
@@ -20,26 +20,26 @@ keywords = [
 license = "MIT OR Apache-2.0"
 
 authors = [ { name = "Na'aman Hirschfeld", email = "nhirschfeld@gmail.com" } ]
-requires-python = ">=3.9.0"
+requires-python = ">=3.10.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: Implementation :: CPython",
   "Typing :: Typed",
 ]
 dependencies = [
-  "tree-sitter==0.23.2",
-  "tree-sitter-c-sharp==0.23.1",
-  "tree-sitter-embedded-template==0.23.2",
-  "tree-sitter-yaml==0.7.0",
+  "tree-sitter>=0.25.2",
+  "tree-sitter-c-sharp>=0.23.1",
+  "tree-sitter-embedded-template>=0.25.0",
+  "tree-sitter-yaml>=0.7.2",
 ]
 
 urls.documentation = "https://github.com/Goldziher/tree-sitter-language-pack#readme"
@@ -52,7 +52,7 @@ dev = [
   "anyio>=4.10.0",
   "gitpython>=3.1.45",
   "mypy>=1.18.2",
-  "pre-commit>=4.3.0",
+  "prek>=0.2.4",
   "pytest>=8.4.2",
   "ruff>=0.13.1",
   "setuptools>=80.9.0",
@@ -62,8 +62,11 @@ dev = [
   "uv-bump",
 ]
 
+[tool.uv.sources]
+uv-bump = { git = "https://github.com/Goldziher/uv-bump" }
+
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 line-length = 120
 src = [ "tests", "tree_sitter_language_pack" ]
 format.docstring-code-line-length = 120
@@ -94,16 +97,13 @@ ignore-words-list = "wast"
 
 [tool.pyproject-fmt]
 keep_full_version = true
-max_supported_python = "3.13"
+max_supported_python = "3.14"
 
 [tool.mypy]
 packages = [ "tree_sitter_language_pack", "tests" ]
-python_version = "3.9"
+python_version = "3.10"
 disallow_untyped_decorators = true
 disallow_any_unimported = true
 show_error_codes = true
 strict = true
 warn_unreachable = true
-
-[tool.uv.sources]
-uv-bump = { git = "https://github.com/Goldziher/uv-bump" }

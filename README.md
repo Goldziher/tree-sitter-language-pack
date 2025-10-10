@@ -33,7 +33,8 @@ pip install tree-sitter-language-pack
 - All languages bundled by this package are licensed under permissive open-source licenses (MIT, Apache 2.0 etc.) only -
     no GPL
     licensed languages are included.
-- This package follows the general Python life-cycle. This means it will drop support for Python 3.9 on October 25th 2025, and ONLY after this point in time will tree-sitter 0.24.0+ will be supported (tree-sitter 0.24 dropped support for Python 3.9 early.)
+- This package follows the general Python life-cycle and now requires Python 3.10 or newer. We align with tree-sitter
+    0.25.x and newer, which dropped Python 3.9 support ahead of the upstream EOL.
 
 ## Features
 
@@ -55,6 +56,33 @@ python_parser = get_parser("python")  # this is an instance of tree_sitter.Parse
 ```
 
 See the list of available languages below to get the name of the language you want to use.
+
+## Development Setup
+
+To work on the package locally you will need Python 3.10+ and the [uv](https://github.com/astral-sh/uv) toolchain.
+
+```bash
+# Install runtime dependencies
+uv sync --no-install-project
+
+# Install the tree-sitter CLI used for code generation
+npm install -g tree-sitter-cli
+
+# Install prek hooks (Rust-based pre-commit replacement)
+uv tool install prek
+prek install
+prek install --hook-type commit-msg
+
+# Fetch bundled language vendors and build native extensions
+uv run --no-sync scripts/clone_vendors.py
+PROJECT_ROOT=. uv run setup.py build_ext --inplace
+
+# Run the full test suite
+PROJECT_ROOT=. uv run --no-sync pytest tests
+
+# Execute all lint/format checks
+prek run --all-files
+```
 
 ## Available Languages
 
