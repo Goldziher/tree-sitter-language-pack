@@ -8,6 +8,9 @@ on:
     branches:
     - main
     - fix/*
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   clone_vendors:
