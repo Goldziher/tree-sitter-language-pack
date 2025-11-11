@@ -24,6 +24,7 @@ SupportedLanguage = Literal[
     "bibtex",
     "bicep",
     "bitbake",
+    "bsl",
     "c",
     "cairo",
     "capnp",
