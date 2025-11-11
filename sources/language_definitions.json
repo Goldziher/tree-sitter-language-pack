@@ -56,6 +56,11 @@
     "repo": "https://github.com/tree-sitter-grammars/tree-sitter-bitbake",
     "rev": "a5d04fdb5a69a02b8fa8eb5525a60dfb5309b73b"
   },
+  "bsl": {
+    "branch": "develop",
+    "repo": "https://github.com/alkoleft/tree-sitter-bsl",
+    "rev": "91efca3c969fe21cadd98e94e631c430cbc75f74"
+  },
   "c": {
     "branch": "master",
     "repo": "https://github.com/tree-sitter/tree-sitter-c",

@@ -100,6 +100,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [bibtex](https://github.com/latex-lsp/tree-sitter-bibtex) - MIT License
 - [bicep](https://github.com/tree-sitter-grammars/tree-sitter-bicep) - MIT License
 - [bitbake](https://github.com/tree-sitter-grammars/tree-sitter-bitbake) - MIT License
+- [bsl](https://github.com/alkoleft/tree-sitter-bsl) - MIT License
 - [c](https://github.com/tree-sitter/tree-sitter-c) - MIT License
 - [cairo](https://github.com/tree-sitter-grammars/tree-sitter-cairo) - MIT License
 - [capnp](https://github.com/tree-sitter-grammars/tree-sitter-capnp) - MIT License
