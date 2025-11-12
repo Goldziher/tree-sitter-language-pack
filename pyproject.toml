@@ -5,7 +5,7 @@ requires = [ "cython>=3.0.12", "setuptools>=80.9.0", "typing-extensions>=4.15.0"
 
 [project]
 name = "tree-sitter-language-pack"
-version = "0.10.0"
+version = "0.11.0"
 description = "Comprehensive collection of 160+ tree-sitter language parsers"
 readme = "README.md"
 keywords = [
@@ -52,9 +52,9 @@ dev = [
   "anyio>=4.10.0",
   "gitpython>=3.1.45",
   "mypy>=1.18.2",
-  "prek>=0.2.4",
-  "pytest>=8.4.2",
-  "ruff>=0.13.1",
+  "prek>=0.2.13",
+  "pytest>=9.0.0",
+  "ruff>=0.14.4",
   "setuptools>=80.9.0",
   "tomli>=2.2.1; python_version<'3.11'",
   "types-setuptools>=80.9.0.20250822",
