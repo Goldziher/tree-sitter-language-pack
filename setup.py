@@ -111,9 +111,9 @@ class BdistWheel(bdist_wheel):
         
         if platform.startswith("linux"):
             if is_alpine:
-                # Alpine uses musl libc, use linux_musl tag
+                # Alpine uses musl libc, use musllinux tag (PEP 656)
                 arch = machine()
-                platform = f"linux_musl_{arch}"
+                platform = f"musllinux_1_2_{arch}"
             else:
                 # Other Linux distributions use glibc (manylinux)
                 platform = platform.replace("linux", "manylinux2014")

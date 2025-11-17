@@ -33,6 +33,9 @@ runs:
           exit 1
         fi
         echo "Found wheel: $wheel_file"
+        # Update pip to ensure musllinux tag support (PEP 656)
+        pip install --upgrade pip
+        # Install the wheel
         pip install "$wheel_file"
       shell: sh
 
