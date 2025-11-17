@@ -170,6 +170,7 @@ jobs:
     needs: clone_vendors
     runs-on: ubuntu-latest
     container: python:3.11-alpine
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -183,14 +184,6 @@ jobs:
       - name: Install Alpine build dependencies
         run: apk add --no-cache build-base git
 
-      - name: Install GNU tar (required by actions/cache)
-        run: |
-          apk add --no-cache gnu-tar || true
-          # ensure 'tar' points to GNU tar (gtar)
-          if [ -x "/usr/bin/gtar" ]; then
-            ln -sf /usr/bin/gtar /usr/bin/tar
-          fi
-
       - name: Install uv
         run: pip install uv
 
@@ -198,7 +191,7 @@ jobs:
         uses: ./.github/actions/build-wheel
         with:
           runner-key: alpine
-          artifact-name: dist-wheel-alpine
+          artifact-name: wheel-alpine
 
   test-wheel:
     name: Test wheel
@@ -218,78 +211,59 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Download wheel artifact (matrix)
-        uses: actions/download-artifact@v4
+      - name: Run Test Logic
+        uses: ./.github/actions/test-wheel
         with:
-          name: wheel-${{ matrix.os }}
-          path: artifacts/matrix
+          artifact-name: wheel-${{ matrix.os }}
+  test-wheel-alpine:
+    name: Test wheel on alpine
+    needs: build-wheel-alpine
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    container: python:${{ matrix.python-version }}-alpine
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Download wheel artifact (alpine)
-        uses: actions/download-artifact@v4
+      - name: Run Test Logic
+        uses: ./.github/actions/test-wheel
         with:
-          name: dist-wheel-alpine
-          path: artifacts/alpine
+          artifact-name: wheel-alpine
 
-      - name: Install wheel
-        shell: bash
-        run: |
-          # Prefer wheel built for this matrix OS, then fallback to alpine artifact, then dist/
-          wheel_file=$(ls artifacts/matrix/*.whl 2>/dev/null | head -n 1 || true)
-          if [ -z "$wheel_file" ]; then
-            wheel_file=$(ls artifacts/alpine/*.whl 2>/dev/null | head -n 1 || true)
-          fi
-          if [ -z "$wheel_file" ]; then
-            wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1 || true)
-          fi
-          if [ -z "$wheel_file" ]; then
-            echo "No wheel file found" >&2
-            exit 1
-          fi
-          echo "Installing wheel: $wheel_file"
-          pip install "$wheel_file"
-
-      - name: Install pytest
-        run: pip install pytest
-
-      - name: Test with installed wheel
-        run: |
-          mkdir -p /tmp/test_wheel
-          cp tests/entry_point_test.py /tmp/test_wheel/
-          cd /tmp/test_wheel
-          pytest entry_point_test.py -v
-        env:
-          PROJECT_ROOT: ${{ github.workspace }}
-#    - name: Set up MSYS2 Python
-#      if: matrix.os == 'windows-latest'
-#      uses: msys2/setup-msys2@v2
-#      with:
-#        msystem: UCRT64
-#        update: true
-#        pacboy: python-pip:p gcc:p
-#
-#    - name: Install MSYS2 GCC wheel
-#      if: matrix.os == 'windows-latest'
-#      shell: msys2 {0}
-#      run: |
-#        wheel_file=$(ls *.whl 2>/dev/null | head -n 1)
-#        if [ -z "$wheel_file" ]; then
-#          wheel_file=$(find . -name "*.whl" -type f | head -n 1)
-#        fi
-#        echo "Installing wheel: $wheel_file"
-#        pip install "$wheel_file"
-#
-#    - name: Install MSYS2 pytest
-#      if: matrix.os == 'windows-latest'
-#      shell: msys2 {0}
-#      run: pip install pytest
-#
-#    - name: Test with installed MSYS2 wheel
-#      if: matrix.os == 'windows-latest'
-#      shell: msys2 {0}
-#      run: |
-#        mkdir -p /tmp/test_wheel
-#        cp tests/entry_point_test.py /tmp/test_wheel/
-#        cd /tmp/test_wheel
-#        pytest entry_point_test.py -v
-#      env:
-#        PROJECT_ROOT: ${{ github.workspace }}
+  #    - name: Set up MSYS2 Python
+  #      if: matrix.os == 'windows-latest'
+  #      uses: msys2/setup-msys2@v2
+  #      with:
+  #        msystem: UCRT64
+  #        update: true
+  #        pacboy: python-pip:p gcc:p
+  #
+  #    - name: Install MSYS2 GCC wheel
+  #      if: matrix.os == 'windows-latest'
+  #      shell: msys2 {0}
+  #      run: |
+  #        wheel_file=$(ls *.whl 2>/dev/null | head -n 1)
+  #        if [ -z "$wheel_file" ]; then
+  #          wheel_file=$(find . -name "*.whl" -type f | head -n 1)
+  #        fi
+  #        echo "Installing wheel: $wheel_file"
+  #        pip install "$wheel_file"
+  #
+  #    - name: Install MSYS2 pytest
+  #      if: matrix.os == 'windows-latest'
+  #      shell: msys2 {0}
+  #      run: pip install pytest
+  #
+  #    - name: Test with installed MSYS2 wheel
+  #      if: matrix.os == 'windows-latest'
+  #      shell: msys2 {0}
+  #      run: |
+  #        mkdir -p /tmp/test_wheel
+  #        cp tests/entry_point_test.py /tmp/test_wheel/
+  #        cd /tmp/test_wheel
+  #        pytest entry_point_test.py -v
+  #      env:
+  #        PROJECT_ROOT: ${{ github.workspace }}
