@@ -14,13 +14,25 @@ runs:
       with:
         name: ${{ inputs.artifact-name }}
 
-    - name: Install wheel
+    - name: Find and install wheel
       run: |
+        echo "Current directory: $(pwd)"
+        echo "Listing files:"
+        ls -la
+        echo "Looking for wheel files..."
+        # Try dist/*.whl first (standard location)
         wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1)
+        # If not found, search recursively
         if [ -z "$wheel_file" ]; then
-          wheel_file=$(find dist -name "*.whl" -type f | head -n 1)
+          wheel_file=$(find . -name "*.whl" -type f | head -n 1)
         fi
-        echo "Installing wheel: $wheel_file"
+        if [ -z "$wheel_file" ]; then
+          echo "ERROR: No wheel file found!"
+          echo "Directory structure:"
+          find . -type f | head -20
+          exit 1
+        fi
+        echo "Found wheel: $wheel_file"
         pip install "$wheel_file"
       shell: sh
 

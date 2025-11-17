@@ -195,7 +195,7 @@ jobs:
 
   test-wheel:
     name: Test wheel
-    needs: [build-wheel, build-wheel-alpine]
+    needs: [build-wheel]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
