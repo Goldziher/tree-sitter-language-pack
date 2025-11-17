@@ -3,11 +3,11 @@ name: CI
 on:
   pull_request:
     branches:
-    - main
+      - main
   push:
     branches:
-    - main
-    - fix/*
+      - main
+      - fix/*
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -17,79 +17,79 @@ jobs:
     name: Clone vendors
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node
-      uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
 
-    - name: Install tree-sitter cli
-      run: npm install -g tree-sitter-cli
+      - name: Install tree-sitter cli
+        run: npm install -g tree-sitter-cli
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-    - name: Install Dependencies
-      run: uv sync --no-install-project
+      - name: Install Dependencies
+        run: uv sync --no-install-project
 
-    - name: Clone vendors
-      run: |
-        mkdir parsers
-        uv run --no-sync scripts/clone_vendors.py
+      - name: Clone vendors
+        run: |
+          mkdir parsers
+          uv run --no-sync scripts/clone_vendors.py
 
-    - name: Upload Parsers
-      uses: actions/upload-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
+      - name: Upload Parsers
+        uses: actions/upload-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
 
   validate:
     needs: clone_vendors
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Download parsers
-      uses: actions/download-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-    - name: Install Dependencies
-      run: uv sync --no-install-project
+      - name: Install Dependencies
+        run: uv sync --no-install-project
 
-    - name: Install prek
-      run: |
-        uv tool install prek
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install prek
+        run: |
+          uv tool install prek
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-    - name: Load Cached Prek Dependencies
-      id: cached-prek-dependencies
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/prek/
-        key: prek|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
+      - name: Load Cached Prek Dependencies
+        id: cached-prek-dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/prek/
+          key: prek|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
-    - name: Execute Prek
-      run: prek run --show-diff-on-failure --color=always --all-files
+      - name: Execute Prek
+        run: prek run --show-diff-on-failure --color=always --all-files
 
   build-wheel:
     name: Build wheel
@@ -100,117 +100,165 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Download parsers
-      uses: actions/download-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-    - name: Install Dependencies
-      run: uv sync --no-install-project
+      - name: Install Dependencies
+        run: uv sync --no-install-project
 
-    - name: Set path in environment
-      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
-      shell: bash
+      - name: Set path in environment
+        run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+        shell: bash
 
-    - name: Cache Build
-      id: cache-build
-      uses: actions/cache@v4
-      with:
-        path: |
-          dist
-          *.whl
-        key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
+      - name: Cache Build
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            dist
+            *.whl
+          key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
 
-    - name: Build wheel
-      if: steps.cache-build.outputs.cache-hit != 'true'
-      run: uv build --wheel
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
+      - name: Build wheel
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        run: uv build --wheel
+        env:
+          PROJECT_ROOT: ${{github.workspace}}
 
-    - name: Setup MSYS2 GCC build
-      if: matrix.os == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: UCRT64
-        update: true
-        pacboy: python-pip:p gcc:p
+      - name: Setup MSYS2 GCC build
+        if: matrix.os == 'windows-latest'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          pacboy: python-pip:p gcc:p
 
-    - name: Build MSYS2 GCC wheel
-      if: matrix.os == 'windows-latest' && steps.cache-build.outputs.cache-hit != 'true'
-      shell: msys2 {0}
-      run: |
-        . .venv/Scripts/activate
-        pip wheel --no-deps .
+      - name: Build MSYS2 GCC wheel
+        if: matrix.os == 'windows-latest' && steps.cache-build.outputs.cache-hit != 'true'
+        shell: msys2 {0}
+        run: |
+          . .venv/Scripts/activate
+          pip wheel --no-deps .
 
-    - name: Upload wheel artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: wheel-${{ matrix.os }}
-        path: |
-          dist/*.whl
-          *.whl
-        if-no-files-found: error
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}
+          path: |
+            dist/*.whl
+            *.whl
+          if-no-files-found: error
+
+  build-wheel-alpine:
+    name: Build wheel on alpine-latest
+    needs: clone_vendors
+    runs-on: ubuntu-latest
+    container: python:3.11-alpine
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
+
+      - name: Install Alpine build dependencies
+        run: apk add --no-cache build-base git
+
+      - name: Install GNU tar (required by actions/cache)
+        run: |
+          apk add --no-cache gnu-tar || true
+          # ensure 'tar' points to GNU tar (gtar)
+          if [ -x "/usr/bin/gtar" ]; then
+            ln -sf /usr/bin/gtar /usr/bin/tar
+          fi
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Run Build Logic
+        uses: ./.github/actions/build-wheel
+        with:
+          runner-key: alpine
+          artifact-name: dist-wheel-alpine
 
   test-wheel:
     name: Test wheel
-    needs: build-wheel
+    needs: [build-wheel, build-wheel-alpine]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        #os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
         os: [ubuntu-latest, windows-latest, ubuntu-24.04-arm]
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Download wheel artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: wheel-${{ matrix.os }}
+      - name: Download wheel artifact (matrix)
+        uses: actions/download-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}
+          path: artifacts/matrix
 
-    - name: Install wheel
-      shell: bash
-      run: |
-        wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1)
-        if [ -z "$wheel_file" ]; then
-          wheel_file=$(find dist -name "*.whl" -type f | head -n 1)
-        fi
-        echo "Installing wheel: $wheel_file"
-        pip install "$wheel_file"
+      - name: Download wheel artifact (alpine)
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-wheel-alpine
+          path: artifacts/alpine
 
-    - name: Install pytest
-      run: pip install pytest
+      - name: Install wheel
+        shell: bash
+        run: |
+          # Prefer wheel built for this matrix OS, then fallback to alpine artifact, then dist/
+          wheel_file=$(ls artifacts/matrix/*.whl 2>/dev/null | head -n 1 || true)
+          if [ -z "$wheel_file" ]; then
+            wheel_file=$(ls artifacts/alpine/*.whl 2>/dev/null | head -n 1 || true)
+          fi
+          if [ -z "$wheel_file" ]; then
+            wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1 || true)
+          fi
+          if [ -z "$wheel_file" ]; then
+            echo "No wheel file found" >&2
+            exit 1
+          fi
+          echo "Installing wheel: $wheel_file"
+          pip install "$wheel_file"
 
-    - name: Test with installed wheel
-      run: |
-        mkdir -p /tmp/test_wheel
-        cp tests/entry_point_test.py /tmp/test_wheel/
-        cd /tmp/test_wheel
-        pytest entry_point_test.py -v
-      env:
-        PROJECT_ROOT: ${{ github.workspace }}
+      - name: Install pytest
+        run: pip install pytest
 
+      - name: Test with installed wheel
+        run: |
+          mkdir -p /tmp/test_wheel
+          cp tests/entry_point_test.py /tmp/test_wheel/
+          cd /tmp/test_wheel
+          pytest entry_point_test.py -v
+        env:
+          PROJECT_ROOT: ${{ github.workspace }}
 #    - name: Set up MSYS2 Python
 #      if: matrix.os == 'windows-latest'
 #      uses: msys2/setup-msys2@v2
