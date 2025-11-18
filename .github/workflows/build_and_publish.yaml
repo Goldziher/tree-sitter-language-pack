@@ -105,6 +105,22 @@ jobs:
           name: language-parsers
           path: parsers
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Run Build Logic
+        uses: ./.github/actions/build-wheel
+        with:
+          runner-key: ${{ matrix.os }}
+          artifact-name: dist-wheel-${{ matrix.os }}
+
   build-wheel-alpine:
     needs: clone_vendors
     name: Build wheel on alpine-latest
@@ -125,7 +141,9 @@ jobs:
         run: apk add --no-cache build-base git
 
       - name: Install uv
-        run: pip install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
       - name: Run Build Logic
         uses: ./.github/actions/build-wheel
