@@ -1,7 +1,7 @@
 from itertools import chain
 from os import environ, getcwd, listdir
 from pathlib import Path
-from platform import system
+from platform import machine, system
 
 from setuptools import Extension, find_packages, setup
 from setuptools.command.bdist_wheel import bdist_wheel
@@ -105,7 +105,19 @@ class BdistWheel(bdist_wheel):
     def get_tag(self) -> tuple[str, str, str]:
         """Get the tag for the wheel."""
         python, abi, platform = super().get_tag()
-        platform = platform.replace("linux", "manylinux2014")
+
+        # Check if running on Alpine Linux (musl libc)
+        is_alpine = Path("/etc/alpine-release").exists()
+
+        if platform.startswith("linux"):
+            if is_alpine:
+                # Alpine uses musl libc, use musllinux tag (PEP 656)
+                arch = machine()
+                platform = f"musllinux_1_2_{arch}"
+            else:
+                # Other Linux distributions use glibc (manylinux)
+                platform = platform.replace("linux", "manylinux2014")
+
         if python.startswith("cp") and int(python[2:]) >= MIN_PYTHON_VERSION:
             # Support all Python versions >= 3.10 using abi3
             return "cp310", "abi3", platform

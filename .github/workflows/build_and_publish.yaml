@@ -87,6 +87,7 @@ jobs:
           name: dist-sdist
           if-no-files-found: error
           path: dist
+
   build-wheels:
     needs: clone_vendors
     strategy:
@@ -95,68 +96,75 @@ jobs:
     name: Build wheel on ${{matrix.os}}
     runs-on: ${{matrix.os}}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Download parsers
-      uses: actions/download-artifact@v4
-      with:
-        name: language-parsers
-        path: parsers
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
-      with:
-        enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "pyproject.toml"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
 
-    - name: Install Dependencies
-      run: uv sync --no-install-project
+      - name: Run Build Logic
+        uses: ./.github/actions/build-wheel
+        with:
+          runner-key: ${{ matrix.os }}
+          artifact-name: dist-wheel-${{ matrix.os }}
 
-    - name: Set path in environment
-      run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
+  build-wheel-alpine:
+    needs: clone_vendors
+    name: Build wheel on alpine-latest
+    runs-on: ubuntu-latest
+    container: python:3.11-alpine # (ou 3.12-alpine, etc.)
 
-    - name: Cache Bindings
-      id: cache-bindings
-      uses: actions/cache@v4
-      with:
-        path: tree_sitter_language_pack/bindings
-        key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'parsers/**/*', 'setup.py') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Build Extensions
-      if: steps.cache-bindings.outputs.cache-hit != 'true'
-      run: uv run setup.py build_ext --inplace
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
+      - name: Download parsers
+        uses: actions/download-artifact@v4
+        with:
+          name: language-parsers
+          path: parsers
 
-    - name: Build wheel
-      run: uv build --wheel
-      env:
-        PROJECT_ROOT: ${{github.workspace}}
+      - name: Install Alpine build dependencies
+        run: apk add --no-cache build-base git
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: dist-wheel-${{ matrix.os }}-${{ strategy.job-index }}
-        if-no-files-found: error
-        path: dist
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Run Build Logic
+        uses: ./.github/actions/build-wheel
+        with:
+          runner-key: alpine
+          artifact-name: dist-wheel-alpine
+
   publish:
     name: Publish Python package
-    needs: [build-sdist, build-wheels]
+    needs: [build-sdist, build-wheels, build-wheel-alpine]
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
       id-token: write
     steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: dist
-        pattern: dist-*
-        merge-multiple: true
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          pattern: dist-*
+          merge-multiple: true
 
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
