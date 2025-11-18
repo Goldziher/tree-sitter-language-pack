@@ -35,10 +35,7 @@ runs:
         PROJECT_ROOT: ${{github.workspace}}
 
     - name: Build wheel
-      run: |
-        uv build --wheel
-        echo "Built wheels:"
-        ls -lh dist/*.whl || echo "No wheels found in dist/"
+      run: uv build --wheel
       shell: sh
       env:
         PROJECT_ROOT: ${{github.workspace}}

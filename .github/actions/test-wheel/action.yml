@@ -16,10 +16,6 @@ runs:
 
     - name: Find and install wheel
       run: |
-        echo "Current directory: $(pwd)"
-        echo "Listing files:"
-        ls -la
-        echo "Looking for wheel files..."
         # Try dist/*.whl first (standard location)
         wheel_file=$(ls dist/*.whl 2>/dev/null | head -n 1)
         # If not found, search recursively
@@ -28,11 +24,8 @@ runs:
         fi
         if [ -z "$wheel_file" ]; then
           echo "ERROR: No wheel file found!"
-          echo "Directory structure:"
-          find . -type f | head -20
           exit 1
         fi
-        echo "Found wheel: $wheel_file"
         # Update pip to ensure musllinux tag support (PEP 656)
         pip install --upgrade pip
         # Install the wheel
