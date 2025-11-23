@@ -153,26 +153,26 @@ jobs:
               echo "not-found"
             fi
           }
-          
+
           # Compute hashes manually to avoid hashFiles issues on macOS
           if [ -d patches ] && [ -n "$(find patches -type f 2>/dev/null | head -1)" ]; then
             PATCHES_HASH=$(compute_hash patches)
           else
             PATCHES_HASH="no-patches"
           fi
-          
+
           if [ -d sources ] && [ -n "$(find sources -type f 2>/dev/null | head -1)" ]; then
             SOURCES_HASH=$(compute_hash sources)
           else
             SOURCES_HASH="no-sources"
           fi
-          
+
           if [ -f setup.py ]; then
             SETUP_HASH=$(compute_hash setup.py)
           else
             SETUP_HASH="no-setup"
           fi
-          
+
           echo "key=${{ matrix.os }}-build-${SOURCES_HASH}-${PATCHES_HASH}-${SETUP_HASH}" >> $GITHUB_OUTPUT
         shell: bash
 
