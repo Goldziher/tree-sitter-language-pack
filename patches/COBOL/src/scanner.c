@@ -213,3 +213,4 @@ void tree_sitter_COBOL_external_scanner_deserialize(void *payload, const char *b
 
 void tree_sitter_COBOL_external_scanner_destroy(void *payload) {
 }
+

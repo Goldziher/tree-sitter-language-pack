@@ -18,6 +18,7 @@ from typing_extensions import NotRequired, TypedDict
 
 vendor_directory = Path(__file__).parent.parent / "vendor"
 parsers_directory = Path(__file__).parent.parent / "parsers"
+patches_directory = Path(__file__).parent.parent / "patches"
 
 COMMON_RE_PATTERN = re.compile(r"\.\.[/\\](?:\.\.[/\\])*common[/\\]")
 
@@ -147,6 +148,20 @@ async def move_src_folder(language_name: str, directory: str | None) -> None:
 
             file_contents = COMMON_RE_PATTERN.sub(replacement_path, file_contents)
             await AsyncPath(file).write_text(file_contents)
+
+    # Apply patches if they exist
+    patch_dir = patches_directory / language_name
+    if await AsyncPath(patch_dir).exists():
+        print(f"Applying patches for {language_name}")
+        for patch_file in patch_dir.rglob("*"):
+            if await AsyncPath(patch_file).is_file():
+                relative_path = patch_file.relative_to(patch_dir)
+                target_file = target_source_dir / relative_path
+                if await AsyncPath(target_file).exists():
+                    patch_content = await AsyncPath(patch_file).read_text()
+                    await AsyncPath(target_file).write_text(patch_content)
+                    print(f"Applied patch: {relative_path}")
+        print(f"Applied patches for {language_name} successfully")
 
 
 async def process_repo(language_name: str, language_definition: LanguageDict) -> None:
