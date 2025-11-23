@@ -126,6 +126,27 @@ jobs:
         run: echo "PROJECT_ROOT=${{ github.workspace }}" >> $GITHUB_ENV
         shell: bash
 
+      - name: Compute cache key
+        id: cache-key
+        run: |
+          mkdir -p patches
+          # Compute patches hash manually to avoid hashFiles issues on macOS
+          if [ -d patches ] && [ -n "$(find patches -type f 2>/dev/null | head -1)" ]; then
+            if command -v sha256sum >/dev/null 2>&1; then
+              PATCHES_HASH=$(find patches -type f -exec sha256sum {} \; | sort | sha256sum | cut -d' ' -f1 | head -c 16)
+            elif command -v shasum >/dev/null 2>&1; then
+              PATCHES_HASH=$(find patches -type f -exec shasum -a 256 {} \; | sort | shasum -a 256 | cut -d' ' -f1 | head -c 16)
+            else
+              PATCHES_HASH="no-hash-tool"
+            fi
+          else
+            PATCHES_HASH="no-patches"
+          fi
+          SOURCES_HASH="${{ hashFiles('sources/**/*') }}"
+          SETUP_HASH="${{ hashFiles('setup.py') }}"
+          echo "key=${{ matrix.os }}-build-${SOURCES_HASH}-${PATCHES_HASH}-${SETUP_HASH}" >> $GITHUB_OUTPUT
+        shell: bash
+
       - name: Cache Build
         id: cache-build
         uses: actions/cache@v4
@@ -133,7 +154,7 @@ jobs:
           path: |
             dist
             *.whl
-          key: ${{ matrix.os }}-build-${{ hashFiles('sources/**/*', 'patches/**/*', 'setup.py') }}
+          key: ${{ steps.cache-key.outputs.key }}
 
       - name: Build wheel
         if: steps.cache-build.outputs.cache-hit != 'true'
