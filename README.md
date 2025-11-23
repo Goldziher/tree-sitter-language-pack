@@ -108,6 +108,7 @@ Each language below is identified by the key used to retrieve it from the `get_l
 - [clarity](https://github.com/xlittlerag/tree-sitter-clarity) - MIT License
 - [clojure](https://github.com/sogaiu/tree-sitter-clojure) - CC0 1.0 Universal License
 - [cmake](https://github.com/uyha/tree-sitter-cmake) - MIT License
+- [COBOL](https://github.com/yutaro-sakamoto/tree-sitter-cobol) - MIT License
 - [comment](https://github.com/stsewd/tree-sitter-comment) - MIT License
 - [commonlisp](https://github.com/tree-sitter-grammars/tree-sitter-commonlisp) - MIT License
 - [cpon](https://github.com/tree-sitter-grammars/tree-sitter-cpon) - MIT License
