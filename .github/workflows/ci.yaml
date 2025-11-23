@@ -130,20 +130,49 @@ jobs:
         id: cache-key
         run: |
           mkdir -p patches
-          # Compute patches hash manually to avoid hashFiles issues on macOS
-          if [ -d patches ] && [ -n "$(find patches -type f 2>/dev/null | head -1)" ]; then
-            if command -v sha256sum >/dev/null 2>&1; then
-              PATCHES_HASH=$(find patches -type f -exec sha256sum {} \; | sort | sha256sum | cut -d' ' -f1 | head -c 16)
-            elif command -v shasum >/dev/null 2>&1; then
-              PATCHES_HASH=$(find patches -type f -exec shasum -a 256 {} \; | sort | shasum -a 256 | cut -d' ' -f1 | head -c 16)
+          # Helper function to compute hash
+          compute_hash() {
+            local dir_or_file="$1"
+            if [ -e "$dir_or_file" ]; then
+              if command -v sha256sum >/dev/null 2>&1; then
+                if [ -d "$dir_or_file" ]; then
+                  find "$dir_or_file" -type f -exec sha256sum {} \; | sort | sha256sum | cut -d' ' -f1 | head -c 16
+                else
+                  sha256sum "$dir_or_file" | cut -d' ' -f1 | head -c 16
+                fi
+              elif command -v shasum >/dev/null 2>&1; then
+                if [ -d "$dir_or_file" ]; then
+                  find "$dir_or_file" -type f -exec shasum -a 256 {} \; | sort | shasum -a 256 | cut -d' ' -f1 | head -c 16
+                else
+                  shasum -a 256 "$dir_or_file" | cut -d' ' -f1 | head -c 16
+                fi
+              else
+                echo "no-hash-tool"
+              fi
             else
-              PATCHES_HASH="no-hash-tool"
+              echo "not-found"
             fi
+          }
+          
+          # Compute hashes manually to avoid hashFiles issues on macOS
+          if [ -d patches ] && [ -n "$(find patches -type f 2>/dev/null | head -1)" ]; then
+            PATCHES_HASH=$(compute_hash patches)
           else
             PATCHES_HASH="no-patches"
           fi
-          SOURCES_HASH="${{ hashFiles('sources/**/*') }}"
-          SETUP_HASH="${{ hashFiles('setup.py') }}"
+          
+          if [ -d sources ] && [ -n "$(find sources -type f 2>/dev/null | head -1)" ]; then
+            SOURCES_HASH=$(compute_hash sources)
+          else
+            SOURCES_HASH="no-sources"
+          fi
+          
+          if [ -f setup.py ]; then
+            SETUP_HASH=$(compute_hash setup.py)
+          else
+            SETUP_HASH="no-setup"
+          fi
+          
           echo "key=${{ matrix.os }}-build-${SOURCES_HASH}-${PATCHES_HASH}-${SETUP_HASH}" >> $GITHUB_OUTPUT
         shell: bash
 
