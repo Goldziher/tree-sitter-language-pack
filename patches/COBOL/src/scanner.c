@@ -43,7 +43,7 @@ static bool start_with_word( TSLexer *lexer, char *words[], int number_of_words)
     if (number_of_words > MAX_KEYWORDS || number_of_words <= 0) {
         return false;
     }
-    
+
     char *keyword_pointer[MAX_KEYWORDS];
     bool continue_check[MAX_KEYWORDS];
     for(int i=0; i<number_of_words; ++i) {
@@ -213,4 +213,3 @@ void tree_sitter_COBOL_external_scanner_deserialize(void *payload, const char *b
 
 void tree_sitter_COBOL_external_scanner_destroy(void *payload) {
 }
-
