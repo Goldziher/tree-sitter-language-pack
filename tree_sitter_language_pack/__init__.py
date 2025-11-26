@@ -32,6 +32,7 @@ SupportedLanguage = Literal[
     "clarity",
     "clojure",
     "cmake",
+    "cobol",
     "comment",
     "commonlisp",
     "cpon",
