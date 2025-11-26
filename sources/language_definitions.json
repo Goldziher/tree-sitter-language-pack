@@ -94,7 +94,7 @@
   },
   "cobol": {
     "repo": "https://github.com/nolanlwin/tree-sitter-cobol",
-    "rev": "64c0ef51e8b55b0d7243bfc1e017aa0e11efd43a"
+    "rev": "6f1a60ad52b52ccb5e794985454c6743531f17d7"
   },
   "comment": {
     "branch": "master",
