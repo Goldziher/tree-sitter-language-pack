@@ -409,7 +409,7 @@
   },
   "matlab": {
     "repo": "https://github.com/acristoffers/tree-sitter-matlab",
-    "rev": "2e60b9e96774e52edd91cbef37ead8f46c6e1221"
+    "rev": "1bccabdbd420a9c3c3f96f36d7f9e65b3d9c88ef"
   },
   "mermaid": {
     "branch": "master",
